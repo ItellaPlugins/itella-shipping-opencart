@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>Itella Base Mod</name>
+  <version>1.0</version>
+  <author>Mijora</author>
+  <link>https://www.mijora.lt</link>
+  <code>itellashipping</code>
+
+  <!-- ADMIN -->
+
+  <file path="admin/controller/common/column_left.php">
+    <operation>
+      <search><![CDATA[$extension = array();]]></search>
+      <add position="after"><![CDATA[
+        // Itella Admin menu
+        $this->load->language('extension/shipping/itellashipping');
+        if ($this->user->hasPermission('access', 'extension/shipping/itellashipping/manifest')) {
+          $itellashipping[] = array(
+            'name'     => $this->language->get('menu_manifest'),
+            'href'     => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'], true),
+            'children' => array()
+          );
+        }
+        if ($this->user->hasPermission('access', 'extension/shipping/itellashipping')) {
+          $itellashipping[] = array(
+            'name'     => $this->language->get('menu_settings'),
+            'href'     => $this->url->link('extension/shipping/itellashipping', 'token=' . $this->session->data['token'], true),
+            'children' => array()
+          );
+        }
+        if ($this->user->hasPermission('access', 'extension/shipping/itellashipping')) {
+          $extension[] = array(
+            'name'     => $this->language->get('menu_head'),
+            'href'     => '',
+            'children' => $itellashipping
+          );
+        }
+        // Itella END
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+  <file path="admin/controller/sale/order.php" error="log">
+    <operation error="skip">
+      <search><![CDATA[$this->response->setOutput($this->load->view('sale/order_info', $data));]]></search>
+      <add position="before"><![CDATA[
+        $data['itella_panel'] = false; // show only for orders with itella selected
+        if (explode('.', $order_info['shipping_code'])[0] == 'itellashipping') {
+          $this->load->model('extension/itellashipping/itellashipping');
+        
+          $data['itella'] = $this->model_extension_itellashipping_itellashipping->loadOrder($order_id);
+          $data['itella']['order_total'] = $order_info['total'];
+          $data['itella']['shipping_code'] = $order_info['shipping_code'];
+          $data['itella']['country_id'] = $order_info['shipping_country_id'];
+          $data['itella']['zone_id'] = $order_info['shipping_zone_id'];
+          $data['itella_lng'] = $this->model_extension_itellashipping_itellashipping->loadFormLng();
+
+          $data['itella_panel'] = $this->load->view('extension/itellashipping/order_info_form', $data);
+        }
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+  <file path="admin/view/template/sale/order_info.tpl" error="log">
+    <operation>
+      <search><![CDATA[<?php echo $footer; ?>]]></search>
+      <add position="before"><![CDATA[
+        <!-- Place Itella panel -->
+        <?php if ($itella_panel): ?>
+        <?php echo $itella_panel; ?>
+        <script type="text/javascript"><!--
+        $(document).ready(function(){
+          if ($('#itella_panel').length > 0) {
+            $('.container-fluid > .row').next().find('.panel-heading').first().prepend($('#itella_panel'));
+            initItellaForm(); // call JS from template
+          }
+        });
+        //--></script>
+        <?php endif; ?>
+        <!-- Itella END -->
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+  <file path="admin/view/template/sale/order_list.tpl" error="log">
+    <operation>
+      <search><![CDATA[<?php echo $footer; ?>]]></search>
+      <add position="before"><![CDATA[
+        <!-- Itella (check if need to add logo) -->
+        <script type="text/javascript"><!--
+        $(document).ready(function(){
+          $('input[name^=\'shipping_code\'][value^=\'itellashipping\']')
+            .closest('td').next().next()
+            .append($('<img src="view/image/itellashipping/logo.png" alt="Itella Logo" class="itella-order-logo">'))
+        });
+        //--></script>
+        <style>
+        .itella-order-logo {
+          height: 20px;
+          margin-left: 0.5rem;
+        }
+        </style>
+        <!-- Itella END -->
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+  <!-- FRONT -->
+
+  <file path="catalog/view/theme/*/template/common/header.tpl" error="log">
+    <operation>
+      <search><![CDATA[</head>]]></search>
+      <add position="before"><![CDATA[
+        <!-- Itella -->
+        <script>
+            var itella_translation = <?= json_encode($itella_translation); ?>;
+        </script>
+        <!-- Itella END -->
+        ]]>
+      </add>
+    </operation>
+  </file>
+  <file path="catalog/controller/common/header.php">
+    <operation>
+      <search><![CDATA[public function index() {]]></search>
+      <add position="before"><![CDATA[
+        // Itella
+        private function getItellaTranslation()
+        {
+          $this->load->language('extension/shipping/itellashipping');
+          return [
+            'modal_header'            => $this->language->get('itella_map_modal_header'),
+            'selector_header'         => $this->language->get('itella_map_selector_header'),
+            'workhours_header'        => $this->language->get('itella_map_workhours_header'),
+            'contacts_header'         => $this->language->get('itella_map_contacts_header'),
+            'search_placeholder'      => $this->language->get('itella_map_search_placeholder'),
+            'select_pickup_point'     => $this->language->get('itella_map_select_pickup_point'),
+            'no_pickup_points'        => $this->language->get('itella_map_no_pickup_points'),
+            'select_btn'              => $this->language->get('itella_map_select_btn'),
+            'back_to_list_btn'        => $this->language->get('itella_map_back_to_list_btn'),
+            'nothing_found'           => $this->language->get('itella_map_nothing_found'),
+            'select_pickup_point_btn' => $this->language->get('itella_map_select_pickup_point_btn'),
+            'no_information'          => $this->language->get('itella_map_no_information'),
+            'error_leaflet'           => $this->language->get('itella_map_error_leaflet'),
+            'error_missing_mount_el'  => $this->language->get('itella_map_error_missing_mount_el'),
+          ];
+        }
+        // Itella END
+        ]]>
+      </add>
+    </operation>
+    <operation>
+      <search><![CDATA[return $this->load->view('common/header', $data);]]></search>
+      <add position="before"><![CDATA[
+        // Itella
+        $data['itella_translation'] = $this->getItellaTranslation();
+        // Itella END
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+  <file path="catalog/controller/checkout/checkout.php" error="log">
+    <operation error="skip">
+      <search><![CDATA[$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');]]></search>
+      <add position="after"><![CDATA[
+        // Itella
+        $this->document->addStyle('catalog/view/javascript/itellashipping/leaflet.css');
+        $this->document->addStyle('catalog/view/javascript/itellashipping/itella-mapping.css');
+        $this->document->addStyle('catalog/view/javascript/itellashipping/custom.css');
+    
+        $this->document->addScript('catalog/view/javascript/itellashipping/leaflet.js');
+        $this->document->addScript('catalog/view/javascript/itellashipping/itella-mapping.js');
+        $this->document->addScript('catalog/view/javascript/itellashipping/front.js');
+        // Itella END
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+  <file path="catalog/controller/api/order.php" error="log">
+    <operation>
+      <search><![CDATA[$json['order_id'] = $this->model_checkout_order->addOrder($order_data);]]></search>
+      <add position="after"><![CDATA[
+        // Itella
+        if (strpos($order_data['shipping_code'], 'itellashipping') !== false) {
+          $this->load->model('extension/shipping/itellashipping');
+          $this->model_extension_shipping_itellashipping->updateItellaOrderCarrier($json['order_id'], $order_data['shipping_code']);
+        }
+        // Itella END
+        ]]>
+      </add>
+    </operation>
+    <operation>
+      <search><![CDATA[$this->model_checkout_order->editOrder($order_id, $order_data);]]></search>
+      <add position="after"><![CDATA[
+        // Itella
+        if (strpos($order_data['shipping_code'], 'itellashipping') !== false) {
+          $this->load->model('extension/shipping/itellashipping');
+          $this->model_extension_shipping_itellashipping->updateItellaOrderCarrier($order_id, $order_data['shipping_code']);
+        }
+        // Itella END
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+  <file path="catalog/view/theme/*/template/checkout/shipping_method.tpl" error="log">
+    <operation>
+      <search><![CDATA[<?php foreach ($shipping_method['quote'] as $quote) { ?>]]></search>
+      <add position="after"><![CDATA[
+        <?php
+        // Itella (skip pickup locations)
+        if (strpos($quote['code'], 'itellashipping.pickup_') !== false) {
+          continue;
+        }
+        // Itella END
+        ?>
+        ]]>
+      </add>
+    </operation>
+  </file>
+
+</modification>
