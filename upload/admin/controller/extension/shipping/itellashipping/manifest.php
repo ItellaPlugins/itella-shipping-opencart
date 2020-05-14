@@ -47,12 +47,12 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
 
     $data['breadcrumbs'] = array();
     $data['breadcrumbs'][] = array(
-      'text' => 'Home', //$this->language->get('text_home'),
-      'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+      'text' => $this->language->get('text_home'),
+      'href' => $this->url->link('common/dashboard', $this->getUserToken(), true),
     );
     $data['breadcrumbs'][] = array(
       'text' => $this->language->get('text_manifest'),
-      'href' => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'], true),
+      'href' => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken(), true),
     );
 
     // Load translations
@@ -102,10 +102,10 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
     foreach ($results as $result) {
       $actions = array();
       if ($result['label_number']) {
-        $actions['label'] = $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=all&print&id_order=' . $result['order_id'], true);
-        $actions['generate_manifest'] = $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=manifest&generate&id_order=' . $result['order_id'], true);
+        $actions['label'] = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&print&id_order=' . $result['order_id'], true);
+        $actions['generate_manifest'] = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=manifest&generate&id_order=' . $result['order_id'], true);
       } else {
-        $actions['gen_label'] = $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=all&gen_label&id_order=' . $result['order_id'], true);
+        $actions['gen_label'] = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&gen_label&id_order=' . $result['order_id'], true);
       }
       $data['orders'][] = array(
         'order_id'      => $result['order_id'],
@@ -114,17 +114,17 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
         'order_status'  => $result['order_status'] ? $result['order_status'] : $this->language->get('text_missing'),
         'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
         'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-        'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, true),
+        'view'          => $this->url->link('sale/order/info', $this->getUserToken() . '&order_id=' . $result['order_id'] . $url, true),
         'actions'       => $actions,
         'itella_error'  => $result['itella_error']
       );
     }
     $data['form_btn'] = array(
-      'filter'            => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=all&filter', true),
-      'filter_reset'      => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=all&filter_reset', true),
-      'mass_label_gen'    => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=all&mass_gen', true),
-      'mass_label_print'  => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=all&mass_print', true),
-      'mass_manifest_gen' => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=manifest&mass_gen', true),
+      'filter'            => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&filter', true),
+      'filter_reset'      => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&filter_reset', true),
+      'mass_label_gen'    => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&mass_gen', true),
+      'mass_label_print'  => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&mass_print', true),
+      'mass_manifest_gen' => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=manifest&mass_gen', true),
     );
     $order_total = $manifest->getOrdersCount($filter);
     $data['order_total'] = $order_total;
@@ -133,7 +133,7 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
     $pagination->total = $order_total;
     $pagination->page = $page;
     $pagination->limit = $this->config->get('config_limit_admin');
-    $pagination->url = $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=all&page={page}', true);
+    $pagination->url = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&page={page}', true);
     $data['pagination'] = $pagination->render();
 
     $results = $manifest->getManifests($manifest_page);
@@ -143,20 +143,20 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
         'id_itella_manifest'  => $result['id_itella_manifest'],
         'order_total'         => $result['order_total'],
         'date_added'          => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-        'show_orders'         => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&ajaxManifestOrders&id_manifest=' . $result['id_itella_manifest'], true),
-        'print'               => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=manifest&print&id_manifest=' . $result['id_itella_manifest'], true),
-        'call_courier'        => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=manifest&call&id_manifest=' . $result['id_itella_manifest'], true)
+        'show_orders'         => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&ajaxManifestOrders&id_manifest=' . $result['id_itella_manifest'], true),
+        'print'               => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=manifest&print&id_manifest=' . $result['id_itella_manifest'], true),
+        'call_courier'        => $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=manifest&call&id_manifest=' . $result['id_itella_manifest'], true)
       );
     }
     $manifest_total = $manifest->getManifestsCount();
     $data['manifest_total'] = $manifest_total;
-    $data['manifest_view_order'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', true);
+    $data['manifest_view_order'] = $this->url->link('sale/order/info', $this->getUserToken() . '&order_id=', true);
 
     $manifest_pagination = new Pagination();
     $manifest_pagination->total = $manifest_total;
     $manifest_pagination->page = $page;
     $manifest_pagination->limit = $this->config->get('config_limit_admin');
-    $manifest_pagination->url = $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=manifest&page={page}', true);
+    $manifest_pagination->url = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=manifest&page={page}', true);
     $data['manifest_pagination'] = $manifest_pagination->render();
 
     $data['call_info'] = array(
@@ -290,7 +290,7 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
     }
 
     if ($redirect) {
-      $this->response->redirect($this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'] . '&tab=' . $tab, true));
+      $this->response->redirect($this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=' . $tab, true));
     }
   }
 
@@ -298,7 +298,7 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
   {
     $json = false;
     try {
-      if(isset($this->request->get['ajaxManifestOrders']) && isset($this->request->get['id_manifest'])) {
+      if (isset($this->request->get['ajaxManifestOrders']) && isset($this->request->get['id_manifest'])) {
         $this->load->model('extension/itellashipping/manifest');
         $data = $this->model_extension_itellashipping_manifest->getManifestOrders((int) $this->request->get['id_manifest']);
         $json = array(
@@ -560,5 +560,13 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
   {
     return $this->config->get('itellashipping_sender_street') . ', ' . $this->config->get('itellashipping_sender_postcode')
       . ' ' . $this->config->get('itellashipping_sender_city') . ', ' . $this->config->get('itellashipping_sender_country');
+  }
+
+  protected function getUserToken()
+  {
+    if (version_compare(VERSION, '3.0.0', '>=')) {
+      return 'user_token=' . $this->session->data['user_token'];
+    }
+    return $this->getUserToken();
   }
 }

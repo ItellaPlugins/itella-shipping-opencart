@@ -25,6 +25,14 @@
       </div>
     <?php } ?>
   </div>
+  <!-- DB CHECK -->
+  <div class="container-fluid">
+    <?php if ($db_check): ?>
+      <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?= $db_fix_notify; ?> 
+        <a href="<?= $db_fix_url; ?>" class="btn btn-success"><?= $button_fix_db; ?></a>
+      </div>
+    <?php endif; ?>
+  </div>
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab-api" data-toggle="tab"><?php echo $tab_api; ?></a></li>
     <li><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
@@ -329,16 +337,12 @@
                         <td colspan="6">No prices set</td>
                       </tr>
                       <?php foreach ($itellashipping_prices as $price) : ?>
-                        <?php
-                        $priceArr = json_decode($price['value'], true);
-                        $price = str_replace('"', '\'', $price['value']); // prep for html friendly insert
-                        ?>
-                        <tr data-price-row="<?= $priceArr['country']; ?>" data-price-data="<?= $price; ?>">
-                          <td><?= $priceArr['country_name']; ?></td>
-                          <td><?= $priceArr['pickup_price']; ?></td>
-                          <td><?= $priceArr['pickup_price_free']; ?></td>
-                          <td><?= $priceArr['courier_price']; ?></td>
-                          <td><?= $priceArr['courier_price_free']; ?></td>
+                        <tr data-price-row="<?= $price['country']; ?>" data-price-data='<?= json_encode($price); ?>'>
+                          <td><?= $price['country_name']; ?></td>
+                          <td><?= $price['pickup_price']; ?></td>
+                          <td><?= $price['pickup_price_free']; ?></td>
+                          <td><?= $price['courier_price']; ?></td>
+                          <td><?= $price['courier_price_free']; ?></td>
                           <td>
                             <button data-edit-btn class="btn btn-primary"><i class="fa fa-edit"></i></button>
                             <button data-delete-btn class="btn btn-danger"><i class="fa fa-trash"></i></button>

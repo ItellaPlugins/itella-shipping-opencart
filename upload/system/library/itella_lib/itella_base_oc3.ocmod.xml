@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
-  <name>Itella Base Mod for OC2.3</name>
+  <name>Itella Base Mod for OC3</name>
   <version>1.0</version>
   <author>Mijora</author>
   <link>https://www.mijora.lt</link>
@@ -10,26 +10,26 @@
 
   <file path="admin/controller/common/column_left.php">
     <operation>
-      <search><![CDATA[$extension = array();]]></search>
+      <search><![CDATA[$marketplace = array();]]></search>
       <add position="after"><![CDATA[
         // Itella Admin menu
         $this->load->language('extension/shipping/itellashipping');
         if ($this->user->hasPermission('access', 'extension/shipping/itellashipping/manifest')) {
           $itellashipping[] = array(
             'name'     => $this->language->get('menu_manifest'),
-            'href'     => $this->url->link('extension/shipping/itellashipping/manifest', 'token=' . $this->session->data['token'], true),
+            'href'     => $this->url->link('extension/shipping/itellashipping/manifest', 'user_token=' . $this->session->data['user_token'], true),
             'children' => array()
           );
         }
         if ($this->user->hasPermission('access', 'extension/shipping/itellashipping')) {
           $itellashipping[] = array(
             'name'     => $this->language->get('menu_settings'),
-            'href'     => $this->url->link('extension/shipping/itellashipping', 'token=' . $this->session->data['token'], true),
+            'href'     => $this->url->link('extension/shipping/itellashipping', 'user_token=' . $this->session->data['user_token'], true),
             'children' => array()
           );
         }
         if ($this->user->hasPermission('access', 'extension/shipping/itellashipping')) {
-          $extension[] = array(
+          $marketplace[] = array(
             'name'     => $this->language->get('menu_head'),
             'href'     => '',
             'children' => $itellashipping
@@ -63,31 +63,31 @@
     </operation>
   </file>
 
-  <file path="admin/view/template/sale/order_info.tpl" error="log">
+  <file path="admin/view/template/sale/order_info.twig" error="log">
     <operation>
-      <search><![CDATA[<?php echo $footer; ?>]]></search>
+      <search><![CDATA[{{ footer }}]]></search>
       <add position="before"><![CDATA[
         <!-- Place Itella panel -->
-        <?php if ($itella_panel): ?>
-        <?php echo $itella_panel; ?>
-        <script type="text/javascript"><!--
-        $(document).ready(function(){
-          if ($('#itella_panel').length > 0) {
-            $('.container-fluid > .row').next().find('.panel-heading').first().prepend($('#itella_panel'));
-            initItellaForm(); // call JS from template
-          }
-        });
-        //--></script>
-        <?php endif; ?>
+        {% if itella_panel %}
+          {{ itella_panel }}
+          <script type="text/javascript"><!--
+          $(document).ready(function(){
+            if ($('#itella_panel').length > 0) {
+              $('.container-fluid > .row').next().find('.panel-heading').first().prepend($('#itella_panel'));
+              initItellaForm(); // call JS from template
+            }
+          });
+          //--></script>
+        {% endif %}
         <!-- Itella END -->
         ]]>
       </add>
     </operation>
   </file>
 
-  <file path="admin/view/template/sale/order_list.tpl" error="log">
+  <file path="admin/view/template/sale/order_list.twig" error="log">
     <operation>
-      <search><![CDATA[<?php echo $footer; ?>]]></search>
+      <search><![CDATA[{{ footer }}]]></search>
       <add position="before"><![CDATA[
         <!-- Itella (check if need to add logo) -->
         <script type="text/javascript"><!--
@@ -111,13 +111,13 @@
 
   <!-- FRONT -->
 
-  <file path="catalog/view/theme/*/template/common/header.tpl" error="log">
+  <file path="catalog/view/theme/*/template/common/header.twig" error="log">
     <operation>
       <search><![CDATA[</head>]]></search>
       <add position="before"><![CDATA[
         <!-- Itella -->
         <script>
-            var itella_translation = <?= json_encode($itella_translation); ?>;
+            var itella_translation = {{ itella_translation|json_encode }};
         </script>
         <!-- Itella END -->
         ]]>
@@ -209,17 +209,23 @@
     </operation>
   </file>
 
-  <file path="catalog/view/theme/*/template/checkout/shipping_method.tpl" error="log">
+  <file path="catalog/view/theme/*/template/checkout/shipping_method.twig" error="log">
     <operation>
-      <search><![CDATA[<?php foreach ($shipping_method['quote'] as $quote) { ?>]]></search>
+      <search index="0"><![CDATA[{% endfor %}]]></search>
+      <add position="before"><![CDATA[
+        {# Itella (skip pickup locations ending) #}
+        {% endif %}
+        {# Itella END #}
+        ]]>
+      </add>
+    </operation>
+    <operation>
+      <search><![CDATA[{% for quote in shipping_method.quote %}]]></search>
       <add position="after"><![CDATA[
-        <?php
-        // Itella (skip pickup locations)
-        if (strpos($quote['code'], 'itellashipping.pickup_') !== false) {
-          continue;
-        }
-        // Itella END
-        ?>
+        {# Itella (skip pickup locations) #}
+        {% if quote.code starts with 'itellashipping.pickup_' %}
+        {% else %}
+        {# Itella END #}
         ]]>
       </add>
     </operation>

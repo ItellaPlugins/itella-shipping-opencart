@@ -17,6 +17,10 @@ $_['text_manifest']	  = 'Itella manifestas';
 $_['button_save']     = 'Saugoti';
 $_['button_cancel']   = 'Atšaukti';
 
+// DB fix notification
+$_['db_fix_notify'] = 'DB lentelėse rasta problemų';
+$_['button_fix_db'] = 'PATAISYTI';
+
 // Text
 $_['text_shipping'] = 'Shipping';
 $_['text_success']  = 'Itella nustatymai sėkmingai išsaugoti!';
