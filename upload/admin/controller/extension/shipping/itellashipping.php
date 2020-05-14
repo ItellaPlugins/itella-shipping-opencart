@@ -1,21 +1,21 @@
 <?php
 class ControllerExtensionShippingItellashipping extends Controller
 {
-	private $_version = '1.0.0';
+	private $_version = '1.1.0';
 	private $error = array();
 
 	public function install()
 	{
 		$this->load->model('extension/itellashipping/itellashipping');
 
-    $this->model_extension_itellashipping_itellashipping->install();
-    
-    // Defaults for courier emails
-    $this->saveSettings(array(
-      'itellashipping_advanced_email_LT' => 'smartship.routing.lt@itella.com',
-      'itellashipping_advanced_email_LV' => 'smartship.routing.lv@itella.com',
-      'itellashipping_advanced_email_subject' => 'E-com order booking',
-    ));
+		$this->model_extension_itellashipping_itellashipping->install();
+
+		// Defaults for courier emails
+		$this->saveSettings(array(
+			'itellashipping_advanced_email_LT' => 'smartship.routing.lt@itella.com',
+			'itellashipping_advanced_email_LV' => 'smartship.routing.lv@itella.com',
+			'itellashipping_advanced_email_subject' => 'E-com order booking',
+		));
 	}
 
 	public function uninstall()
@@ -33,6 +33,11 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$this->load->model('setting/setting');
 
+		if (isset($this->request->get['fixdb']) && $this->validate()) {
+			$this->fixDBTables();
+			$this->response->redirect($this->url->link('extension/shipping/itellashipping', $this->getUserToken(), true));
+		}
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 
 			$this->prepPostData();
@@ -45,39 +50,49 @@ class ControllerExtensionShippingItellashipping extends Controller
 				// we need unescaped password post
 				$this->request->post['itellashipping_api_pass_2711'] = $_POST['itellashipping_api_pass_2711'];
 				$this->request->post['itellashipping_api_pass_2317'] = $_POST['itellashipping_api_pass_2317'];
+				unset($this->request->post['api_settings_update']);
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 
 			if (isset($this->request->post['module_settings_update'])) {
+				unset($this->request->post['module_settings_update']);
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 			if (isset($this->request->post['sender_settings_update'])) {
+				unset($this->request->post['sender_settings_update']);
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 
 			if (isset($this->request->post['price_settings_update'])) {
+				unset($this->request->post['price_settings_update']);
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 
 			if (isset($this->request->post['cod_settings_update'])) {
+				unset($this->request->post['cod_settings_update']);
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 
 			if (isset($this->request->post['advanced_settings_update'])) {
+				unset($this->request->post['advanced_settings_update']);
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 
-			$this->response->redirect($this->url->link('extension/shipping/itellashipping', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->link('extension/shipping/itellashipping', $this->getUserToken(), true));
 		}
 
 		$data['itella_version'] = $this->_version;
 		$data['heading_title'] = $this->language->get('heading_title');
+
+		// Notification about need to fix db
+		$data['db_fix_notify'] = $this->language->get('db_fix_notify');
+		$data['button_fix_db'] = $this->language->get('button_fix_db');
 
 		// Api settings
 		$data['text_api_settings'] = $this->language->get('text_api_settings');
@@ -123,8 +138,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['text_last_update'] = $this->language->get('text_last_update');
 		$data['text_total_locations'] = $this->language->get('text_total_locations');
 		$data['text_cron_url'] = $this->language->get('text_cron_url');
-    $data['button_update'] = $this->language->get('button_update');
-    
+		$data['button_update'] = $this->language->get('button_update');
+
 		$data['text_advanced_settings'] = $this->language->get('text_advanced_settings');
 		$data['entry_advanced_email_subject'] = $this->language->get('entry_advanced_email_subject');
 		$data['entry_advanced_email'] = $this->language->get('entry_advanced_email');
@@ -170,22 +185,27 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('common/dashboard', $this->getUserToken(), true)
 		);
+
+		$extension_home = 'extension';
+		if (version_compare(VERSION, '3.0.0', '>=')) {
+			$extension_home = 'marketplace';
+		}
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
-			'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true)
+			'href' => $this->url->link($extension_home . '/extension', $this->getUserToken() . '&type=shipping', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title_nologo'),
-			'href' => $this->url->link('extension/shipping/itellashipping', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/shipping/itellashipping', $this->getUserToken(), true)
 		);
 
-		$data['action'] = $this->url->link('extension/shipping/itellashipping', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/shipping/itellashipping', $this->getUserToken(), true);
 
-		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=shipping', true);
+		$data['cancel'] = $this->url->link($extension_home . '/extension', $this->getUserToken() . '&type=shipping', true);
 
 		$data['cod_options'] = $this->loadPaymentOptions();
 
@@ -201,13 +221,11 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		$data['ajax_url'] = HTTPS_CATALOG . 'index.php?route=extension/module/itellashipping/ajax&token=' . $this->session->data['token'];
-		$data['ajax_url'] = 'index.php?route=extension/shipping/itellashipping/ajax&token=' . $this->session->data['token'];
+		$data['ajax_url'] = HTTPS_CATALOG . 'index.php?route=extension/module/itellashipping/ajax&' . $this->getUserToken();
+		$data['ajax_url'] = 'index.php?route=extension/shipping/itellashipping/ajax&' . $this->getUserToken();
 
 		foreach (array(
-			//'itellashipping_cost', 'itellashipping_parcel_cost', // price settings will change
-			'itellashipping_tax_class_id', 'itellashipping_geo_zone_id', 'itellashipping_status',
-			'itellashipping_sort_order',
+			'itellashipping_tax_class_id', 'itellashipping_geo_zone_id',
 			'itellashipping_api_user_2711', 'itellashipping_api_pass_2711', 'itellashipping_api_contract_2711',
 			'itellashipping_api_user_2317', 'itellashipping_api_pass_2317', 'itellashipping_api_contract_2317',
 			'itellashipping_cod_status', 'itellashipping_bic', 'itellashipping_iban',
@@ -229,36 +247,119 @@ class ControllerExtensionShippingItellashipping extends Controller
 			$data['itellashipping_cod_options'] = json_decode($this->config->get('itellashipping_cod_options'));
 		}
 
+		// opencart 3 expects status and sort_order begin with shipping_ 
+		$setting_prefix = '';
+		if (version_compare(VERSION, '3.0.0', '>=')) {
+			$setting_prefix = 'shipping_';
+		}
+
+		if (isset($this->request->post[$setting_prefix . 'itellashipping_status'])) {
+			$data['itellashipping_status'] = $this->request->post[$setting_prefix . 'itellashipping_status'];
+		} else {
+			$data['itellashipping_status'] = $this->config->get($setting_prefix . 'itellashipping_status');
+		}
+
+		if (isset($this->request->post[$setting_prefix . 'itellashipping_sort_order'])) {
+			$data['itellashipping_sort_order'] = $this->request->post[$setting_prefix . 'itellashipping_sort_order'];
+		} else {
+			$data['itellashipping_sort_order'] = $this->config->get($setting_prefix . 'itellashipping_sort_order');
+		}
+
 		if (!$data['itellashipping_cod_options']) {
 			$data['itellashipping_cod_options'] = array();
 		}
 
-		$data['itellashipping_prices'] = $this->getPrices();
+		$data['itellashipping_prices'] = array_map(
+			function ($price) {
+				return json_decode($price['value'], true);
+			},
+			$this->getPrices()
+		);
 
 		$data['locations_info'] = $this->getLocationsInfo();
 		$data['last_update'] = $this->config->get('itellashipping_last_update');
 		$data['last_update'] = $data['last_update'] == null ? 'Never updated' : date('Y-m-d H:i:s', $data['last_update']);
-    $data['cron_url'] = $this->getCronUrl();
-    
-    // courier email data
-    $data['advanced_emails'] = array();
-    foreach(array('LT', 'LV', 'EE') as $code) {
-      if (isset($this->request->post['itellashipping_advanced_email_' . $code])) {
+		$data['cron_url'] = $this->getCronUrl();
+
+		// courier email data
+		$data['advanced_emails'] = array();
+		foreach (array('LT', 'LV', 'EE') as $code) {
+			if (isset($this->request->post['itellashipping_advanced_email_' . $code])) {
 				$email = $this->request->post['itellashipping_advanced_email_' . $code];
 			} else {
 				$email = $this->config->get('itellashipping_advanced_email_' . $code);
 			}
-      $data['advanced_emails'][] = array(
-        'code' => $code,
-        'email' => $email
-      );
-    }
+			$data['advanced_emails'][] = array(
+				'code' => $code,
+				'email' => $email
+			);
+		}
+
+		$data['db_check'] = $this->checkDBTables();
+		$data['db_fix_url'] = $this->url->link('extension/shipping/itellashipping', $this->getUserToken() . '&fixdb', true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/shipping/itellashipping', $data));
+	}
+
+	protected function getUserToken()
+	{
+		if (version_compare(VERSION, '3.0.0', '>=')) {
+			return 'user_token=' . $this->session->data['user_token'];
+		}
+		return 'token=' . $this->session->data['token'];
+	}
+
+	protected function checkDBTables()
+	{
+		$result = array();
+		$itella_table = $this->db->query("DESCRIBE `" . DB_PREFIX . "itella_order`")->rows;
+		foreach ($itella_table as $col) {
+			if (strtolower($col['Field']) != 'id_pickup_point') {
+				continue;
+			}
+			if (strpos(strtolower($col['Type']), 'varchar') === false) {
+				// needs to be varchar, 1.0.0 module had bug where its set as INT
+				$result['itella_order'] = array(
+					'field' => $col['Field'],
+					'fix' => 'VARCHAR(30) COLLATE utf8_unicode_ci DEFAULT NULL'
+				);
+			}
+			break;
+		}
+		if (version_compare(VERSION, '3.0.0', '>=')) {
+			$session_table = $this->db->query("DESCRIBE `" . DB_PREFIX . "session`")->rows;
+			foreach ($session_table as $col) {
+				if (strtolower($col['Field']) != 'data') {
+					continue;
+				}
+				if (strtolower($col['Type']) == 'text') {
+					// needs to be MEDIUMTEXT or LONGTEXT
+					$result['session'] = array(
+						'field' => $col['Field'],
+						'fix' => 'MEDIUMTEXT'
+					);
+				}
+				break;
+			}
+		}
+
+		return $result;
+	}
+
+	protected function fixDBTables()
+	{
+		$db_check = $this->checkDBTables();
+		if (!$db_check) {
+			return; // nothing to fix
+		}
+
+		foreach ($db_check as $table => $data) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` MODIFY `" . $data['field'] . "` " . $data['fix'] . ";");
+		}
 	}
 
 	protected function validate()
@@ -318,7 +419,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 	{
 		$secret = $this->config->get('itellashipping_cron_secret');
 		if (!$secret) { // first time create a secret
-			$this->saveSettings(array('itellashipping_cron_secret' => $this->session->createId()));
+			$this->saveSettings(array('itellashipping_cron_secret' => uniqid()));
 			$secret = $this->config->get('itellashipping_cron_secret');
 		}
 
@@ -328,21 +429,30 @@ class ControllerExtensionShippingItellashipping extends Controller
 	protected function saveSettings($data)
 	{
 		$this->load->model('setting/setting');
-		$this->model_setting_setting->editSetting(
-			'itellashipping',
-			array_merge(
-				$this->model_setting_setting->getSetting('itellashipping'), // current settings
-				$data // updated/new settings
-			)
-		);
+
+		foreach ($data as $key => $value) {
+			$query = $this->db->query("SELECT setting_id FROM `" . DB_PREFIX . "setting` WHERE `code` = 'itellashipping' AND `key` = '" . $this->db->escape($key) . "'");
+			if ($query->num_rows) {
+				$id = $query->row['setting_id'];
+				$this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape($value) . "', serialized = '0' WHERE `setting_id` = '$id'");
+			} else {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET store_id = '0', `code` = 'itellashipping', `key` = '$key', `value` = '" . $this->db->escape($value) . "'");
+			}
+		}
 	}
 
 	protected function loadPaymentOptions()
 	{
 		$result = array();
 
-		$this->load->model('extension/extension');
-		$payments = $this->model_extension_extension->getInstalled('payment');
+		if (version_compare(VERSION, '3.0.0', '>=')) {
+			$this->load->model('setting/extension');
+			$payments = $this->model_setting_extension->getInstalled('payment');
+		} else {
+			$this->load->model('extension/extension');
+			$payments = $this->model_extension_extension->getInstalled('payment');
+		}
+
 		foreach ($payments as $payment) {
 			$this->load->language('extension/payment/' . $payment);
 			$result[$payment] = $this->language->get('heading_title');
@@ -364,6 +474,18 @@ class ControllerExtensionShippingItellashipping extends Controller
 		if (isset($this->request->post['itellashipping_cod_options'])) {
 			$this->request->post['itellashipping_cod_options'] = json_encode($this->request->post['itellashipping_cod_options']);
 		}
+
+		// Opencart 3 expects status to be shipping_itellashipping_status
+		if (version_compare(VERSION, '3.0.0', '>=') && isset($this->request->post['itellashipping_status'])) {
+			$this->request->post['shipping_itellashipping_status'] = $this->request->post['itellashipping_status'];
+			unset($this->request->post['itellashipping_status']);
+		}
+
+		// Opencart 3 expects sort_order to be shipping_itellashipping_sort_order
+		if (version_compare(VERSION, '3.0.0', '>=') && isset($this->request->post['itellashipping_sort_order'])) {
+			$this->request->post['shipping_itellashipping_sort_order'] = $this->request->post['itellashipping_sort_order'];
+			unset($this->request->post['itellashipping_sort_order']);
+		}
 	}
 
 	protected function hasAccess()
@@ -379,7 +501,6 @@ class ControllerExtensionShippingItellashipping extends Controller
 	{
 		$this->load->language('extension/shipping/itellashipping');
 		if (!$this->validate()) {
-			//die($this->error['warning']);
 			echo json_encode($this->error);
 			exit();
 		}
@@ -387,12 +508,10 @@ class ControllerExtensionShippingItellashipping extends Controller
 		switch ($_GET['action']) {
 			case 'save':
 				if (!$this->hasAccess()) {
-					//die($this->error['warning']);
 					echo json_encode($this->error);
 					exit();
 				}
 				echo json_encode($this->ajaxUpdateOrderData());
-				//echo json_encode($this->user);
 				exit();
 				break;
 			case 'printLabel':
@@ -422,7 +541,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 	protected function ajaxGenerateLabel()
 	{
 		if (isset($this->request->post['id_order'])) {
-			$id_order = (int)$this->request->post['id_order'];
+			$id_order = (int) $this->request->post['id_order'];
 		} else {
 			return array('error' => $this->language->get('error_no_order_id'));
 		}
@@ -434,21 +553,21 @@ class ControllerExtensionShippingItellashipping extends Controller
 	protected function ajaxPrintLabel()
 	{
 		if (isset($this->request->get['id_order'])) {
-			$id_order = (int)$this->request->get['id_order'];
+			$id_order = (int) $this->request->get['id_order'];
 		} else {
 			return array('error' => $this->language->get('error_no_order_id'));
 		}
 
 		$this->load->model('extension/itellashipping/itellashipping');
 		$pdf = $this->model_extension_itellashipping_itellashipping->getLabel($id_order);
-		
-		if(isset($pdf['error'])) {
+
+		if (isset($pdf['error'])) {
 			return $pdf;
 		}
-		
+
 		$pdf = base64_decode($pdf);
 		if ($pdf) { // check if its not empty
-			$filename = 'itella_' .time();
+			$filename = 'itella_' . time();
 			$path = DIR_DOWNLOAD  . $filename . '.pdf';
 			file_put_contents($path, $pdf);
 			// make sure there is nothing before headers
@@ -470,11 +589,11 @@ class ControllerExtensionShippingItellashipping extends Controller
 	{
 		$id_order = false;
 		if (isset($this->request->post['id_order'])) {
-			$id_order = (int)$this->request->post['id_order'];
+			$id_order = (int) $this->request->post['id_order'];
 		} else {
 			return array('error' => 'No order ID');
 		}
-		
+
 		$this->load->model('extension/itellashipping/itellashipping');
 		$order = $this->model_extension_itellashipping_itellashipping;
 
@@ -489,7 +608,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 		if (isset($this->request->post['is_pickup'])) {
 			$old_data = $order->getOrder($id_order); // should always work as this function is used from inside order
 
-			$is_pickup = (int)$this->request->post['is_pickup'];
+			$is_pickup = (int) $this->request->post['is_pickup'];
 
 			if ($is_pickup == 0 && $old_data['is_pickup'] != $is_pickup) {
 				$order->updateOCShippingCode(
@@ -503,14 +622,14 @@ class ControllerExtensionShippingItellashipping extends Controller
 			if (isset($this->request->post['pickup_label'])) {
 				$pickup_label = filter_var($this->request->post['pickup_label'], FILTER_SANITIZE_STRING);
 			}
-			
+
 			if ($is_pickup == 1 && isset($this->request->post['id_pickup_point'])) {
 				$method = explode('.', $this->request->post['id_pickup_point']);
 				if ($method[0] != 'itellashipping') {
 					return array('error' => $this->language->get('itella_not_itella'));
 				}
 				if ($method[1] != 'courier') { // extract pickup point id from shipping code if its not courier
-					$data['id_pickup_point'] = (int) explode('_', $method[1])[1];
+					$data['id_pickup_point'] = explode('_', $method[1])[1];
 					if ($is_pickup == 1 && $data['id_pickup_point'] != $old_data['id_pickup_point']) {
 						$order->updateOCShippingCode($id_order, 'itellashipping.pickup_' . $data['id_pickup_point'], $pickup_label);
 					}
@@ -524,44 +643,44 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['is_pickup'] = $is_pickup;
 
 		if ($is_pickup == 0 && isset($this->request->post['packs'])) {
-			$data['packs'] = (int)$this->request->post['packs'];
+			$data['packs'] = (int) $this->request->post['packs'];
 		} else {
 			$data['packs'] = 1;
 		}
 
 		if (isset($this->request->post['weight'])) {
-			$data['weight'] = (float)$this->request->post['weight'];
+			$data['weight'] = (float) $this->request->post['weight'];
 		} else {
 			$data['weight'] = 0;
 		}
 
 		if ($is_pickup == 0 && isset($this->request->post['is_cod']) && isset($this->request->post['cod_amount'])) {
-			$data['is_cod'] = (int)$this->request->post['is_cod'];
+			$data['is_cod'] = (int) $this->request->post['is_cod'];
 			$data['cod_amount'] = $this->request->post['cod_amount'];
 		} else {
 			$data['is_cod'] = 0;
 		}
 
 		// reset extra services
-		foreach(array('is_oversized', 'is_call_before_delivery', 'is_fragile') as $key) {
+		foreach (array('is_oversized', 'is_call_before_delivery', 'is_fragile') as $key) {
 			$data[$key] = 0;
 		}
 
 		if (is_array($itella_extra)) {
-      foreach ($itella_extra as $extra) {
-        if ($is_pickup == 0 && in_array($extra, array('is_oversized', 'is_call_before_delivery', 'is_fragile'))) {
-          $data[$extra] = 1;
-        }
-      }
+			foreach ($itella_extra as $extra) {
+				if ($is_pickup == 0 && in_array($extra, array('is_oversized', 'is_call_before_delivery', 'is_fragile'))) {
+					$data[$extra] = 1;
+				}
+			}
 		}
-		
+
 		// reset error, tracking number and manifest id upon new data saving
 		$data['error'] = NULL;
 		$data['label_number'] = NULL;
 		$data['id_itella_manifest'] = NULL;
 
 		$result = $order->updateOrderData($id_order, $data);
-		return array('success' => 'Itella information for order updated', 'data'=>$result);
+		return array('success' => 'Itella information for order updated', 'data' => $result);
 	}
 
 	protected function getCountries()
@@ -614,7 +733,6 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$store_id = 0;
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int) $store_id . "' AND `code` = 'itellashipping' AND `key` = 'itellashipping_price_" . $country_code . "'");
-		//$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET store_id = '" . (int) $store_id . "', `code` = 'itellashipping', `key` = 'itellashipping_price_" . $country_code . "', `value` = '" . json_encode($data) . "'");
 
 		echo json_encode(array('success' => $data));
 		exit();

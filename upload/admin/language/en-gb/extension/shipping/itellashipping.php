@@ -11,10 +11,15 @@ $_['heading_title_nologo']  = 'Itella';
 // Defaults
 $_['text_enabled']    = 'Enabled';
 $_['text_disabled']   = 'Disabled';
+$_['text_home']       = 'Home';
 $_['text_extension']  = 'Extensions';
 $_['text_manifest']	  = 'Itella Manifest';
 $_['button_save']     = 'Save';
 $_['button_cancel']   = 'Cancel';
+
+// DB fix notification
+$_['db_fix_notify'] = 'Problems found with DB tables';
+$_['button_fix_db'] = 'FIX IT';
 
 // Text
 $_['text_shipping'] = 'Shipping';

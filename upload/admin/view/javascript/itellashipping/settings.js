@@ -101,11 +101,11 @@ function updatePriceNotification() {
 }
 
 function jsonEncodeToHTML(json) {
-  return JSON.stringify(json).replace(/"/g, '\'');
+  return JSON.stringify(json);
 }
 
 function jsonDecodeFromHTML(json_string) {
-  return JSON.parse(json_string.replace(/'/g, '"'));
+  return JSON.parse(json_string);
 }
 
 function fillPriceModal(data) {
@@ -173,7 +173,7 @@ function savePrice(data) {
       $('[name="country"]').find('[value="' + data.country + '"]').remove();
       var buttons = '<button data-edit-btn class="btn btn-primary"><i class="fa fa-edit"></i></button> '
         + '<button data-delete-btn class="btn btn-danger"><i class="fa fa-trash"></i></button>';
-      $row = $('<tr data-price-row="' + data.country + '" data-price-data="' + jsonEncodeToHTML(data) + '"><td>' + data.country_name + '</td><td>' + data.pickup_price + '</td><td>' + data.pickup_price_free + '</td><td>' + data.courier_price + '</td><td>' + data.courier_price_free + '</td><td>' + buttons + '</td></tr>');
+      $row = $('<tr data-price-row="' + data.country + '" data-price-data=\'' + jsonEncodeToHTML(data) + '\'><td>' + data.country_name + '</td><td>' + data.pickup_price + '</td><td>' + data.pickup_price_free + '</td><td>' + data.courier_price + '</td><td>' + data.courier_price_free + '</td><td>' + buttons + '</td></tr>');
       if ($('#created-prices [data-price-row="' + data.country + '"]').length > 0) {
         // Editing price, so remove old entry
         $('#created-prices [data-price-row="' + data.country + '"]').remove();

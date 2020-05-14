@@ -31,7 +31,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
         `volume` decimal(10,2) DEFAULT NULL,
         `cod_amount` decimal(10,2) DEFAULT NULL,
         `is_pickup` tinyint(1) NOT NULL DEFAULT 0,
-        `id_pickup_point` int(10) unsigned NOT NULL DEFAULT 0,
+        `id_pickup_point` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
         `label_number` text COLLATE utf8_unicode_ci NULL,
         `error` text COLLATE utf8_unicode_ci DEFAULT NULL,
         `id_itella_manifest` int(10) unsigned DEFAULT NULL,
@@ -78,6 +78,11 @@ class ModelExtensionItellashippingItellaShipping extends Model
   private function copyModificationXML()
   {
     $xml_file = DIR_SYSTEM . 'library/itella_lib/itella_base.ocmod.xml';
+
+    if (version_compare(VERSION, '3.0.0', '>=')) {
+      $xml_file = DIR_SYSTEM . 'library/itella_lib/itella_base_oc3.ocmod.xml';
+    }
+
     $target = DIR_SYSTEM . 'itella_base.ocmod.xml';
     if (is_file($target)) {
       unlink($target);
@@ -239,15 +244,15 @@ class ModelExtensionItellashippingItellaShipping extends Model
       }
     }
     $is_pickup = 0;
-    $id_pickup_point = 0;
+    $id_pickup_point = '0';
     if ($method[1] != 'courier') { // extract pickup point id from shipping code if its not courier
       $is_pickup = 1;
-      $id_pickup_point = (int) explode('_', $method[1])[1];
+      $id_pickup_point = explode('_', $method[1])[1];
     }
 
     $result = $this->db->query("
       INSERT INTO `" . DB_PREFIX . "itella_order` (id_order, is_cod, cod_amount, is_pickup, id_pickup_point) 
-      VALUES ($id_order, $is_cod, $cod_amount, $is_pickup, $id_pickup_point);
+      VALUES ($id_order, $is_cod, $cod_amount, $is_pickup, '$id_pickup_point');
     ");
 
     if (!$result) {
@@ -295,7 +300,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
     $order_data = $this->getOrder($id_order);
     $oc_order = $this->getOCOrder($id_order);
     if (!$order_data) {
-      $order_data = $this->saveOrderData($oc_order);
+      $order_data = $this->saveOrderData($oc_order, true);
       if (isset($order_data['error']))
         return $order_data;
     }
@@ -363,9 +368,6 @@ class ModelExtensionItellashippingItellaShipping extends Model
         $extra[] = new AdditionalService(AdditionalService::CALL_BEFORE_DELIVERY);
       }
 
-      //$pass = base64_decode($this->config->get('itellashipping_api_pass_' . $product_code));
-      file_put_contents(DIR_DOWNLOAD . 'itella.log', $this->config->get('itellashipping_api_user_' . $product_code). ' '.
-      $this->config->get('itellashipping_api_pass_' . $product_code) . PHP_EOL . PHP_EOL, FILE_APPEND);
       // Create shipment object
       $shipment = new Shipment(
         $this->config->get('itellashipping_api_user_' . $product_code),
@@ -609,7 +611,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
   private function generateDeliveryAddress($order)
   {
     $oc_order = $this->getOCOrder($order['id_order']);
-    
+
     switch ($order['is_pickup']) {
       case '1':
         $loc = $this->getLocationInfo($order['id_pickup_point'], $oc_order['shipping_iso_code_2']);
