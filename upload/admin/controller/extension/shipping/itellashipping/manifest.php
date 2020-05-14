@@ -567,6 +567,6 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
     if (version_compare(VERSION, '3.0.0', '>=')) {
       return 'user_token=' . $this->session->data['user_token'];
     }
-    return $this->getUserToken();
+    return 'token=' . $this->session->data['token'];
   }
 }
