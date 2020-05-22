@@ -90,7 +90,7 @@
               {% for key in ['oversized', 'call_before_delivery', 'fragile'] %}
                 <label class="checkbox-inline">
                 <input type="checkbox" value="is_{{ key }}" name="itella_extra[]" 
-                  {{ itella['data']['is_' + key] ? 'checked="checked"' }}>
+                  {{ itella['data']["is_#{key}"] ? 'checked="checked"' }}>
                 {{ itella_lng[key] }}
               </label>
               {% endfor %}
