@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionShippingItellashipping extends Controller
 {
-	private $_version = '1.1.1';
+	private $_version = '1.2.0';
 	private $error = array();
 
 	public function install()
@@ -33,9 +33,20 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$this->load->model('setting/setting');
 
+		$extension_home = 'extension';
+		if (version_compare(VERSION, '3.0.0', '>=')) {
+			$extension_home = 'marketplace';
+		}
+
 		if (isset($this->request->get['fixdb']) && $this->validate()) {
 			$this->fixDBTables();
 			$this->response->redirect($this->url->link('extension/shipping/itellashipping', $this->getUserToken(), true));
+		}
+
+		if (isset($this->request->get['fixxml']) && $this->validate()) {
+			$this->updateXMLFile();
+			$this->session->data['success'] = $this->language->get('xml_updated');
+			$this->response->redirect($this->url->link($extension_home . '/modification', $this->getUserToken(), true));
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -93,6 +104,9 @@ class ControllerExtensionShippingItellashipping extends Controller
 		// Notification about need to fix db
 		$data['db_fix_notify'] = $this->language->get('db_fix_notify');
 		$data['button_fix_db'] = $this->language->get('button_fix_db');
+		// Notification about xml update
+		$data['xml_fix_notify'] = $this->language->get('xml_fix_notify');
+		$data['button_fix_xml'] = $this->language->get('button_fix_xml');
 
 		// Api settings
 		$data['text_api_settings'] = $this->language->get('text_api_settings');
@@ -188,11 +202,6 @@ class ControllerExtensionShippingItellashipping extends Controller
 			'href' => $this->url->link('common/dashboard', $this->getUserToken(), true)
 		);
 
-		$extension_home = 'extension';
-		if (version_compare(VERSION, '3.0.0', '>=')) {
-			$extension_home = 'marketplace';
-		}
-
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_extension'),
 			'href' => $this->url->link($extension_home . '/extension', $this->getUserToken() . '&type=shipping', true)
@@ -283,7 +292,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		// courier email data
 		$data['advanced_emails'] = array();
-		foreach (array('LT', 'LV', 'EE') as $code) {
+		foreach (array('LT', 'LV', 'EE', 'FI') as $code) {
 			if (isset($this->request->post['itellashipping_advanced_email_' . $code])) {
 				$email = $this->request->post['itellashipping_advanced_email_' . $code];
 			} else {
@@ -297,6 +306,9 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$data['db_check'] = $this->checkDBTables();
 		$data['db_fix_url'] = $this->url->link('extension/shipping/itellashipping', $this->getUserToken() . '&fixdb', true);
+		
+		$data['xml_check'] = $this->checkModificationVersion();
+		$data['xml_fix_url'] = $this->url->link('extension/shipping/itellashipping', $this->getUserToken() . '&fixxml', true);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -311,6 +323,39 @@ class ControllerExtensionShippingItellashipping extends Controller
 			return 'user_token=' . $this->session->data['user_token'];
 		}
 		return 'token=' . $this->session->data['token'];
+	}
+
+	protected function checkModificationVersion()
+	{
+		$source_xml = DIR_SYSTEM . 'library/itella_lib/itella_base.ocmod.xml';
+		if (version_compare(VERSION, '3.0.0', '>=')) {
+			$source_xml = DIR_SYSTEM . 'library/itella_lib/itella_base_oc3.ocmod.xml';
+		}
+
+		$xml = DIR_SYSTEM . 'itella_base.ocmod.xml';
+		
+		return version_compare($this->getModXMLVersion($source_xml), $this->getModXMLVersion($xml), '>');
+	}
+
+	protected function getModXMLVersion($file)
+  {
+    if (!is_file($file)) {
+			return null;
+		}
+    $xml = file_get_contents($file);
+
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $dom->loadXml($xml);
+
+    $version = $dom->getElementsByTagName('version')->item(0)->nodeValue;
+
+    return $version;
+	}
+	
+	protected function updateXMLFile()
+	{
+		$this->load->model('extension/itellashipping/itellashipping');
+		$this->model_extension_itellashipping_itellashipping->copyModificationXML();
 	}
 
 	protected function checkDBTables()
@@ -384,7 +429,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 	protected function getLocationsInfo()
 	{
-		$locations = array('LT' => 0, 'LV' => 0, 'EE' => 0);
+		$locations = array('LT' => 0, 'LV' => 0, 'EE' => 0, 'FI' => 0);
 
 		$dir = DIR_DOWNLOAD . "itellashipping/";
 

@@ -75,7 +75,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
     $this->copyModificationXML();
   }
 
-  private function copyModificationXML()
+  public function copyModificationXML()
   {
     $xml_file = DIR_SYSTEM . 'library/itella_lib/itella_base.ocmod.xml';
 
@@ -91,7 +91,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
     copy($xml_file, $target);
   }
 
-  private function removeModificationXML()
+  public function removeModificationXML()
   {
     $target = DIR_SYSTEM . 'itella_base.ocmod.xml';
     if (is_file($target)) {

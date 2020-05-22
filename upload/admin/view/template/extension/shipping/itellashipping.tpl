@@ -33,6 +33,14 @@
       </div>
     <?php endif; ?>
   </div>
+  <!-- XML CHECK -->
+  <div class="container-fluid">
+    <?php if ($xml_check): ?>
+      <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?= $xml_fix_notify; ?> 
+        <a href="<?= $xml_fix_url; ?>" class="btn btn-success"><?= $button_fix_xml; ?></a>
+      </div>
+    <?php endif; ?>
+  </div>
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab-api" data-toggle="tab"><?php echo $tab_api; ?></a></li>
     <li><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>

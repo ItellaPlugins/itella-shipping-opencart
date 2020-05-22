@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
   <name>Itella Base Mod for OC2.3</name>
-  <version>1.0</version>
+  <version>1.1.0</version>
   <author>Mijora</author>
   <link>https://www.mijora.lt</link>
   <code>itellashipping_base</code>
@@ -170,6 +170,8 @@
       <add position="after"><![CDATA[
         // Itella
         $this->document->addStyle('catalog/view/javascript/itellashipping/leaflet.css');
+        $this->document->addStyle('catalog/view/javascript/itellashipping/MarkerCluster.css');
+        $this->document->addStyle('catalog/view/javascript/itellashipping/MarkerCluster.Default.css');
         $this->document->addStyle('catalog/view/javascript/itellashipping/itella-mapping.css');
         $this->document->addStyle('catalog/view/javascript/itellashipping/custom.css');
     

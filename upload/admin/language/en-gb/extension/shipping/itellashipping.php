@@ -20,6 +20,10 @@ $_['button_cancel']   = 'Cancel';
 // DB fix notification
 $_['db_fix_notify'] = 'Problems found with DB tables';
 $_['button_fix_db'] = 'FIX IT';
+// XML fix notification
+$_['xml_fix_notify'] = 'Newer version of modification file found for system/itella_base.ocmod.xml';
+$_['button_fix_xml'] = 'Update file';
+$_['xml_updated']   = 'system/itella_base.ocmod.xml updated. Please refresh modifications now.';
 
 // Text
 $_['text_shipping'] = 'Shipping';

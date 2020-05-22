@@ -51,7 +51,7 @@ class ControllerExtensionModuleItellaShipping extends Controller
     if (!is_dir($dir)) {
       mkdir($dir, 0777, true);
     }
-    foreach (array('LT', 'LV', 'EE') as $country) {
+    foreach (array('LT', 'LV', 'EE', 'FI') as $country) {
       $itellaLoc = $loc->getLocationsByCountry($country);
       if ($itellaLoc) {
         $loc->saveLocationsToJSONFile($dir . 'locations_' . $country . '.json', json_encode($itellaLoc));
