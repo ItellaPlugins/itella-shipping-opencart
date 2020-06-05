@@ -2,8 +2,8 @@
 // Text
 $_['text_title']  = 'Smartpost Itella';
 
-$_['text_courier']  = 'Itella kurjeris';
-$_['text_pickup']   = 'Itella atsiėmimo taškas';
+$_['text_courier']  = 'Itella pristatymas į nurodytą adresą';
+$_['text_pickup']   = 'Itella pristatymas į atsiėmimo tašką';
 $_['text_prefix']   = 'Itella:';
 
 $_['itella_map_modal_header']            = 'Atsiėmimo taškai';
