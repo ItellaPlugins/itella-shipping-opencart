@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.2] - 2020-09-09
+### Updated
+- itella-mapping.js to v1.2.3
+
 ## [1.2.1] - 2020-06-05
 ### Changed
 - Itella courier and pickup point lithuanian translation for checkout display
