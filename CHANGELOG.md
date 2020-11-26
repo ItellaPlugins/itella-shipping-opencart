@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.4]
+### Added
+- Estonian localization
+- Latvian localization
+- Russian localization
+
 ## [1.2.3]
 ### Updated
 - itella-mapping.js to v1.3.1
