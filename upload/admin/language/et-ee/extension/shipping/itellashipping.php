@@ -1,19 +1,19 @@
 <?php
 //Menu
-$_['menu_head']     = 'Itella';
+$_['menu_head']     = 'Smartpost';
 $_['menu_manifest'] = 'Manifest';
 $_['menu_settings'] = 'Settings';
 
 // Heading
-$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Itella Logo" style="height: 33px;">Itella';
-$_['heading_title_nologo']  = 'Itella';
+$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Smartpost Itella Logo" style="height: 33px;">Smartpost';
+$_['heading_title_nologo']  = 'Smartpost Itella';
 
 // Defaults
 $_['text_enabled']    = 'Enabled';
 $_['text_disabled']   = 'Disabled';
 $_['text_home']       = 'Avaleht';
 $_['text_extension']  = 'Extensions';
-$_['text_manifest']	  = 'Itella Manifest';
+$_['text_manifest']	  = 'Smartpost Manifest';
 $_['button_save']     = 'Salvesta';
 $_['button_cancel']   = 'Tühista';
 
@@ -27,7 +27,7 @@ $_['xml_updated']   = 'system/itella_base.ocmod.xml updated. Please refresh modi
 
 // Text
 $_['text_shipping'] = 'Tarnimine';
-$_['text_success']  = 'Success: Itella settings updated!';
+$_['text_success']  = 'Success: Smartpost settings updated!';
 $_['text_edit']     = 'Module settings';
 
 // Entry
@@ -47,7 +47,7 @@ $_['error_itella_error']  = 'Tellimuses esineb vigu';
 $_['error_itella_empty']  = 'No order IDs given';
 
 // Locations
-$_['text_locations']        = 'Kättesaamiskohtade teave';
+$_['text_locations']        = 'Paki kättesaamiskohtade teave';
 $_['text_last_update']      = 'Viimati uuendatud';
 $_['text_total_locations']  = 'Kõik kättesaamiskohad';
 $_['text_cron_url']         = 'CRON URL';
@@ -107,12 +107,12 @@ $_['text_price_help_country'] = 'Valik on piiratud määratud geograafilise tsoo
 
 // order_info_form
 $_['itella_bad_order_id']   = 'Order information not found in database';
-$_['itella_not_itella']     = 'Not Itella order';
+$_['itella_not_itella']     = 'Not Smartpost order';
 $_['itella_bad_terminal']   = 'Kättesaamiskohta ei ole või see eemaldati';
-$_['itella_insert_failed']  = 'Failed to add this order to Itella table';
+$_['itella_insert_failed']  = 'Failed to add this order to Smartpost table';
 
-$_['itella_lng_title']          = 'Itella';
-$_['itella_lng_prefix']         = 'Itella:';
+$_['itella_lng_title']          = 'Smartpost';
+$_['itella_lng_prefix']         = 'Smartpost:';
 $_['itella_lng_packets_total']  = 'Pakke (kokku):';
 $_['itella_lng_weight']         = 'Kaal (kg):';
 $_['itella_lng_cod']            = 'Kaardimakse kauba kättesaamisel:';
@@ -121,8 +121,8 @@ $_['itella_lng_yes']            = 'Jah';
 $_['itella_lng_cod_amount']     = 'Kauba kättesaamisel kaardiga tasutav summa:';
 $_['itella_lng_carrier']        = 'Transpordiettevõte:';
 $_['itella_lng_courier']        = 'Kullerteenus';
-$_['itella_lng_pickup']         = 'Kättesaamiskoht';
-$_['itella_lng_pickup_point']   = 'Kättesaamiskoht:';
+$_['itella_lng_pickup']         = 'Paki kättesaamiskoht';
+$_['itella_lng_pickup_point']   = 'Paki kättesaamiskoht:';
 $_['itella_lng_extra']          = 'Lisateenused:';
 $_['itella_lng_oversized']      = 'Ülemõõduline';
 $_['itella_lng_call_before_delivery'] = 'Helista enne kohaletoimetamist';
@@ -174,7 +174,7 @@ $_['lng_call_failed']           = 'Call courier failed with:';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifest:';
-$_['lng_modal_title']       = 'Call Itella courier';
+$_['lng_modal_title']       = 'Call Smartpost courier';
 $_['lng_modal_message']     = 'Courier will be called to';
 $_['lng_modal_name']        = 'Nimi:';
 $_['lng_modal_address']     = 'Aadress:';

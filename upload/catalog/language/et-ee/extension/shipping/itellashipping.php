@@ -2,12 +2,12 @@
 // Text
 $_['text_title']  = 'Smartpost Itella';
 
-$_['text_courier']  = 'Itella kuller';
-$_['text_pickup']   = 'Itella kättesaamiskoht';
-$_['text_prefix']   = 'Itella:';
+$_['text_courier']  = 'Smartposti kuller';
+$_['text_pickup']   = 'Smartposti kättesaamiskoht';
+$_['text_prefix']   = 'Smartpost:';
 
-$_['itella_map_modal_header']            = 'Kättesaamiskohad';
-$_['itella_map_selector_header']         = 'Kättesaamiskoht';
+$_['itella_map_modal_header']            = 'Paki kättesaamiskohad';
+$_['itella_map_selector_header']         = 'Paki kättesaamiskoht';
 $_['itella_map_workhours_header']        = 'Tööaeg';
 $_['itella_map_contacts_header']         = 'Kontakt';
 $_['itella_map_search_placeholder']      = 'Sisesta sihtnumber';

@@ -2,9 +2,9 @@
 // Text
 $_['text_title']  = 'Smartpost Itella';
 
-$_['text_courier']  = 'Itella Courier';
-$_['text_pickup']   = 'Itella Pickup point';
-$_['text_prefix']   = 'Itella:';
+$_['text_courier']  = 'Smartpost Courier';
+$_['text_pickup']   = 'Smartpost Pickup point';
+$_['text_prefix']   = 'Smartpost:';
 
 $_['itella_map_modal_header']            = 'Pickup points';
 $_['itella_map_selector_header']         = 'Pickup point';

@@ -1,19 +1,19 @@
 <?php
 //Menu
-$_['menu_head']     = 'Itella';
+$_['menu_head']     = 'Smartpost';
 $_['menu_manifest'] = 'Manifest';
 $_['menu_settings'] = 'Settings';
 
 // Heading
-$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Itella Logo" style="height: 33px;">Itella';
-$_['heading_title_nologo']  = 'Itella';
+$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Smartpost Itella Logo" style="height: 33px;">Smartpost';
+$_['heading_title_nologo']  = 'Smartpost Itella';
 
 // Defaults
 $_['text_enabled']    = 'Enabled';
 $_['text_disabled']   = 'Disabled';
 $_['text_home']       = 'Home';
 $_['text_extension']  = 'Extensions';
-$_['text_manifest']	  = 'Itella Manifest';
+$_['text_manifest']	  = 'Smartpost Manifest';
 $_['button_save']     = 'Save';
 $_['button_cancel']   = 'Cancel';
 
@@ -27,7 +27,7 @@ $_['xml_updated']   = 'system/itella_base.ocmod.xml updated. Please refresh modi
 
 // Text
 $_['text_shipping'] = 'Shipping';
-$_['text_success']  = 'Success: Itella settings updated!';
+$_['text_success']  = 'Success: Smartpost settings updated!';
 $_['text_edit']     = 'Module settings';
 
 // Entry
@@ -107,12 +107,12 @@ $_['text_price_help_country'] = 'Selection is limited to set Geo Zone';
 
 // order_info_form
 $_['itella_bad_order_id']   = 'Order information not found in database';
-$_['itella_not_itella']     = 'Not Itella order';
+$_['itella_not_itella']     = 'Not Smartpost order';
 $_['itella_bad_terminal']   = 'Pickup point doesnt exist or it was removed';
-$_['itella_insert_failed']  = 'Failed to add this order to Itella table';
+$_['itella_insert_failed']  = 'Failed to add this order to Smartpost Itella table';
 
-$_['itella_lng_title']          = 'Itella';
-$_['itella_lng_prefix']         = 'Itella:';
+$_['itella_lng_title']          = 'Smartpost';
+$_['itella_lng_prefix']         = 'Smartpost:';
 $_['itella_lng_packets_total']  = 'Packets (total):';
 $_['itella_lng_weight']         = 'Weight (kg):';
 $_['itella_lng_cod']            = 'C.O.D:';
@@ -174,7 +174,7 @@ $_['lng_call_failed']           = 'Call courier failed with:';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifest:';
-$_['lng_modal_title']       = 'Call Itella courier';
+$_['lng_modal_title']       = 'Call Smartpost courier';
 $_['lng_modal_message']     = 'Courier will be called to';
 $_['lng_modal_name']        = 'Name:';
 $_['lng_modal_address']     = 'Address:';
@@ -187,7 +187,7 @@ $_['itella_label_downloaded'] = 'Label downloaded';
 
 // Manifest PDF strings
 $_['manifest_sender_address']   = 'Sender address:';
-$_['manifest_nr']               = 'Nr.';
+$_['manifest_nr']               = 'No.';
 $_['manifest_track_num']        = 'Tracking number';
 $_['manifest_date']             = 'Date';
 $_['manifest_amount']           = 'Amount';

@@ -1,19 +1,19 @@
 <?php
 //Menu
-$_['menu_head']     = 'Itella';
+$_['menu_head']     = 'Smartpost';
 $_['menu_manifest'] = 'Manifestai';
 $_['menu_settings'] = 'Nustatymai';
 
 // Heading
-$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Itella Logo" style="height: 33px;">Itella';
-$_['heading_title_nologo']  = 'Itella';
+$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Smartpost Itella Logo" style="height: 33px;">Smartpost';
+$_['heading_title_nologo']  = 'Smartpost Itella';
 
 // Defaults
 $_['text_enabled']    = 'Įjungta';
 $_['text_disabled']   = 'Išjungta';
 $_['text_home']       = 'Pagrindinis';
 $_['text_extension']  = 'Išplėtimai';
-$_['text_manifest']	  = 'Itella manifestas';
+$_['text_manifest']	  = 'Smartpost manifestas';
 $_['button_save']     = 'Saugoti';
 $_['button_cancel']   = 'Atšaukti';
 
@@ -27,7 +27,7 @@ $_['xml_updated']   = 'system/itella_base.ocmod.xml atnaujinta. Atnaujinkite (re
 
 // Text
 $_['text_shipping'] = 'Shipping';
-$_['text_success']  = 'Itella nustatymai sėkmingai išsaugoti!';
+$_['text_success']  = 'Smartpost nustatymai sėkmingai išsaugoti!';
 $_['text_edit']     = 'Modulio nustatymai';
 
 // Entry
@@ -107,12 +107,12 @@ $_['text_price_help_country'] = 'Pasirinkimas apribojamas pagal nustatytą Geo z
 
 // order_info_form
 $_['itella_bad_order_id']   = 'Užsakymo informacija nerasta duomenų bazėje';
-$_['itella_not_itella']     = 'Užsakymas nepriklauso Itella';
+$_['itella_not_itella']     = 'Užsakymas nepriklauso Smartpost';
 $_['itella_bad_terminal']   = 'Paėmimo taškas neegzistuoja arba jis buvo pašalintas';
-$_['itella_insert_failed']  = 'Nepavyko išsaugoti užsakymo Itella lentelėje';
+$_['itella_insert_failed']  = 'Nepavyko išsaugoti užsakymo Smartpost Itella lentelėje';
 
-$_['itella_lng_title']          = 'Itella';
-$_['itella_lng_prefix']         = 'Itella:';
+$_['itella_lng_title']          = 'Smartpost';
+$_['itella_lng_prefix']         = 'Smartpost:';
 $_['itella_lng_packets_total']  = 'Siuntos (viso):';
 $_['itella_lng_weight']         = 'Svoris (kg):';
 $_['itella_lng_cod']            = 'C.O.D:';
@@ -174,7 +174,7 @@ $_['lng_call_failed']           = 'Kurjerio iškvietimas nepavyko, klaida:';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifestas:';
-$_['lng_modal_title']       = 'Kviesti Itella kurjerį';
+$_['lng_modal_title']       = 'Kviesti Smartpost kurjerį';
 $_['lng_modal_message']     = 'Kurjeris bus iškviestas į';
 $_['lng_modal_name']        = 'Vardas:';
 $_['lng_modal_address']     = 'Adresas:';

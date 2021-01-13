@@ -1,12 +1,19 @@
 # Changelog
 
-## [1.2.4]
+## [1.2.5] - Unreleased
+### Changed
+- name "Itella" to "Smartpost"
+
+### Updated
+- translations
+
+## [1.2.4] - 2020-11-26
 ### Added
 - Estonian localization
 - Latvian localization
 - Russian localization
 
-## [1.2.3]
+## [1.2.3] - 2020-11-18
 ### Updated
 - itella-mapping.js to v1.3.1
 - itella-api to 2.2.5
