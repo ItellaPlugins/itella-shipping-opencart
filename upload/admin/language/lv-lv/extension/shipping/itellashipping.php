@@ -1,21 +1,21 @@
 <?php
 //Menu
-$_['menu_head']     = 'Itella';
+$_['menu_head']     = 'Smartpost';
 $_['menu_manifest'] = 'Manifest';
 $_['menu_settings'] = 'Settings';
 
 // Heading
-$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Itella Logo" style="height: 33px;">Itella';
-$_['heading_title_nologo']  = 'Itella';
+$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Smartpost Itella Logo" style="height: 33px;">Smartpost';
+$_['heading_title_nologo']  = 'Smartpost Itella';
 
 // Defaults
 $_['text_enabled']    = 'Enabled';
 $_['text_disabled']   = 'Disabled';
-$_['text_home']       = 'Home';
+$_['text_home']       = 'Sākums';
 $_['text_extension']  = 'Extensions';
-$_['text_manifest']	  = 'Itella Manifest';
-$_['button_save']     = 'Save';
-$_['button_cancel']   = 'Cancel';
+$_['text_manifest']	  = 'Smartpost Manifest';
+$_['button_save']     = 'Saglabāt';
+$_['button_cancel']   = 'Atcelt';
 
 // DB fix notification
 $_['db_fix_notify'] = 'Problems found with DB tables';
@@ -26,30 +26,30 @@ $_['button_fix_xml'] = 'Update file';
 $_['xml_updated']   = 'system/itella_base.ocmod.xml updated. Please refresh modifications now.';
 
 // Text
-$_['text_shipping'] = 'Shipping';
-$_['text_success']  = 'Success: Itella settings updated!';
+$_['text_shipping'] = 'Piegāde';
+$_['text_success']  = 'Success: Smartpost settings updated!';
 $_['text_edit']     = 'Module settings';
 
 // Entry
 $_['entry_cost']        = 'Courier Cost';
 $_['entry_cost_parcel'] = 'Pickup Point Cost';
 $_['entry_tax_class']   = 'Tax Class';
-$_['entry_geo_zone']    = 'Geo Zone';
-$_['entry_status']      = 'Status';
-$_['entry_sort_order']  = 'Sort Order';
+$_['entry_geo_zone']    = 'Ģeo zona';
+$_['entry_status']      = 'Statuss';
+$_['entry_sort_order']  = 'Šķirošanas secība';
 
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify!';
 $_['error_no_label']      = 'No tracking number found';
 $_['error_empty_label']   = 'Downloaded label data is empty';
 $_['error_no_order_id']   = 'No order ID given';
-$_['error_itella_error']  = 'Order has errors';
+$_['error_itella_error']  = 'Pasūtījumā ir kļūdas';
 $_['error_itella_empty']  = 'No order IDs given';
 
 // Locations
-$_['text_locations']        = 'Pickup points information';
-$_['text_last_update']      = 'Last update';
-$_['text_total_locations']  = 'Total pickup points';
+$_['text_locations']        = 'Informācija par saņemšanas punktiem';
+$_['text_last_update']      = 'Pēdējais atjauninājums';
+$_['text_total_locations']  = 'Kopā saņemšanas punkti';
 $_['text_cron_url']         = 'CRON URL';
 
 $_['button_update']         = 'Update Now';
@@ -68,13 +68,13 @@ $_['entry_api_2317']      = '2317 Product Credentials';
 $_['entry_bic']           = 'BIC';
 $_['entry_iban']          = 'IBAN';
 
-$_['entry_price_country']             = 'Country';
+$_['entry_price_country']             = 'Valsts';
 $_['entry_price_pickup']              = 'Pickup Point price';
 $_['entry_price_courier']             = 'Courier price';
 $_['entry_price_free']                = 'free from';
 $_['button_add_price']                = 'Add Price';
 $_['button_save_price']               = 'Save Price';
-$_['entry_price_country_placeholder'] = 'Select country';
+$_['entry_price_country_placeholder'] = 'Izvēlēties valsti';
 $_['text_actions']                    = 'Actions';
 
 $_['text_price_settings'] = 'Price Settings';
@@ -86,52 +86,52 @@ $_['entry_advanced_email_subject']  = 'Email subject';
 $_['entry_advanced_email']          = 'Courier email';
 
 $_['text_sender_settings']  = 'Sender Information';
-$_['entry_sender_name']     = 'Name';
-$_['entry_sender_street']   = 'Street';
-$_['entry_sender_postcode'] = 'Postcode';
-$_['entry_sender_city']     = 'City';
-$_['entry_sender_country']  = 'Country';
-$_['entry_sender_phone']    = 'Mob. phone';
-$_['entry_sender_email']    = 'E-mail';
+$_['entry_sender_name']     = 'Vārds';
+$_['entry_sender_street']   = 'Iela';
+$_['entry_sender_postcode'] = 'Pasta indekss';
+$_['entry_sender_city']     = 'Pilsēta';
+$_['entry_sender_country']  = 'Valsts';
+$_['entry_sender_phone']    = 'Mob. telefons';
+$_['entry_sender_email']    = 'E-pasts';
 
 $_['tab_api']           = 'API';
-$_['tab_general']       = 'General';
+$_['tab_general']       = 'Galvenais';
 $_['tab_sender_info']   = 'Sender';
-$_['tab_price']         = 'Price';
+$_['tab_price']         = 'Cena';
 $_['tab_cod']           = 'C.O.D';
-$_['tab_pickuppoints']  = 'Pickup Points';
+$_['tab_pickuppoints']  = 'Saņemšanas punkti';
 $_['tab_advanced']      = 'Advanced Settings';
 
 $_['text_price_help']         = 'Set -1 (negative price) in price field to disable that option for particular country.';
-$_['text_price_help_country'] = 'Selection is limited to set Geo Zone';
+$_['text_price_help_country'] = 'Izvēle ir ierobežota noteiktai Ģeo zonai';
 
 // order_info_form
 $_['itella_bad_order_id']   = 'Order information not found in database';
-$_['itella_not_itella']     = 'Not Itella order';
-$_['itella_bad_terminal']   = 'Pickup point doesnt exist or it was removed';
-$_['itella_insert_failed']  = 'Failed to add this order to Itella table';
+$_['itella_not_itella']     = 'Not Smartpost order';
+$_['itella_bad_terminal']   = 'Paņemšanas punkts neeksistē vai neaktīvs';
+$_['itella_insert_failed']  = 'Failed to add this order to Smartpost Itella table';
 
-$_['itella_lng_title']          = 'Itella';
-$_['itella_lng_prefix']         = 'Itella:';
-$_['itella_lng_packets_total']  = 'Packets (total):';
-$_['itella_lng_weight']         = 'Weight (kg):';
+$_['itella_lng_title']          = 'Smartpost';
+$_['itella_lng_prefix']         = 'Smartpost:';
+$_['itella_lng_packets_total']  = 'Pakas (kopā):';
+$_['itella_lng_weight']         = 'Svars (kg):';
 $_['itella_lng_cod']            = 'C.O.D:';
-$_['itella_lng_no']             = 'No';
-$_['itella_lng_yes']            = 'Yes';
+$_['itella_lng_no']             = 'Nē';
+$_['itella_lng_yes']            = 'Jā';
 $_['itella_lng_cod_amount']     = 'C.O.D. amount:';
-$_['itella_lng_carrier']        = 'Carrier:';
-$_['itella_lng_courier']        = 'Courier';
-$_['itella_lng_pickup']         = 'Pickup Point';
-$_['itella_lng_pickup_point']   = 'Pickup point:';
-$_['itella_lng_extra']          = 'Extra services:';
-$_['itella_lng_oversized']      = 'Oversized';
-$_['itella_lng_call_before_delivery'] = 'Call before delivery';
-$_['itella_lng_fragile']        = 'Fragile';
-$_['itella_lng_multi']          = 'Multi parcel';
+$_['itella_lng_carrier']        = 'Pārvadātājs:';
+$_['itella_lng_courier']        = 'Kurjers';
+$_['itella_lng_pickup']         = 'Saņemšanas punkts';
+$_['itella_lng_pickup_point']   = 'Saņemšanas punkts:';
+$_['itella_lng_extra']          = 'Papildus pakalpojumi:';
+$_['itella_lng_oversized']      = 'Lielizmēra';
+$_['itella_lng_call_before_delivery'] = 'Zvans pirms piegādes';
+$_['itella_lng_fragile']        = 'Trausls';
+$_['itella_lng_multi']          = 'Daudzpaku sūtījums';
 $_['itella_lng_print']          = 'Print';
-$_['itella_lng_save']           = 'Save';
+$_['itella_lng_save']           = 'Saglabāt';
 $_['itella_lng_generate']       = 'Generate label';
-$_['itella_lng_loading']        = 'Loading...';
+$_['itella_lng_loading']        = 'Ielādējas…';
 $_['itella_lng_attention']      = 'Changing carrier here will not recalculate order shipping cost!';
 
 // Manifest Page
@@ -140,22 +140,22 @@ $_['tab_manifest']  = 'Manifests';
 
 $_['btn_label']             = 'Label';
 $_['btn_print']             = 'Print';
-$_['btn_view']              = 'View';
-$_['btn_show']              = 'Show';
+$_['btn_view']              = 'Skats';
+$_['btn_show']              = 'Parādīt';
 $_['btn_gen_label']         = 'Generate label';
 $_['btn_call_courier']      = 'Call courier';
 $_['btn_mass_generate']     = 'Generate labels';
 $_['btn_mass_print']        = 'Print labels';
 $_['btn_generate_manifest'] = 'Manifest';
 $_['btn_mass_manifest']     = 'Generate manifest';
-$_['btn_filter']            = 'Filter';
-$_['btn_reset']             = 'Reset filter';
+$_['btn_filter']            = 'Filtrēt';
+$_['btn_reset']             = 'Atjaunot filtru';
 
 $_['lng_missing']               = '';
 $_['lng_id']                    = 'ID';
-$_['lng_customer']              = 'Customer';
-$_['lng_tracking_nr']           = 'Tracking #';
-$_['lng_status']                = 'Status';
+$_['lng_customer']              = 'Klients';
+$_['lng_tracking_nr']           = 'Sūtījuma izsekošana #';
+$_['lng_status']                = 'Statuss';
 $_['lng_date_added']            = 'Date added';
 $_['lng_date_modified']         = 'Date modified';
 $_['lng_actions']               = 'Actions';
@@ -174,25 +174,25 @@ $_['lng_call_failed']           = 'Call courier failed with:';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifest:';
-$_['lng_modal_title']       = 'Call Itella courier';
+$_['lng_modal_title']       = 'Call Smartpost courier';
 $_['lng_modal_message']     = 'Courier will be called to';
-$_['lng_modal_name']        = 'Name:';
-$_['lng_modal_address']     = 'Address:';
-$_['lng_modal_phone']       = 'Contact mob. phone:';
+$_['lng_modal_name']        = 'Vārds:';
+$_['lng_modal_address']     = 'Adrese:';
+$_['lng_modal_phone']       = 'Kontakttelefons:';
 $_['lng_modal_manifest_id'] = 'Manifest ID to attach:';
 $_['lng_modal_btn_call']    = 'Call Courier';
-$_['lng_modal_btn_cancel']  = 'Cancel';
+$_['lng_modal_btn_cancel']  = 'Atcelt';
 
 $_['itella_label_downloaded'] = 'Label downloaded';
 
 // Manifest PDF strings
 $_['manifest_sender_address']   = 'Sender address:';
-$_['manifest_nr']               = 'Nr.';
-$_['manifest_track_num']        = 'Tracking number';
-$_['manifest_date']             = 'Date';
-$_['manifest_amount']           = 'Amount';
-$_['manifest_weight']           = 'Weight (kg)';
-$_['manifest_delivery_address'] = 'Delivery address';
-$_['manifest_courier']          = 'Courier';
+$_['manifest_nr']               = 'No.';
+$_['manifest_track_num']        = 'Sūtījuma izsekošanas numurs';
+$_['manifest_date']             = 'Datums';
+$_['manifest_amount']           = 'Daudzums';
+$_['manifest_weight']           = 'Svars (kg)';
+$_['manifest_delivery_address'] = 'Piegādes adrese';
+$_['manifest_courier']          = 'Kurjers';
 $_['manifest_sender']           = 'Sender';
 $_['manifest_signature']        = 'name, lastname, signature';
