@@ -1,11 +1,12 @@
 # Changelog
 
-## [1.2.5] - Unreleased
+## [1.2.5] - 2021-01-20
 ### Changed
 - name "Itella" to "Smartpost"
 
 ### Updated
 - translations
+- itella-api to 2.3.0
 
 ## [1.2.4] - 2020-11-26
 ### Added
