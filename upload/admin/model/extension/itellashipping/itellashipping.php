@@ -608,6 +608,29 @@ class ModelExtensionItellashippingItellaShipping extends Model
     return $pdf->setToString(true)->setBase64(true)->printManifest('manifest.pdf');
   }
 
+  public function getItems($id_manifest)
+  {
+    $orders = $this->db->query("
+      SELECT * FROM `" . DB_PREFIX . "itella_order` WHERE id_itella_manifest = '" . (int) $id_manifest . "';
+    ")->rows;
+
+    if (!$orders) {
+      return array('error' => 'No orders associated with this manifest');
+    }
+
+    $items = array();
+    foreach ($orders as $order) {
+      $items[] = array(
+        'tracking_number' => implode(' ', explode(',', $order['label_number'])),
+        'amount' => $order['packs'],
+        'weight' => $order['weight'],
+        'delivery_address' => $this->generateDeliveryAddress($order)
+      );
+    }
+
+    return $items;
+  }
+
   private function generateDeliveryAddress($order)
   {
     $oc_order = $this->getOCOrder($order['id_order']);

@@ -532,23 +532,31 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
       return $pdf;
     }
 
+    $items = $order->getItems($id_manifest);
+    if (isset($items['error'])) {
+      return $items;
+    }
+
     try {
       $send_to = $this->config->get('itellashipping_advanced_email_' . strtoupper($this->config->get('itellashipping_sender_country')));
       if (!$send_to) {
         throw new \Exception($this->language->get('lng_courier_email_missing'));
       }
-      $store_address = $this->getSenderAddress();
       $mailer = new CallCourier($send_to);
       $result = $mailer
         ->setSenderEmail($this->config->get('itellashipping_sender_email'))
         ->setSubject($this->config->get('itellashipping_advanced_email_subject'))
         ->setPickUpAddress(array(
           'sender' => $this->config->get('itellashipping_sender_name'),
-          'address' => $store_address,
+          'address_1' => $this->config->get('itellashipping_sender_street'),
+          'postcode' => $this->config->get('itellashipping_sender_postcode'),
+          'city' => $this->config->get('itellashipping_sender_city'),
+          'country' => $this->config->get('itellashipping_sender_country'),
           //'pickup_time' => $storeObj->pick_start . ' - ' . $storeObj->pick_finish,
           'contact_phone' => $this->config->get('itellashipping_sender_phone'),
         ))
         ->setAttachment($pdf, true)
+        ->setItems($items)
         ->callCourier();
       return array('success' => $this->language->get('lng_call_success') . ' ' . $store_address);
     } catch (\Exception $th) {
