@@ -532,11 +532,12 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
       return $pdf;
     }
 
+    $items = $order->getItems($id_manifest);
+    if (isset($items['error'])) {
+      return $items;
+    }
+
     try {
-      $items = $order->getItems($id_manifest);
-      if (isset($items['error'])) {
-        return $items;
-      }
       $send_to = $this->config->get('itellashipping_advanced_email_' . strtoupper($this->config->get('itellashipping_sender_country')));
       if (!$send_to) {
         throw new \Exception($this->language->get('lng_courier_email_missing'));
