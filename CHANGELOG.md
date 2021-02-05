@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] -
+### Added
+- Price field in settings now accepts formating for cost per weight range. Ranges going from lowest weight to highest.
+Format `weight1:price1 ; weight2:price2`
+
 ## [1.2.6] - 2021-02-01
 ### Updated
 - itella-api to 2.3.1
