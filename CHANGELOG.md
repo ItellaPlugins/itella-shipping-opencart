@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] -
+## [1.2.7] - 2021-02-05
 ### Added
 - Price field in settings now accepts formating for cost per weight range. Ranges going from lowest weight to highest.
 Format `weight1:price1 ; weight2:price2`
