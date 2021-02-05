@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.8] - 2021-02-05
+### Fixed
+- Fixed a typo in lithuanian language for courier called success message
+
 ## [1.2.7] - 2021-02-05
 ### Added
 - Price field in settings now accepts formating for cost per weight range. Ranges going from lowest weight to highest.

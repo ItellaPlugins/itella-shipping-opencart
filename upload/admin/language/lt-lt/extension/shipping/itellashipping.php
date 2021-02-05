@@ -169,7 +169,7 @@ $_['lng_register_success']      = 'Užsakymas užregistruotas';
 $_['lng_total_registered']      = 'Viso užregistruota užsakymų:';
 $_['lng_no_order_selected']     = 'Nepasirinkta užsakymas(ai)!';
 $_['lng_courier_email_missing'] = 'Nėra nustatytas kurjerio el. paštas';
-$_['lng_call_success']          = 'Kurjeris iškviestsa į:';
+$_['lng_call_success']          = 'Kurjeris iškviestas į:';
 $_['lng_call_failed']           = 'Kurjerio iškvietimas nepavyko, klaida:';
 
 // manifest page modal
