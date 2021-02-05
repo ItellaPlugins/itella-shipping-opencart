@@ -295,6 +295,23 @@ class ModelExtensionItellashippingItellaShipping extends Model
     $this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` SET `order_id` = '" . (int) $order_id . "', `order_status_id` = '" . (int) $order_status_id . "', `notify` = '0', `comment` = '" . $this->db->escape($comment) . "', `date_added` = NOW()");
   }
 
+  private function getContractNumber($product_code, $receiver_country)
+  {
+    if ((int) $product_code === Shipment::PRODUCT_COURIER) {
+      $contract_gls = $this->config->get('itellashipping_api_contract_' . $product_code . '_gls');
+      $baltics = ['LT', 'LV', 'EE', 'FI'];
+      // either sender or receiver is from GLS country and GLS contract is set
+      if (!empty($contract_gls)
+          && (!in_array($this->config->get('itellashipping_sender_country'), $baltics) || !in_array($receiver_country, $baltics))
+      ) {
+        return $contract_gls;
+      }
+    }
+
+    // return default contract by product code
+    return $this->config->get('itellashipping_api_contract_' . $product_code);
+  }
+
   public function generateLabel($id_order)
   {
     $order_data = $this->getOrder($id_order);
@@ -313,10 +330,12 @@ class ModelExtensionItellashippingItellaShipping extends Model
         $product_code = Shipment::PRODUCT_PICKUP;
       }
 
+      $contract_number = $this->getContractNumber($product_code, $oc_order['shipping_iso_code_2']);
+
       // Create and configure sender
       $sender = new Party(Party::ROLE_SENDER);
       $sender
-        ->setContract($this->config->get('itellashipping_api_contract_' . $product_code))
+        ->setContract($contract_number)
         ->setName1($this->config->get('itellashipping_sender_name'))
         ->setStreet1($this->config->get('itellashipping_sender_street'))
         ->setPostCode($this->config->get('itellashipping_sender_postcode'))

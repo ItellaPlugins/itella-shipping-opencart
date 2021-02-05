@@ -104,11 +104,67 @@ JS;
 		return $method_data;
 	}
 
+	/**
+	 * Determines if cost setting has weight:price formating and extracts cost by cart weight. In case of incorrect formating will return -1.
+	 * 
+	 * @param string|float $cost_ranges price setting, can be in weight:price range formating (string)
+	 * 
+	 * @return string|float Extracted cost from format according to cart weight. If no format identifier (:) found in string will return original $cost_ranges. If it fails to extract cost returns -1 
+	 */
+	protected function getCostByWeight($cost_ranges)
+	{
+		// Check if $cost_ranges is in weight:price ; weight:price format
+		if (strpos($cost_ranges, ':') === false) {
+			return $cost_ranges; // not formated return as is
+		}
+
+		$cost = -1;
+		$ranges = explode(';', $cost_ranges);
+		if (!is_array($ranges)) {
+			return $cost;
+		}
+
+		$cart_weight = $this->getCartWeightInKg();
+
+		foreach ($ranges as $range) {
+			$weight_cost = explode(':', trim($range));
+			// check it is valid weight cost pair, skip otherwise
+			if (!is_array($weight_cost) || count($weight_cost) != 2) {
+				continue;
+			}
+
+			// if cart weight is higher than set weight use this ranges cost
+			// formating is assumed to go from lowest to highest weight
+			// and cost will be the last lower or equal to cart weight
+			if ($weight_cost[0] <= $cart_weight) {
+				$cost = $weight_cost[1];
+			}
+		}
+
+		return $cost;
+	}
+
+	protected function getCartWeightInKg()
+	{
+		// Get cart weight
+		$total_kg = $this->cart->getWeight();
+		// Make sure its in kg (we do not support imperial units, so assume weight is in metric units)
+		$weight_class_id = $this->config->get('config_weight_class_id');
+		$unit = $this->db->query("SELECT unit FROM `" . DB_PREFIX . "weight_class_description` wcd WHERE (weight_class_id = " . $weight_class_id . ") AND language_id = '" . (int) $this->config->get('config_language_id') . "'");
+		if ($unit->row['unit'] == 'g') { // if default in grams means cart weight will be in grams as well
+			$total_kg /= 1000;
+		}
+
+		return $total_kg;
+	}
+
 	protected function calculateCost($cost, $free_from)
 	{
 		if (empty($cost)) {
 			$cost = 0;
 		}
+
+		$cost = $this->getCostByWeight($cost);
 
 		// custom disabling through negative price setting
 		if ($cost < 0) {

@@ -119,6 +119,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['entry_api_user'] = $this->language->get('entry_api_user');
 		$data['entry_api_pass'] = $this->language->get('entry_api_pass');
 		$data['entry_api_contract'] = $this->language->get('entry_api_contract');
+		$data['entry_api_contract_gls'] = $this->language->get('entry_api_contract_gls');
+		$data['text_api_contract_gls_help'] = $this->language->get('text_api_contract_gls_help');
 		$data['entry_cod_options'] = $this->language->get('entry_cod_options');
 		$data['entry_bic'] = $this->language->get('entry_bic');
 		$data['entry_iban'] = $this->language->get('entry_iban');
@@ -237,6 +239,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 			'itellashipping_tax_class_id', 'itellashipping_geo_zone_id',
 			'itellashipping_api_user_2711', 'itellashipping_api_pass_2711', 'itellashipping_api_contract_2711',
 			'itellashipping_api_user_2317', 'itellashipping_api_pass_2317', 'itellashipping_api_contract_2317',
+			'itellashipping_api_contract_2317_gls',
 			'itellashipping_cod_status', 'itellashipping_bic', 'itellashipping_iban',
 			'itellashipping_sender_name', 'itellashipping_sender_street', 'itellashipping_sender_postcode',
 			'itellashipping_sender_city', 'itellashipping_sender_country', 'itellashipping_sender_phone',
