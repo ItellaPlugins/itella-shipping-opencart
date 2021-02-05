@@ -4,6 +4,10 @@
 ### Added
 - Price field in settings now accepts formating for cost per weight range. Ranges going from lowest weight to highest.
 Format `weight1:price1 ; weight2:price2`
+- 2317 (Courier) product now support dual contract settings, second one is for GLS countries only (not LT, LV, EE, FI), if left empty defaults to first contract number
+
+### Fixed
+- Fixed an issue with information block inside order form where laoding overlay would not be properly applied
 
 ## [1.2.6] - 2021-02-01
 ### Updated
