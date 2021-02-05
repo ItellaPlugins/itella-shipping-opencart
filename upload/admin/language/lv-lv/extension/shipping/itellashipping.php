@@ -196,3 +196,7 @@ $_['manifest_delivery_address'] = 'Piegādes adrese';
 $_['manifest_courier']          = 'Kurjers';
 $_['manifest_sender']           = 'Sender';
 $_['manifest_signature']        = 'name, lastname, signature';
+
+// GLS contract strings
+$_['entry_api_contract_gls']        = 'API GLS Contract #';
+$_['text_api_contract_gls_help']    = 'For GLS countries only (not LT, LV, EE, FI).';

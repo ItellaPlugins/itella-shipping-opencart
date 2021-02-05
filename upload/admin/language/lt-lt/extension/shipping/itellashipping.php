@@ -196,3 +196,7 @@ $_['manifest_delivery_address'] = 'Pristatymo adresas';
 $_['manifest_courier']          = 'Kurjeris';
 $_['manifest_sender']           = 'Siuntėjas';
 $_['manifest_signature']        = 'vardas, pavardė, parašas';
+
+// GLS contract strings
+$_['entry_api_contract_gls']        = 'API GLS Kontrakto #';
+$_['text_api_contract_gls_help']    = 'Tik GLS šalims (ne LT, LV, EE, FI).';

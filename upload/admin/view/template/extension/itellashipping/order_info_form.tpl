@@ -123,6 +123,10 @@
 </div>
 
 <style type="text/css">
+  #itella_panel {
+    display: flex;
+  }
+
   .itella {
     margin: 0;
   }
@@ -463,6 +467,9 @@
     function buildDropdown(terminals) {
       var html = [];
       var address = '';
+      if (!terminals) {
+        terminals = [];
+      }
       terminals.forEach(function(terminal) {
         if (terminal.address.postalCodeName != null && terminal.address.postalCodeName != '') {
           address += terminal.address.postalCodeName;

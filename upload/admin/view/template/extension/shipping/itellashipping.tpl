@@ -108,6 +108,13 @@
                       <input type="text" name="itellashipping_api_contract_2317" value="<?php echo $itellashipping_api_contract_2317; ?>" placeholder="<?php echo $entry_api_contract; ?>" id="input-api-contract-2" class="form-control" />
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input-api-contract-3"><?php echo $entry_api_contract_gls; ?></label>
+                    <div class="col-sm-8">
+                      <input type="text" name="itellashipping_api_contract_2317_gls" value="<?php echo $itellashipping_api_contract_2317_gls; ?>" placeholder="<?php echo $entry_api_contract_gls; ?>" id="input-api-contract-3" class="form-control" />
+                      <p class="help-block"><?php echo $text_api_contract_gls_help; ?></p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
