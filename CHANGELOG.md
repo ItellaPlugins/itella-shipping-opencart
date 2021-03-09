@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 
+### Updated
+- itella-api to 2.3.2
+
 ## [1.2.8] - 2021-02-05
 ### Fixed
 - Fixed a typo in lithuanian language for courier called success message
