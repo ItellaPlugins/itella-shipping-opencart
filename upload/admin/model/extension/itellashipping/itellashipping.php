@@ -35,6 +35,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
         `label_number` text COLLATE utf8_unicode_ci NULL,
         `error` text COLLATE utf8_unicode_ci DEFAULT NULL,
         `id_itella_manifest` int(10) unsigned DEFAULT NULL,
+        `comment` text COLLATE utf8_unicode_ci DEFAULT NULL,
         PRIMARY KEY (`id_order`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;',
 
