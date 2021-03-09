@@ -309,7 +309,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$data['db_check'] = $this->checkDBTables();
 		$data['db_fix_url'] = $this->url->link('extension/shipping/itellashipping', $this->getUserToken() . '&fixdb', true);
-		
+
 		$data['xml_check'] = $this->checkModificationVersion();
 		$data['xml_fix_url'] = $this->url->link('extension/shipping/itellashipping', $this->getUserToken() . '&fixxml', true);
 
@@ -336,25 +336,25 @@ class ControllerExtensionShippingItellashipping extends Controller
 		}
 
 		$xml = DIR_SYSTEM . 'itella_base.ocmod.xml';
-		
+
 		return version_compare($this->getModXMLVersion($source_xml), $this->getModXMLVersion($xml), '>');
 	}
 
 	protected function getModXMLVersion($file)
-  {
-    if (!is_file($file)) {
+	{
+		if (!is_file($file)) {
 			return null;
 		}
-    $xml = file_get_contents($file);
+		$xml = file_get_contents($file);
 
-    $dom = new DOMDocument('1.0', 'UTF-8');
-    $dom->loadXml($xml);
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXml($xml);
 
-    $version = $dom->getElementsByTagName('version')->item(0)->nodeValue;
+		$version = $dom->getElementsByTagName('version')->item(0)->nodeValue;
 
-    return $version;
+		return $version;
 	}
-	
+
 	protected function updateXMLFile()
 	{
 		$this->load->model('extension/itellashipping/itellashipping');
@@ -365,19 +365,39 @@ class ControllerExtensionShippingItellashipping extends Controller
 	{
 		$result = array();
 		$itella_table = $this->db->query("DESCRIBE `" . DB_PREFIX . "itella_order`")->rows;
+		$comment_field_found = false;
 		foreach ($itella_table as $col) {
-			if (strtolower($col['Field']) != 'id_pickup_point') {
-				continue;
+			switch (strtolower($col['Field'])) {
+				case 'id_pickup_point':
+					// needs to be varchar, 1.0.0 module had bug where its set as INT
+					if (strpos(strtolower($col['Type']), 'varchar') === false) {
+						$result['itella_order'] = array(
+							'field' => $col['Field'],
+							'fix' => "
+								ALTER TABLE `" . DB_PREFIX . "itella_order` 
+								MODIFY `id_pickup_point` VARCHAR(30) COLLATE utf8_unicode_ci DEFAULT NULL;
+							"
+						);
+					}
+					break;
+
+				case 'comment':
+					$comment_field_found = true;
+					break;
 			}
-			if (strpos(strtolower($col['Type']), 'varchar') === false) {
-				// needs to be varchar, 1.0.0 module had bug where its set as INT
-				$result['itella_order'] = array(
-					'field' => $col['Field'],
-					'fix' => 'VARCHAR(30) COLLATE utf8_unicode_ci DEFAULT NULL'
-				);
-			}
-			break;
 		}
+
+		// added in 1.2.9 version
+		if (!$comment_field_found) {
+			$result['itella_order'] = array(
+				'field' => 'comment',
+				'fix' => "
+					ALTER TABLE `" . DB_PREFIX . "itella_order` 
+					ADD `comment` text COLLATE utf8_unicode_ci DEFAULT NULL;
+				"
+			);
+		}
+
 		if (version_compare(VERSION, '3.0.0', '>=')) {
 			$session_table = $this->db->query("DESCRIBE `" . DB_PREFIX . "session`")->rows;
 			foreach ($session_table as $col) {
@@ -388,7 +408,10 @@ class ControllerExtensionShippingItellashipping extends Controller
 					// needs to be MEDIUMTEXT or LONGTEXT
 					$result['session'] = array(
 						'field' => $col['Field'],
-						'fix' => 'MEDIUMTEXT'
+						'fix' => "
+								ALTER TABLE `" . DB_PREFIX . "session` 
+								MODIFY `data` MEDIUMTEXT;
+							"
 					);
 				}
 				break;
@@ -406,7 +429,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 		}
 
 		foreach ($db_check as $table => $data) {
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` MODIFY `" . $data['field'] . "` " . $data['fix'] . ";");
+			$this->db->query($data['fix']);
+			//$this->db->query("ALTER TABLE `" . DB_PREFIX . $table . "` MODIFY `" . $data['field'] . "` " . $data['fix'] . ";");
 		}
 	}
 
@@ -709,6 +733,12 @@ class ControllerExtensionShippingItellashipping extends Controller
 			$data['is_cod'] = 0;
 		}
 
+		if (isset($this->request->post['comment'])) {
+			$data['comment'] = $this->db->escape($this->request->post['comment']);
+		} else {
+			$data['comment'] = '';
+		}
+
 		// reset extra services
 		foreach (array('is_oversized', 'is_call_before_delivery', 'is_fragile') as $key) {
 			$data[$key] = 0;
@@ -727,7 +757,14 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['label_number'] = NULL;
 		$data['id_itella_manifest'] = NULL;
 
-		$result = $order->updateOrderData($id_order, $data);
+		try {
+			$result = $order->updateOrderData($id_order, $data);
+		} catch (\Throwable $th) {
+			return array('error' => $th->getMessage());
+		} catch (\Exception $th) {
+			return array('error' => $th->getMessage());
+		}
+
 		return array('success' => 'Itella information for order updated', 'data' => $result);
 	}
 

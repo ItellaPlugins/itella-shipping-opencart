@@ -161,6 +161,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
       'carrier', 'courier', 'pickup',
       'pickup_point',
       'extra', 'oversized', 'call_before_delivery', 'fragile', 'multi',
+      'comment',
       'print', 'save', 'generate',
       'loading', 'attention', 'prefix'
     );
@@ -400,6 +401,11 @@ class ModelExtensionItellashippingItellaShipping extends Model
         ->setReceiverParty($receiver) // Receiver class object
         ->addAdditionalServices($extra) // set additional services
         ->addGoodsItems($items);
+      
+      // add comment if it is set
+      if (isset($order_data['comment']) && !empty($order_data['comment'])) {
+        $shipment->setComment($order_data['comment']);
+      }
 
       if ($product_code == Shipment::PRODUCT_PICKUP) {
         $shipment->setPickupPoint($order_data['id_pickup_point']);

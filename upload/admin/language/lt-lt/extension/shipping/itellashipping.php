@@ -200,3 +200,6 @@ $_['manifest_signature']        = 'vardas, pavardė, parašas';
 // GLS contract strings
 $_['entry_api_contract_gls']        = 'API GLS Kontrakto #';
 $_['text_api_contract_gls_help']    = 'Tik GLS šalims (ne LT, LV, EE, FI).';
+
+// order_info_form comment field
+$_['itella_lng_comment'] = 'Siuntos komentaras:';

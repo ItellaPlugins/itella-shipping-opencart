@@ -200,3 +200,6 @@ $_['manifest_signature']        = 'name, lastname, signature';
 // GLS contract strings
 $_['entry_api_contract_gls']        = 'API GLS Contract #';
 $_['text_api_contract_gls_help']    = 'For GLS countries only (not LT, LV, EE, FI).';
+
+// order_info_form comment field
+$_['itella_lng_comment'] = 'Shipment comment:';

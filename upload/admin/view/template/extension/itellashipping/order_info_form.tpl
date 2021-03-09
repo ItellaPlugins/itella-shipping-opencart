@@ -99,6 +99,14 @@
       </div>
 
       <div class="row">
+        <div class="col-md-12">
+          <label class="control-label"><?= $itella_lng['comment'] ?></label>
+          <input id="itella-comment" type="text" name="comment" class="form-control" 
+            value="<?= $itella['data']['comment'] ?>" />
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-xs-12">
           <div class="ajaxresponse">
           </div>
@@ -125,6 +133,10 @@
 <style type="text/css">
   #itella_panel {
     display: flex;
+  }
+
+  .itella-form > .row:not(:last-of-type) {
+    margin-bottom: 1em;
   }
 
   .itella {

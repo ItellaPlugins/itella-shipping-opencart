@@ -25,12 +25,12 @@
     <?php } ?>
   </div>
   <ul class="nav nav-tabs">
-    <li <?=($active_tab == 'all' ? 'class="active"' : '');?>><a href="#tab-all" data-toggle="tab"><?php echo $tab_all . " ($order_total)"; ?></a></li>
-    <li <?=($active_tab == 'manifest' ? 'class="active"' : '');?>><a href="#tab-manifest" data-toggle="tab"><?php echo $tab_manifest . " ($manifest_total)"; ?></a></li>
+    <li <?=($active_tab == 'all' ? ' class="active"' : '');?>><a href="#tab-all" data-toggle="tab"><?php echo $tab_all . " ($order_total)"; ?></a></li>
+    <li <?=($active_tab == 'manifest' ? ' class="active"' : '');?>><a href="#tab-manifest" data-toggle="tab"><?php echo $tab_manifest . " ($manifest_total)"; ?></a></li>
   </ul>
   <div class="tab-content">
     <!-- Ready Orders -->
-    <div class="tab-pane <?=($active_tab == 'all' ? 'active' : '');?>" id="tab-all">
+    <div class="tab-pane <?=($active_tab == 'all' ? ' active' : '');?>" id="tab-all">
       <div class="container-fluid">
         <div class="panel panel-default">
         <form id="form-orders" method="POST">
@@ -170,7 +170,7 @@
     </div>
 
     <!-- Manifest Tab -->
-    <div class="tab-pane <?=($active_tab == 'manifest' ? 'active' : '');?>" id="tab-manifest">
+    <div class="tab-pane <?=($active_tab == 'manifest' ? ' active' : '');?>" id="tab-manifest">
       <input type="hidden" id="view-order-base-link" value="<?= $manifest_view_order; ?>">
       <div class="container-fluid">
         <div class="panel panel-default">
