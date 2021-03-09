@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased] - 
+## [1.2.9] - 2021-03-09
+### Added
+- Add shipment comment to label. Done inside Itella form in order page.
+
 ### Updated
 - itella-api to 2.3.2
 
