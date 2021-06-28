@@ -134,7 +134,9 @@
                         {{ error_itella_error }}
                       {% else %}
                         {% for action, link in order['actions'] %}
+                          {% if action != 'resend_email' or (tracking_email_status and action == 'resend_email') %}
                           <a class="btn btn-default" href="{{ link }}">{{ _context['btn_' ~ action] }}</a>
+                          {% endif %}
                         {% endfor %}
                       {% endif %}
                     </td>

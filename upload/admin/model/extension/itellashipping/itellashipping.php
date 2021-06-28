@@ -13,12 +13,17 @@ use Mijora\Itella\Pdf\Manifest;
 
 class ModelExtensionItellashippingItellaShipping extends Model
 {
+  const TRACKING_URL = [
+    'default' => 'https://itella.lt/en/business-customer/track-shipment/?trackingCode=@',
+    'lt' => 'https://itella.lt/verslui/siuntos-sekimas/?trackingCode=@',
+    'lv' => 'https://itella.lv/private-customer/sutijuma-meklesana/?trackingCode=@',
+    'ee' => 'https://itella.ee/ariklient/saadetise-jalgimine/?trackingCode=@',
+  ];
 
   private $_locations = array();
 
   public function install()
   {
-
     $sql = array(
       'itella_order' => 'CREATE TABLE IF NOT EXISTS `' . DB_PREFIX . 'itella_order` (
         `id_order` int(10) unsigned NOT NULL,
@@ -164,7 +169,8 @@ class ModelExtensionItellashippingItellaShipping extends Model
       'extra', 'oversized', 'call_before_delivery', 'fragile', 'multi',
       'comment',
       'print', 'save', 'generate',
-      'loading', 'attention', 'prefix'
+      'loading', 'attention', 'prefix',
+      'resend_email'
     );
     $translation = array();
     foreach ($itella_lng as $key) {
@@ -194,7 +200,8 @@ class ModelExtensionItellashippingItellaShipping extends Model
     //   $pupCode = explode('_', $oc_order['shipping_code'])[];
     //   $this->updatePickupPointId($order_data['id_order'], )
     // }
-    return ['data' => $order_data, 'oc_order' => $oc_order, 'new_order' => $new_data]; //($result ? $result : false);
+    $tracking_email_status = (bool) $this->config->get('itellashipping_tracking_email_status');
+    return ['tracking_email_status' => $tracking_email_status, 'data' => $order_data, 'oc_order' => $oc_order, 'new_order' => $new_data];
   }
 
   public function saveItellaError($id_order, $error_msg)
@@ -294,7 +301,12 @@ class ModelExtensionItellashippingItellaShipping extends Model
   public function updateOrderStatus($order_id, $order_status_id, $comment = '')
   {
     $this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int) $order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int) $order_id . "'");
-    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` SET `order_id` = '" . (int) $order_id . "', `order_status_id` = '" . (int) $order_status_id . "', `notify` = '0', `comment` = '" . $this->db->escape($comment) . "', `date_added` = NOW()");
+    $this->updateOrderHistory($order_id, $order_status_id, $comment);
+  }
+
+  public function updateOrderHistory($order_id, $order_status_id, $comment = '', $notify = 0)
+  {
+    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` SET `order_id` = '" . (int) $order_id . "', `order_status_id` = '" . (int) $order_status_id . "', `notify` = '" . (int) $notify . "', `comment` = '" . $this->db->escape($comment) . "', `date_added` = NOW()");
   }
 
   private function getContractNumber($product_code, $receiver_country)
@@ -416,7 +428,17 @@ class ModelExtensionItellashippingItellaShipping extends Model
       $tracking_number = $shipment->registerShipment();
       // update itella_order with tracking nunmber
       $this->db->query("UPDATE `" . DB_PREFIX . "itella_order` SET `label_number`='" . $tracking_number . "', `error`='' WHERE id_order=" . (int) $id_order);
+
       $this->updateOrderStatus($id_order, $this->config->get('itella_status_id'), $tracking_number);
+
+      if ($this->config->get('itellashipping_tracking_email_status')) {
+        $this->sendTrackingUrl([
+          'id_order' => $id_order,
+          'tracking_number' => $tracking_number,
+          'email' => $oc_order['email'],
+          'country_code' => $oc_order['shipping_iso_code_2']
+        ]);
+      }
 
       $this->load->language('extension/shipping/itellashipping');
 
@@ -428,6 +450,99 @@ class ModelExtensionItellashippingItellaShipping extends Model
       $this->saveItellaError($id_order, $e->getMessage());
       return array('error' => $e->getMessage());
     }
+  }
+
+  /**
+   * Sends email to customer with tracking url
+   * 
+   * @param array|int $data - either array with tracking number, email and country code or order ID
+   * 
+   * @return array - array containing either success or error keys
+   */
+  public function sendTrackingUrl($data)
+  {
+    $this->load->language('extension/shipping/itellashipping');
+
+    $is_tracking_email_enabled = (bool) $this->config->get('itellashipping_tracking_email_status');
+
+    if (!$is_tracking_email_enabled) {
+      return [
+        'error' => $this->language->get('error_tracking_email_disabled')
+      ];
+    }
+
+    // if not array assume its order ID
+    if (!is_array($data)) {
+      $id_order = (int) $data;
+      $order_data = $this->loadOrder($id_order);
+
+      if (!isset($order_data['data']['label_number']) || !$order_data['data']['label_number']) {
+        return [
+          'error' => $id_order . ': ' . $this->language->get('error_no_label')
+        ];
+      }
+
+      $data = [
+        'id_order' => $id_order,
+        'tracking_number' => $order_data['data']['label_number'],
+        'email' => $order_data['oc_order']['email'],
+        'country_code' => $order_data['oc_order']['shipping_iso_code_2']
+      ];
+    }
+
+    $data['tracking_url'] = str_replace('@', $data['tracking_number'], $this->getTrackingURLByCountryCode($data['country_code']));
+
+    if (version_compare(VERSION, '3.0.0', '>=')) {
+      $mail = new Mail($this->config->get('config_mail_engine'));
+    } else { // OC 2.3
+      $mail = new Mail();
+      $mail->protocol = $this->config->get('config_mail_protocol');
+    }
+    
+    $mail->parameter = $this->config->get('config_mail_parameter');
+		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+		$mail->setTo($data['email']);
+		$mail->setFrom($this->config->get('config_email'));
+		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+    $subject = $this->config->get('itellashipping_tracking_email_subject');
+		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+
+    $template = $this->config->get('itellashipping_tracking_email_template');
+
+    if (empty($template)) {
+      if (version_compare(VERSION, '3.0.0', '>=')) {
+        $body = $this->load->view('extension/itellashipping/tracking_mail', $data);
+      } else { // OC 2.3
+        $body = file_get_contents(DIR_TEMPLATE . 'extension/itellashipping/tracking_mail.twig');
+      }
+    } else {
+      $key_values = [
+        '{{ tracking_url }}' => $data['tracking_url'],
+        '{{ tracking_number }}' => $data['tracking_number']
+      ];
+      $body = str_replace(array_keys($key_values), array_values($key_values), json_decode($template));
+    }
+    
+		$mail->setText(html_entity_decode($body, ENT_QUOTES, 'UTF-8'));
+		$mail->send();
+
+    $this->updateOrderHistory($data['id_order'], $this->config->get('itella_status_id'), $body, 1);
+
+    return [
+      'success' => $data['id_order'] . ': Email sent to ' . $data['email'] . '<pre>' . json_encode($data, JSON_PRETTY_PRINT) . '</pre>',
+    ];
+  }
+
+  public function getTrackingURLByCountryCode($country_code)
+  {
+    $country_code = strtolower($country_code);
+  
+    return isset(self::TRACKING_URL[$country_code]) ? self::TRACKING_URL[$country_code] : self::TRACKING_URL['default'];
   }
 
   public function getLabel($id_order)

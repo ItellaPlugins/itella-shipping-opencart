@@ -203,3 +203,13 @@ $_['text_api_contract_gls_help']    = 'Tik GLS šalims (ne LT, LV, EE, FI).';
 
 // order_info_form comment field
 $_['itella_lng_comment'] = 'Siuntos komentaras:';
+
+// Tracking Email
+$_['itella_lng_resend_email'] = 'Siųsti sekimo URL el. laišką';
+$_['btn_resend_email'] = 'Siųsti sekimo URL el. laišką';
+$_['tab_tracking_email'] = 'Sekimo URL siuntimas';
+$_['text_tracking_email'] = 'Sekimo URL siuntimas';
+$_['entry_tracking_email_subject'] = 'El. laiško tema';
+$_['entry_tracking_email_template'] = 'El. laiško šablonas';
+$_['text_tracking_email_template_help'] = '{{ tracking_url }} - yra raktas kur bus įterptas sekimo URL, norint įterpti tik sekimo numerį naudokite {{ tracking_number }}';
+$_['error_tracking_email_disabled'] = 'Sekimo URL siuntimas išjungtas';

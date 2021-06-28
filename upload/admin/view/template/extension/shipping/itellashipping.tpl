@@ -48,6 +48,7 @@
     <li><a href="#tab-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
     <li><a href="#tab-cod" data-toggle="tab"><?php echo $tab_cod; ?></a></li>
     <li><a href="#tab-pickuppoints" data-toggle="tab"><?php echo $tab_pickuppoints; ?></a></li>
+    <li><a href="#tab-tracking-email" data-toggle="tab"><?php echo $tab_tracking_email; ?></a></li>
     <li><a href="#tab-advanced" data-toggle="tab"><?php echo $tab_advanced; ?></a></li>
   </ul>
 
@@ -476,6 +477,60 @@
           <div class="panel-footer clearfix">
             <div class="pull-right">
               <button type="submit" form="form-itellashipping-locations" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tracking Email -->
+    <div class="tab-pane" id="tab-tracking-email">
+      <div class="container-fluid">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> <?= $text_tracking_email; ?></h3>
+          </div>
+          <div class="panel-body">
+            <form action="<?= $action; ?>" method="post" enctype="multipart/form-data" id="form-itellashipping-tracking-email" class="form-horizontal">
+              <input type="hidden" name="tracking_email_update">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-tracking-email-status"><?= $entry_status; ?></label>
+                <div class="col-sm-10">
+                  <select name="itellashipping_tracking_email_status" id="input-tracking-email-status" class="form-control">
+                    <?php if ($itellashipping_tracking_email_status): ?>
+                      <option value="1" selected="selected"><?= $text_enabled; ?></option>
+                      <option value="0"><?= $text_disabled; ?></option>
+                    <?php else: ?>
+                      <option value="1"><?= $text_enabled; ?></option>
+                      <option value="0" selected="selected"><?= $text_disabled; ?></option>
+                    <?php endif; ?>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-tracking-email-subject"><?= $entry_tracking_email_subject; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="itellashipping_tracking_email_subject" value="<?= $itellashipping_tracking_email_subject; ?>" placeholder="<?= $entry_tracking_email_subject; ?>" id="input-tracking-email-subject" class="form-control" />
+                </div>
+              </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-tracking-email-template"><?= $entry_tracking_email_template; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="itellashipping_tracking_email_template" placeholder="<?= $entry_tracking_email_template; ?>" id="input-tracking-email-template" class="form-control" rows="20"><?= $itellashipping_tracking_email_template; ?></textarea>
+                    <p class="help-block"><?= $text_tracking_email_template_help; ?></p>
+                  </div>
+                </div>
+
+            </form>
+          </div>
+
+          <div class="panel-footer clearfix">
+            <div class="pull-right">
+              <button type="submit" form="form-itellashipping-tracking-email" data-toggle="tooltip" title="<?= $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+              <a href="<?= $cancel; ?>" data-toggle="tooltip" title="<?= button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
             </div>
           </div>
         </div>

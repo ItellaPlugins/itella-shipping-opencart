@@ -65,7 +65,7 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
       'label', 'print', 'view', 'gen_label',
       'call_courier', 'mass_generate', 'mass_print',
       'generate_manifest', 'mass_manifest', 'filter', 'reset',
-      'show'
+      'show', 'resend_email'
     ) as $key) {
       $data['btn_' . $key] = $this->language->get('btn_' . $key);
     }
@@ -98,10 +98,12 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
     $manifest = $this->model_extension_itellashipping_manifest;
 
     $results = $manifest->getOrders($all_page, $filter);
+    $data['tracking_email_status'] = (bool) $this->config->get('itellashipping_tracking_email_status');
     $data['orders'] = array();
     foreach ($results as $result) {
       $actions = array();
       if ($result['label_number']) {
+        $actions['resend_email'] = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&resend_email&id_order=' . $result['order_id'], true);
         $actions['label'] = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=all&print&id_order=' . $result['order_id'], true);
         $actions['generate_manifest'] = $this->url->link('extension/shipping/itellashipping/manifest', $this->getUserToken() . '&tab=manifest&generate&id_order=' . $result['order_id'], true);
       } else {
@@ -234,6 +236,18 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
           if (isset($result['error'])) {
             $this->session->data['itella_error'] = $result['error'];
           }
+          $redirect = true;
+        }
+        if (isset($this->request->get['resend_email']) && isset($this->request->get['id_order'])) {
+          $result = $this->resendEmail((int) $this->request->get['id_order']);
+          if (isset($result['success'])) {
+            $this->session->data['success'] = $result['success'];
+          }
+
+          if (isset($result['error'])) {
+            $this->session->data['itella_error'] = $result['error'];
+          }
+
           $redirect = true;
         }
         if (isset($this->request->get['mass_print']) && isset($this->request->post['order_ids'])) {
@@ -439,6 +453,13 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
     $this->load->model('extension/itellashipping/itellashipping');
     $order = $this->model_extension_itellashipping_itellashipping;
     return $order->registerManifest($id_orders);
+  }
+
+  private function resendEmail($id_order)
+  {
+    $this->load->model('extension/itellashipping/itellashipping');
+    $order = $this->model_extension_itellashipping_itellashipping;
+    return $order->sendTrackingUrl($id_order);
   }
 
   private function printLabel($id_order)

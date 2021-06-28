@@ -203,3 +203,13 @@ $_['text_api_contract_gls_help']    = 'For GLS countries only (not LT, LV, EE, F
 
 // order_info_form comment field
 $_['itella_lng_comment'] = 'Shipment comment:';
+
+// Tracking Email
+$_['itella_lng_resend_email'] = 'Resend tracking URL email';
+$_['btn_resend_email'] = 'Resend tracking URL email';
+$_['tab_tracking_email'] = 'Tracking URL Email';
+$_['text_tracking_email'] = 'Tracking URL email';
+$_['entry_tracking_email_subject'] = 'Email subject';
+$_['entry_tracking_email_template'] = 'Email template';
+$_['text_tracking_email_template_help'] = '{{ tracking_url }} - key where to insert tracking URL, to insert just tracking number please use {{ tracking_number }}';
+$_['error_tracking_email_disabled'] = 'Tracking URL email is disabled';
