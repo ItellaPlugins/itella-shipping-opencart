@@ -2,6 +2,10 @@
   <div class="panel panel-default col-md-6 itella-no-padding">
     <div class="panel-heading">
       <h3 class="panel-title"><img src="view/image/itellashipping/logo.png" class="itella-logo" alt="Itella Logo">{{ itella_lng['title'] }}</h3>
+      {% if itella['data']['label_number'] and itella['tracking_email_status'] %}
+      <a href="index.php?route=extension/shipping/itellashipping/ajax&action=resendEmail&id_order={{ itella['data']['id_order'] }}&user_token={{ user_token }}"
+        id="itella_resend_email_btn" class="btn btn-success"><i class="fa fa-envelope-o"></i>{{ itella_lng['resend_email'] }}</a>
+      {% endif %}
     </div>
 
     {% if itella['data']['error'] %}
@@ -143,6 +147,12 @@
     display: flex;
   }
 
+  #itella_panel .panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .itella-form > .row:not(:last-of-type) {
     margin-bottom: 1em;
   }
@@ -207,6 +217,7 @@
     background-color: #6eb257;
   }
 
+  #itella_panel .panel-heading .btn .fa,
   .itella-footer .btn .fa {
     padding-right: 5px;
   }
@@ -263,6 +274,7 @@
     var $extra_services = $('#itella_panel .extra-services-container');
     var $response = $('#itella_panel .ajaxresponse');
     var itella_buttons = {
+      resend_email: document.getElementById('itella_resend_email_btn'),
       print: document.getElementById('itella_print_label_btn'),
       save: document.getElementById('itella_save_cart_info_btn'),
       generate: document.getElementById('itella_generate_label_btn')
@@ -308,6 +320,31 @@
       }
 
       generateItellaLabel(new FormData(itella_form));
+    });
+
+    $(itella_buttons.resend_email).on('click', function(e) {
+      e.preventDefault();
+
+      showOverlay();
+      $.ajax({
+        type: "GET",
+        url: this.href,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function(res) {
+          res = JSON.parse(res);
+          if (typeof res.error != 'undefined') {
+            showResponse(res.error, 'danger');
+          }
+          if (typeof res.success != 'undefined') {
+            showResponse(res.success, 'success');
+          }
+        },
+        complete: function(jqXHR, status) {
+          hideOverlay();
+        }
+      });
     });
 
     function fillItellaData() {

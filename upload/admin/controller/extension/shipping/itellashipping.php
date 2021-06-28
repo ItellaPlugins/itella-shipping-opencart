@@ -95,6 +95,12 @@ class ControllerExtensionShippingItellashipping extends Controller
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
 
+			if (isset($this->request->post['tracking_email_update'])) {
+				unset($this->request->post['tracking_email_update']);
+				$this->saveSettings($this->request->post);
+				$this->session->data['success'] = $this->language->get('text_success');
+			}
+
 			$this->response->redirect($this->url->link('extension/shipping/itellashipping', $this->getUserToken(), true));
 		}
 
@@ -182,6 +188,12 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['entry_api_2711'] = $this->language->get('entry_api_2711');
 		$data['entry_api_2317'] = $this->language->get('entry_api_2317');
 
+		// Tracking email tab
+		$data['tab_tracking_email'] = $this->language->get('tab_tracking_email');
+		$data['text_tracking_email'] = $this->language->get('text_tracking_email');
+		$data['entry_tracking_email_subject'] = $this->language->get('entry_tracking_email_subject');
+		$data['entry_tracking_email_template'] = $this->language->get('entry_tracking_email_template');
+		$data['text_tracking_email_template_help'] = $this->language->get('text_tracking_email_template_help');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -243,7 +255,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 			'itellashipping_cod_status', 'itellashipping_bic', 'itellashipping_iban',
 			'itellashipping_sender_name', 'itellashipping_sender_street', 'itellashipping_sender_postcode',
 			'itellashipping_sender_city', 'itellashipping_sender_country', 'itellashipping_sender_phone',
-			'itellashipping_sender_email', 'itellashipping_advanced_email_subject'
+			'itellashipping_sender_email', 'itellashipping_advanced_email_subject',
+			'itellashipping_tracking_email_status', 'itellashipping_tracking_email_subject'
 		) as $key) {
 			if (isset($this->request->post[$key])) {
 				$data[$key] = $this->request->post[$key];
@@ -257,6 +270,15 @@ class ControllerExtensionShippingItellashipping extends Controller
 			$data['itellashipping_cod_options'] = json_decode($this->request->post['itellashipping_cod_options']);
 		} else {
 			$data['itellashipping_cod_options'] = json_decode($this->config->get('itellashipping_cod_options'));
+		}
+
+		if (isset($this->request->post['itellashipping_tracking_email_template'])) {
+			$data['itellashipping_tracking_email_template'] = json_decode($this->request->post['itellashipping_tracking_email_template']);
+		} else {
+			$data['itellashipping_tracking_email_template'] = json_decode($this->config->get('itellashipping_tracking_email_template'));
+			if (empty($data['itellashipping_tracking_email_template'])) {
+				$data['itellashipping_tracking_email_template'] = file_get_contents(DIR_TEMPLATE . 'extension/itellashipping/tracking_mail.twig');
+			}
 		}
 
 		// opencart 3 expects status and sort_order begin with shipping_ 
@@ -547,6 +569,10 @@ class ControllerExtensionShippingItellashipping extends Controller
 			$this->request->post['itellashipping_cod_options'] = json_encode($this->request->post['itellashipping_cod_options']);
 		}
 
+		if (isset($this->request->post['itellashipping_tracking_email_template'])) {
+			$this->request->post['itellashipping_tracking_email_template'] = json_encode($this->request->post['itellashipping_tracking_email_template']);
+		}
+
 		// Opencart 3 expects status to be shipping_itellashipping_status
 		if (version_compare(VERSION, '3.0.0', '>=') && isset($this->request->post['itellashipping_status'])) {
 			$this->request->post['shipping_itellashipping_status'] = $this->request->post['itellashipping_status'];
@@ -590,6 +616,10 @@ class ControllerExtensionShippingItellashipping extends Controller
 				echo json_encode($this->ajaxPrintLabel());
 				exit();
 				break;
+			case 'resendEmail':
+				echo json_encode($this->ajaxResendEmail());
+				exit();
+				break;
 			case 'generateLabel':
 				echo json_encode($this->ajaxGenerateLabel());
 				exit();
@@ -620,6 +650,19 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$this->load->model('extension/itellashipping/itellashipping');
 		return $this->model_extension_itellashipping_itellashipping->generateLabel($id_order);
+	}
+
+	protected function ajaxResendEmail()
+	{
+		if (isset($this->request->get['id_order'])) {
+			$id_order = (int) $this->request->get['id_order'];
+		} else {
+			return array('error' => $this->language->get('error_no_order_id'));
+		}
+
+		$this->load->model('extension/itellashipping/itellashipping');
+		$order = $this->model_extension_itellashipping_itellashipping;
+		return $order->sendTrackingUrl($id_order);
 	}
 
 	protected function ajaxPrintLabel()

@@ -134,7 +134,9 @@
                         <?= $error_itella_error; ?>
                       <?php else: ?>
                         <?php foreach($order['actions'] as $action => $link): ?>
+                          <?php if ($action != 'resend_email' or ($tracking_email_status and $action == 'resend_email')): ?>
                           <a class="btn btn-default" href="<?= $link; ?>"><?= ${"btn_" . $action}; ?></a>
+                          <?php endif; ?>
                         <?php endforeach; ?>
                       <?php endif; ?>
                     </td>
