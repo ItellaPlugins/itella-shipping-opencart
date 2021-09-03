@@ -553,6 +553,14 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
       return $pdf;
     }
 
+    $pdf = base64_decode($pdf);
+    $manifest_file = DIR_DOWNLOAD  . 'manifest.pdf';
+    file_put_contents($manifest_file, $pdf);
+
+    if (!is_file($manifest_file)) {
+      return ['error' => 'Failed to save manifest in storage directory'];
+    }
+
     $items = $order->getItems($id_manifest);
     if (isset($items['error'])) {
       return $items;
@@ -563,8 +571,8 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
       if (!$send_to) {
         throw new \Exception($this->language->get('lng_courier_email_missing'));
       }
-      $mailer = new CallCourier($send_to);
-      $result = $mailer
+      $itella_mailer = new CallCourier($send_to);
+      $body_html = $itella_mailer
         ->setSenderEmail($this->config->get('itellashipping_sender_email'))
         ->setSubject($this->config->get('itellashipping_advanced_email_subject'))
         ->setPickUpAddress(array(
@@ -576,9 +584,41 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
           //'pickup_time' => $storeObj->pick_start . ' - ' . $storeObj->pick_finish,
           'contact_phone' => $this->config->get('itellashipping_sender_phone'),
         ))
-        ->setAttachment($pdf, true)
+        ->setAttachment(true)
         ->setItems($items)
-        ->callCourier();
+        ->buildMailBody();
+        // ->callCourier();
+
+      $store_address = implode(', ', [
+        $this->config->get('itellashipping_sender_street'),
+        $this->config->get('itellashipping_sender_postcode'),
+        $this->config->get('itellashipping_sender_city'),
+        $this->config->get('itellashipping_sender_country')
+      ]);
+
+      if (version_compare(VERSION, '3.0.0', '>=')) {
+        $mail = new Mail($this->config->get('config_mail_engine'));
+      } else { // OC 2.3
+        $mail = new Mail();
+        $mail->protocol = $this->config->get('config_mail_protocol');
+      }
+      
+      $mail->parameter = $this->config->get('config_mail_parameter');
+      $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+      $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+      $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+      $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+      $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+  
+      $mail->setTo($send_to);
+      $mail->setFrom($this->config->get('itellashipping_sender_email'));
+      $mail->setSender(html_entity_decode($this->config->get('itellashipping_sender_name'), ENT_QUOTES, 'UTF-8'));
+      $subject = $this->config->get('itellashipping_advanced_email_subject');
+      $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+      $mail->addAttachment($manifest_file);
+      $mail->setHtml($body_html);
+      $mail->send();
+        
       return array('success' => $this->language->get('lng_call_success') . ' ' . $store_address);
     } catch (\Exception $th) {
       return array('error' => $this->language->get('lng_call_failed') . ' ' . $th->getMessage());
