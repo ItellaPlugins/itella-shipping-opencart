@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.11] - 2021-09-03
+### Changed
+- Call carrier now uses Opencart Mail object, this should fix issues when Opencart has custom mail settings instead of using default php mail() function.
+
 ## [1.2.10] - 2021-06-28
 ### Added
 - Added new module functionality for sending email with tracking URL upon label generation.
