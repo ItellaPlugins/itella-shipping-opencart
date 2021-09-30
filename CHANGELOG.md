@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.12] - 2021-09-30
+### Added
+- Pickup point product (2711) now supports COD additional service
+
+### Updated
+- itella-api to 2.3.4
+
 ## [1.2.11] - 2021-09-03
 ### Changed
 - Call carrier now uses Opencart Mail object, this should fix issues when Opencart has custom mail settings instead of using default php mail() function.
