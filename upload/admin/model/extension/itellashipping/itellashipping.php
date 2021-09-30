@@ -383,7 +383,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
 
       // Create manualy assigned additional services (multiparcel and pickup point services auto created by lib)
       $extra = array();
-      if (!$order_data['is_pickup'] && $order_data['is_cod']) {
+      if ($order_data['is_cod']) {
         $extra[] = new AdditionalService(AdditionalService::COD, array(
           'amount' => $order_data['cod_amount'],
           'account' => $this->config->get('itellashipping_iban'),
