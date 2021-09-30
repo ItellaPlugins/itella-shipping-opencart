@@ -370,13 +370,13 @@
       // reset packs to 1
       packs.value = 1;
       $(packs).trigger('change');
-      // disable COD
-      is_cod.value = 0;
-      cod_amount.disabled = true;
+      // COD
+      is_cod.value = 1;
+      cod_amount.disabled = false;
       //$(is_cod).trigger('change');
 
       packs.disabled = true;
-      is_cod.disabled = true;
+      is_cod.disabled = false;
       is_multi.disabled = true;
 
       $extra_services.hide();

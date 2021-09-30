@@ -769,7 +769,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 			$data['weight'] = 0;
 		}
 
-		if ($is_pickup == 0 && isset($this->request->post['is_cod']) && isset($this->request->post['cod_amount'])) {
+		if (isset($this->request->post['is_cod']) && isset($this->request->post['cod_amount'])) {
 			$data['is_cod'] = (int) $this->request->post['is_cod'];
 			$data['cod_amount'] = $this->request->post['cod_amount'];
 		} else {
