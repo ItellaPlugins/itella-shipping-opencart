@@ -21,7 +21,7 @@ function initItella($this) {
 
 function buildItella(target, terminals, country_code, current_method) {
   var $newEl = $('<div></div>');
-  $(target).closest('label').parent().append($newEl);
+  $(target).closest('div').append($newEl);
   window.itella = new itellaMapping($newEl.get(0));
   itella
     .setImagesUrl('image/catalog/itellashipping/')
