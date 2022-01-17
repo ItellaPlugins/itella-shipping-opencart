@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.13] - 2022-01-17
+### Changed
+- Changed how terminal selector place is determined. To accomodate possible structure differences, it will be added to closes div element from radio input.
+
 ## [1.2.12] - 2021-09-30
 ### Added
 - Pickup point product (2711) now supports COD additional service
