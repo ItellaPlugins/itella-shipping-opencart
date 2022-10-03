@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.14] - 2022-01-17
+### Updated
+- itella-api to 2.3.7
+- updated logo colors
+
 ## [1.2.13] - 2022-01-17
 ### Changed
 - Changed how terminal selector place is determined. To accomodate possible structure differences, it will be added to closes div element from radio input.
