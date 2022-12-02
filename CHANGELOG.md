@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.15] - 2022-12-02
+### Added
+- feature to change shipping option title in checkout for courier and pickup points
+
 ## [1.2.14] - 2022-01-17
 ### Updated
 - itella-api to 2.3.7
