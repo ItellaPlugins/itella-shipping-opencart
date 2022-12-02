@@ -193,6 +193,38 @@
                   <input type="text" name="itellashipping_sort_order" value="<?php echo $itellashipping_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                 </div>
               </div>
+
+              <div class="form-group">
+                <div class="panel-body table-responsive">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th><?php echo $itellashipping_title_lang; ?></th>
+                        <th><?php echo $itellashipping_pickup_point_title; ?></th>
+                        <th><?php echo $itellashipping_courier_title; ?></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($languages as $language) : ?>
+                        <tr>
+                          <td><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></td>
+                          <?php foreach ($itellashipping_title_data[$language['language_id']] as $key => $title): ?>
+                            <td>
+                              <input 
+                                type="text" 
+                                name="<?php echo $key; ?>" 
+                                value="<?php echo $title; ?>" 
+                                class="form-control" 
+                              />
+                            </td>
+                          <?php endforeach; ?>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
             </form>
           </div>
 

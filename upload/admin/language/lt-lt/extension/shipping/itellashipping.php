@@ -13,7 +13,7 @@ $_['text_enabled']    = 'Įjungta';
 $_['text_disabled']   = 'Išjungta';
 $_['text_home']       = 'Pagrindinis';
 $_['text_extension']  = 'Išplėtimai';
-$_['text_manifest']	  = 'Smartpost manifestas';
+$_['text_manifest']      = 'Smartpost manifestas';
 $_['button_save']     = 'Saugoti';
 $_['button_cancel']   = 'Atšaukti';
 
@@ -213,3 +213,10 @@ $_['entry_tracking_email_subject'] = 'El. laiško tema';
 $_['entry_tracking_email_template'] = 'El. laiško šablonas';
 $_['text_tracking_email_template_help'] = '{{ tracking_url }} - yra raktas kur bus įterptas sekimo URL, norint įterpti tik sekimo numerį naudokite {{ tracking_number }}';
 $_['error_tracking_email_disabled'] = 'Sekimo URL siuntimas išjungtas';
+
+// added in v1.2.15
+$_['itellashipping_title_lang'] = 'Kalba';
+$_['itellashipping_pickup_point_title'] = 'Terminalo opcijos pavadinimas';
+$_['itellashipping_courier_title'] = 'Kurjerio opcijos pavadinimas';
+$_['itellashipping_pickup_point_title_default'] = 'Smartpost pristatymas į atsiėmimo tašką';
+$_['itellashipping_courier_title_default'] = 'Smartpost pristatymas į nurodytą adresą';

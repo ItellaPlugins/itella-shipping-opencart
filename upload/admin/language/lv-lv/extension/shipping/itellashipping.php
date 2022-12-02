@@ -13,7 +13,7 @@ $_['text_enabled']    = 'Enabled';
 $_['text_disabled']   = 'Disabled';
 $_['text_home']       = 'Sākums';
 $_['text_extension']  = 'Extensions';
-$_['text_manifest']	  = 'Smartpost Manifest';
+$_['text_manifest']      = 'Smartpost Manifest';
 $_['button_save']     = 'Saglabāt';
 $_['button_cancel']   = 'Atcelt';
 
@@ -213,3 +213,10 @@ $_['entry_tracking_email_subject'] = 'Email subject';
 $_['entry_tracking_email_template'] = 'Email template';
 $_['text_tracking_email_template_help'] = '{{ tracking_url }} - key where to insert tracking URL, to insert just tracking number please use {{ tracking_number }}';
 $_['error_tracking_email_disabled'] = 'Tracking URL email is disabled';
+
+// added in v1.2.15
+$_['itellashipping_title_lang'] = 'Language';
+$_['itellashipping_pickup_point_title'] = 'Pickup point title in checkout';
+$_['itellashipping_courier_title'] = 'Courier title in checkout';
+$_['itellashipping_pickup_point_title_default'] = 'Smartpost Pickup point';
+$_['itellashipping_courier_title_default'] = 'Smartpost Courier';

@@ -38,9 +38,10 @@ class ModelExtensionShippingItellaShipping extends Model
 			$courier_cost = $this->calculateCost($prices['courier_price'], $prices['courier_price_free']);
 
 			if ($courier_cost >= 0) {
+				$courier_title = $this->config->get('itellashipping_courier_title_' . $this->config->get('config_language_id'));
 				$quote_data['courier'] = array(
 					'code'         => 'itellashipping.courier',
-					'title'        => $this->language->get('text_courier'),
+					'title'        => !empty($courier_title) ? $courier_title : $this->language->get('text_courier'),
 					'cost'         => $courier_cost,
 					'tax_class_id' => $this->config->get('itellashipping_tax_class_id'),
 					'text'         => $this->currency->format($this->tax->calculate($courier_cost, $this->config->get('itellashipping_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'])
@@ -71,9 +72,10 @@ JS;
 				}
 
 				if (count($terminals) > 0) {
+					$pickup_title = $this->config->get('itellashipping_pickup_point_title_' . $this->config->get('config_language_id'));
 					$quote_data['pickup'] = array(
 						'code'         => 'fake_itella.pickup',
-						'title'        => $this->language->get('text_pickup'),
+						'title'        => !empty($pickup_title) ? $pickup_title : $this->language->get('text_pickup'),
 						'cost'         => $pickup_cost,
 						'tax_class_id' => $this->config->get('itellashipping_tax_class_id'),
 						'text'         => $this->currency->format($this->tax->calculate($pickup_cost, $this->config->get('itellashipping_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency']) . $js
