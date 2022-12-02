@@ -194,6 +194,38 @@
                   <input type="text" name="itellashipping_sort_order" value="{{ itellashipping_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
                 </div>
               </div>
+
+              <div class="form-group">
+                <div class="panel-body table-responsive">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>{{ itellashipping_title_lang }}</th>
+                        <th>{{ itellashipping_pickup_point_title }}</th>
+                        <th>{{ itellashipping_courier_title }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for language in languages %}
+                        <tr>
+                          <td><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></td>
+                          {% for key, title in itellashipping_title_data[language.language_id] %}
+                          <td>
+                            <input 
+                              type="text" 
+                              name="{{ key }}" 
+                              value="{{ title }}" 
+                              class="form-control" 
+                            />
+                          </td>
+                          {% endfor %}
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
             </form>
           </div>
 

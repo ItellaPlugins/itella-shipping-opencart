@@ -244,6 +244,31 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+		$data['languages'] = $languages;
+
+		$data['itellashipping_title_data'] = [];
+		$default_title_pickup = $this->language->get('itellashipping_pickup_point_title_default');
+		$default_title_courier = $this->language->get('itellashipping_courier_title_default');
+		foreach ($languages as $language) {
+			$key_pickup = 'itellashipping_pickup_point_title_' . $language['language_id'];
+			$localized_title_pickup = $this->config->get($key_pickup);
+
+			$key_courier = 'itellashipping_courier_title_' . $language['language_id'];
+			$localized_title_courier = $this->config->get($key_courier);
+
+			$data['itellashipping_title_data'][$language['language_id']] = [
+				$key_pickup => $localized_title_pickup ? $localized_title_pickup : $default_title_pickup,
+				$key_courier => $localized_title_courier ? $localized_title_courier : $default_title_courier
+			];
+		}
+
+		$data['itellashipping_title_lang'] = $this->language->get('itellashipping_title_lang');
+		$data['itellashipping_pickup_point_title'] = $this->language->get('itellashipping_pickup_point_title');
+		$data['itellashipping_courier_title'] = $this->language->get('itellashipping_courier_title');
+
 		$data['ajax_url'] = HTTPS_CATALOG . 'index.php?route=extension/module/itellashipping/ajax&' . $this->getUserToken();
 		$data['ajax_url'] = 'index.php?route=extension/shipping/itellashipping/ajax&' . $this->getUserToken();
 
