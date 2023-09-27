@@ -46,7 +46,7 @@ class ControllerExtensionModuleItellaShipping extends Controller
   protected function updateLocations()
   {
     require_once(DIR_SYSTEM . 'library/itella_lib/itella-api/vendor/autoload.php');
-    $loc = new \Mijora\Itella\Locations\PickupPoints('https://locationservice.posti.com/api/2/location');
+    $loc = new \Mijora\Itella\Locations\PickupPoints('https://delivery.plugins.itella.com/api/locations');
     $dir = DIR_DOWNLOAD . "itellashipping/";
     if (!is_dir($dir)) {
       mkdir($dir, 0777, true);
