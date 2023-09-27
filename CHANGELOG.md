@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.16] - 2023-09-27
+### Changed
+- Parcel terminal locations API
+
 ## [1.2.15] - 2022-12-02
 ### Added
 - feature to change shipping option title in checkout for courier and pickup points
