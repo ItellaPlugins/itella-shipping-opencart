@@ -126,7 +126,7 @@ class ControllerExtensionModuleItellaShipping extends Controller
       //'data' => $this->session->data,
       'country_info' => $country_info,
       'request' => $this->request->post,
-      'terminals' => $this->loadTerminals(array('country_code' => $country_code)),
+      'terminals' => $this->loadAndFilterTerminals(array('country_code' => $country_code)),
       'country_code' => $country_code,
       'current_method' => $current_method
     ));
@@ -141,6 +141,39 @@ class ControllerExtensionModuleItellaShipping extends Controller
     }
     $locations = file_get_contents($path);
     return $locations;
+  }
+
+  public function loadAndFilterTerminals($params)
+  {
+    $locations_json = $this->loadTerminals($params);
+    if (!$locations_json) {
+      return false;
+    }
+
+    $locations = json_decode($locations_json);
+    if (!is_array($locations)) {
+      return false;
+    }
+
+    $exclude_outdoors = $this->config->get('itellashipping_locations_exclude_outdoors');
+
+    $remove_locations = array();
+    foreach ($locations as $key => $location) {
+      if (!property_exists($location, 'capabilities')) {
+        continue;
+      }
+      foreach ($location->capabilities as $capability) {
+        if ($exclude_outdoors && $capability->name == 'outdoors' && $capability->value == 'OUTDOORS') {
+          $remove_locations[] = $key;
+          break;
+        }
+      }
+    }
+    foreach ($remove_locations as $key) {
+      unset($locations[$key]);
+    }
+
+    return json_encode($locations);
   }
 
   /**
