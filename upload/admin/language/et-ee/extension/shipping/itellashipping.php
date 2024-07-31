@@ -47,12 +47,15 @@ $_['error_itella_error']  = 'Tellimuses esineb vigu';
 $_['error_itella_empty']  = 'No order IDs given';
 
 // Locations
-$_['text_locations']        = 'Paki kättesaamiskohtade teave';
-$_['text_last_update']      = 'Viimati uuendatud';
-$_['text_total_locations']  = 'Kõik kättesaamiskohad';
-$_['text_cron_url']         = 'CRON URL';
+$_['text_locations']                        = 'Paki kättesaamiskohtade teave';
+$_['text_last_update']                      = 'Viimati uuendatud';
+$_['text_total_locations']                  = 'Kõik kättesaamiskohad';
+$_['text_cron_url']                         = 'CRON URL';
+$_['text_locations_settings']               = 'Pickup points settings';
+$_['entry_locations_exclude_outdoors']      = 'Exclude outdoors';
+$_['text_locations_exclude_outdoors_help']  = 'In the Checkout page dont show pickup points that have "Outdoors" parameter';
 
-$_['button_update']         = 'Update Now';
+$_['button_update']                         = 'Update Now';
 
 // API
 $_['text_cod_options_help'] = 'Vali makseviisid kaardimakseks kauba kättesaamisel';

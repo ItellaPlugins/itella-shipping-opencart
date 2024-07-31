@@ -47,12 +47,15 @@ $_['error_itella_error']  = 'Order has errors';
 $_['error_itella_empty']  = 'No order IDs given';
 
 // Locations
-$_['text_locations']        = 'Информация о пунктах получения';
-$_['text_last_update']      = 'Последнее обновление';
-$_['text_total_locations']  = 'Общее количество пунктов получения посылок';
-$_['text_cron_url']         = 'CRON URL';
+$_['text_locations']                        = 'Информация о пунктах получения';
+$_['text_last_update']                      = 'Последнее обновление';
+$_['text_total_locations']                  = 'Общее количество пунктов получения посылок';
+$_['text_cron_url']                         = 'CRON URL';
+$_['text_locations_settings']               = 'Pickup points settings';
+$_['entry_locations_exclude_outdoors']      = 'Exclude outdoors';
+$_['text_locations_exclude_outdoors_help']  = 'In the Checkout page dont show pickup points that have "Outdoors" parameter';
 
-$_['button_update']         = 'Update Now';
+$_['button_update']                         = 'Update Now';
 
 // API
 $_['text_cod_options_help'] = 'Select payment options that are for C.O.D';

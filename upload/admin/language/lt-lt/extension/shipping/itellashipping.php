@@ -47,12 +47,15 @@ $_['error_itella_error']  = 'Užsakyme yra klaidų';
 $_['error_itella_empty']  = 'Nepateikti užsakymų ID';
 
 // Locations
-$_['text_locations']        = 'Paėmimo taškų informacija';
-$_['text_last_update']      = 'Paskutinis atnaujinimas';
-$_['text_total_locations']  = 'Viso paėmimo taškų';
-$_['text_cron_url']         = 'CRON URL';
+$_['text_locations']                        = 'Paėmimo taškų informacija';
+$_['text_last_update']                      = 'Paskutinis atnaujinimas';
+$_['text_total_locations']                  = 'Viso paėmimo taškų';
+$_['text_cron_url']                         = 'CRON URL';
+$_['text_locations_settings']               = 'Paėmimo taškų nustatymai';
+$_['entry_locations_exclude_outdoors']      = 'Nerodyti lauko taškų';
+$_['text_locations_exclude_outdoors_help']  = 'Apmokėjimo puslapyje nerodyti paėmimo taškų, kurie turi parametrą "Lauke"';
 
-$_['button_update']         = 'Atnaujinti dabar';
+$_['button_update']                         = 'Atnaujinti dabar';
 
 // API
 $_['text_cod_options_help'] = 'Pasirinkimte C.O.D atsiskaitymo būdus';
