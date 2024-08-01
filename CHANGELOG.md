@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+### Added
+- Added option to disable display of pickup points that have "Outdoor" parameter
+
 ## [1.2.16] - 2023-09-27
 ### Changed
 - Parcel terminal locations API
