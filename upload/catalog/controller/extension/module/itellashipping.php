@@ -172,6 +172,7 @@ class ControllerExtensionModuleItellaShipping extends Controller
     foreach ($remove_locations as $key) {
       unset($locations[$key]);
     }
+    $locations = array_values($locations);
 
     return json_encode($locations);
   }
