@@ -478,6 +478,37 @@
       <div class="container-fluid">
         <div class="panel panel-default">
           <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-map-marker"></i> <?php echo $text_locations_settings; ?></h3>
+          </div>
+          <div class="panel-body">
+            <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-itellashipping-pickuppoints" class="form-horizontal">
+              <input type="hidden" name="pickuppoints_settings_update">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-pickuppoints-exclude-outdoors"><?php echo $entry_locations_exclude_outdoors; ?></label>
+                <div class="col-sm-10">
+                  <select name="itellashipping_locations_exclude_outdoors" id="input-pickuppoints-exclude-outdoors" class="form-control">
+                    <?php if ($itellashipping_locations_exclude_outdoors) { ?>
+                      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                      <option value="0"><?php echo $text_disabled; ?></option>
+                    <?php } else { ?>
+                      <option value="1"><?php echo $text_enabled; ?></option>
+                      <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                    <?php } ?>
+                  </select>
+                  <p class="help-block"><?php echo $text_locations_exclude_outdoors_help; ?></p>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="panel-footer clearfix">
+            <div class="pull-right">
+              <button type="submit" form="form-itellashipping-cod" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+              <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-map-marker"></i> <?php echo $text_locations; ?></h3>
           </div>
           <div class="panel-body itella-info">

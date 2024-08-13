@@ -88,6 +88,11 @@ class ControllerExtensionShippingItellashipping extends Controller
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
 			}
+			if (isset($this->request->post['pickuppoints_settings_update'])) {
+				unset($this->request->post['pickuppoints_settings_update']);
+				$this->saveSettings($this->request->post);
+				$this->session->data['success'] = $this->language->get('text_success');
+			}
 
 			if (isset($this->request->post['advanced_settings_update'])) {
 				unset($this->request->post['advanced_settings_update']);
@@ -281,7 +286,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 			'itellashipping_sender_name', 'itellashipping_sender_street', 'itellashipping_sender_postcode',
 			'itellashipping_sender_city', 'itellashipping_sender_country', 'itellashipping_sender_phone',
 			'itellashipping_sender_email', 'itellashipping_advanced_email_subject',
-			'itellashipping_tracking_email_status', 'itellashipping_tracking_email_subject'
+			'itellashipping_tracking_email_status', 'itellashipping_tracking_email_subject',
+			'itellashipping_locations_exclude_outdoors'
 		) as $key) {
 			if (isset($this->request->post[$key])) {
 				$data[$key] = $this->request->post[$key];
