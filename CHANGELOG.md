@@ -4,6 +4,9 @@
 ### Added
 - Added option to disable display of pickup points that have "Outdoor" parameter
 
+### Fixed
+- Fixed that the COD service would not be selected automatically
+
 ## [1.2.16] - 2023-09-27
 ### Changed
 - Parcel terminal locations API
