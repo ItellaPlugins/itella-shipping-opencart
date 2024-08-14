@@ -6,6 +6,7 @@
 
 ### Fixed
 - Fixed that the COD service would not be selected automatically
+- Fix error when installing module on server with PHP 5.6
 
 ## [1.2.16] - 2023-09-27
 ### Changed

@@ -542,7 +542,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
   {
     $country_code = strtolower($country_code);
   
-    return isset(self::TRACKING_URL[$country_code]) ? self::TRACKING_URL[$country_code] : self::TRACKING_URL['default'];
+    return (self::TRACKING_URL[$country_code] !== null) ? self::TRACKING_URL[$country_code] : self::TRACKING_URL['default'];
   }
 
   public function getLabel($id_order)
