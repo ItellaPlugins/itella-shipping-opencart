@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.17] - 2024-09-20
 ### Added
 - Added option to disable display of pickup points that have "Outdoor" parameter
 
