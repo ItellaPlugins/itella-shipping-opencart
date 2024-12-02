@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.18] - 2024-12-02
+### Updated
+- itella-api to 2.3.8.1
+
 ## [1.2.17] - 2024-09-20
 ### Added
 - Added option to disable display of pickup points that have "Outdoor" parameter
