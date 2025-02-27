@@ -224,5 +224,5 @@ $_['itellashipping_courier_title'] = 'Courier title in checkout';
 $_['itellashipping_pickup_point_title_default'] = 'Smartposti Pickup point';
 $_['itellashipping_courier_title_default'] = 'Smartposti Courier';
 
-// added in vx.x.x
+// added in v1.2.19
 $_['browser_tab_title'] = 'Smartposti settings';

@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased]
+### Updated
+- itella-mapping.js to v1.3.2
+- itella-api to 2.3.9
+
+### Changed
+- name "Smartpost" and "Smartpost Itella" to "Smartposti"
+- logo to "Smartposti"
+
 ## [1.2.18] - 2024-12-02
 ### Updated
 - itella-api to 2.3.8.1
