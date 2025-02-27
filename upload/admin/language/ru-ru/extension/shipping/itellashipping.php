@@ -1,19 +1,19 @@
 <?php
 //Menu
-$_['menu_head']     = 'Smartpost';
+$_['menu_head']     = 'Smartposti';
 $_['menu_manifest'] = 'Manifest';
 $_['menu_settings'] = 'Settings';
 
 // Heading
-$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Smartpost Itella Logo" style="height: 33px;">Smartpost';
-$_['heading_title_nologo']  = 'Smartpost Itella';
+$_['heading_title']         = '<img src="view/image/itellashipping/logo.png" alt="Smartposti Logo" style="height: 33px;">Smartposti';
+$_['heading_title_nologo']  = 'Smartposti';
 
 // Defaults
 $_['text_enabled']    = 'Enabled';
 $_['text_disabled']   = 'Disabled';
 $_['text_home']       = 'Начало';
 $_['text_extension']  = 'Extensions';
-$_['text_manifest']      = 'Smartpost Manifest';
+$_['text_manifest']      = 'Smartposti Manifest';
 $_['button_save']     = 'Сохранить';
 $_['button_cancel']   = 'Отменить';
 
@@ -27,7 +27,7 @@ $_['xml_updated']   = 'system/itella_base.ocmod.xml updated. Please refresh modi
 
 // Text
 $_['text_shipping'] = 'Доставкa';
-$_['text_success']  = 'Success: Smartpost settings updated!';
+$_['text_success']  = 'Success: Smartposti settings updated!';
 $_['text_edit']     = 'Module settings';
 
 // Entry
@@ -110,12 +110,12 @@ $_['text_price_help_country'] = 'Выбор ограничен определе�
 
 // order_info_form
 $_['itella_bad_order_id']   = 'Order information not found in database';
-$_['itella_not_itella']     = 'Not Smartpost order';
+$_['itella_not_itella']     = 'Not Smartposti order';
 $_['itella_bad_terminal']   = 'Pickup point doesnt exist or it was removed';
-$_['itella_insert_failed']  = 'Failed to add this order to Smartpost table';
+$_['itella_insert_failed']  = 'Failed to add this order to Smartposti table';
 
-$_['itella_lng_title']          = 'Smartpost';
-$_['itella_lng_prefix']         = 'Smartpost:';
+$_['itella_lng_title']          = 'Smartposti';
+$_['itella_lng_prefix']         = 'Smartposti:';
 $_['itella_lng_packets_total']  = 'Посылки (вместе):';
 $_['itella_lng_weight']         = 'Вес (кг):';
 $_['itella_lng_cod']            = 'C.O.D:';
@@ -177,7 +177,7 @@ $_['lng_call_failed']           = 'Call courier failed with:';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifest:';
-$_['lng_modal_title']       = 'Call Smartpost courier';
+$_['lng_modal_title']       = 'Call Smartposti courier';
 $_['lng_modal_message']     = 'Courier will be called to';
 $_['lng_modal_name']        = 'Имя:';
 $_['lng_modal_address']     = 'Адрес:';
@@ -221,5 +221,8 @@ $_['error_tracking_email_disabled'] = 'Tracking URL email is disabled';
 $_['itellashipping_title_lang'] = 'Language';
 $_['itellashipping_pickup_point_title'] = 'Pickup point title in checkout';
 $_['itellashipping_courier_title'] = 'Courier title in checkout';
-$_['itellashipping_pickup_point_title_default'] = 'Smartpost Pickup point';
-$_['itellashipping_courier_title_default'] = 'Smartpost Courier';
+$_['itellashipping_pickup_point_title_default'] = 'Smartposti Pickup point';
+$_['itellashipping_courier_title_default'] = 'Smartposti Courier';
+
+// added in vx.x.x
+$_['browser_tab_title'] = 'Smartposti settings';

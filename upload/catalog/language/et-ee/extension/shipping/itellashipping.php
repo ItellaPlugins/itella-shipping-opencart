@@ -1,10 +1,10 @@
 <?php
 // Text
-$_['text_title']  = 'Smartpost Itella';
+$_['text_title']  = 'Smartposti';
 
 $_['text_courier']  = 'Smartposti kuller';
 $_['text_pickup']   = 'Smartposti kättesaamiskoht';
-$_['text_prefix']   = 'Smartpost:';
+$_['text_prefix']   = 'Smartposti:';
 
 $_['itella_map_modal_header']            = 'Paki kättesaamiskohad';
 $_['itella_map_selector_header']         = 'Paki kättesaamiskoht';
