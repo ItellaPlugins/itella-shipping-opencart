@@ -225,4 +225,5 @@ $_['itellashipping_pickup_point_title_default'] = 'Smartposti pristatymas į ats
 $_['itellashipping_courier_title_default'] = 'Smartposti pristatymas į nurodytą adresą';
 
 // added in v1.2.19
-$_['browser_tab_title'] = 'Smartposti nustatymai';
+$_['browser_tab_settings'] = 'Smartposti nustatymai';
+$_['browser_tab_manifest'] = 'Smartposti manifestas';

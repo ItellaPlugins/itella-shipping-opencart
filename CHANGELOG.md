@@ -9,6 +9,9 @@
 - name "Smartpost" and "Smartpost Itella" to "Smartposti"
 - logo to "Smartposti"
 
+### Fixed
+- Fixed browser tab title in module controlers
+
 ## [1.2.18] - 2024-12-02
 ### Updated
 - itella-api to 2.3.8.1

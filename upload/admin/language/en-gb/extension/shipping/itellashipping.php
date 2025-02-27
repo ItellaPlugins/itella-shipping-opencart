@@ -225,4 +225,5 @@ $_['itellashipping_pickup_point_title_default'] = 'Smartposti Pickup point';
 $_['itellashipping_courier_title_default'] = 'Smartposti Courier';
 
 // added in v1.2.19
-$_['browser_tab_title'] = 'Smartposti settings';
+$_['browser_tab_settings'] = 'Smartposti settings';
+$_['browser_tab_manifest'] = 'Smartposti manifest';
