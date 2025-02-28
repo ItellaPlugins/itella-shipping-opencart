@@ -12,6 +12,8 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
   {
     $this->load->language('extension/shipping/itellashipping');
 
+    $this->document->setTitle($this->language->get('browser_tab_manifest'));
+
     $data['error_warning'] = '';
     $tab = 'all';
 

@@ -29,7 +29,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 	{
 		$this->load->language('extension/shipping/itellashipping');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('browser_tab_settings'));
 
 		$this->load->model('setting/setting');
 
