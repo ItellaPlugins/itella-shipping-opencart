@@ -1,10 +1,10 @@
 <?php
 // Text
-$_['text_title']  = 'Smartpost Itella';
+$_['text_title']  = 'Smartposti';
 
-$_['text_courier']  = 'Smartpost Courier';
-$_['text_pickup']   = 'Smartpost Pickup point';
-$_['text_prefix']   = 'Smartpost:';
+$_['text_courier']  = 'Smartposti Courier';
+$_['text_pickup']   = 'Smartposti Pickup point';
+$_['text_prefix']   = 'Smartposti:';
 
 $_['itella_map_modal_header']            = 'Pickup points';
 $_['itella_map_selector_header']         = 'Pickup point';
@@ -19,4 +19,4 @@ $_['itella_map_nothing_found']           = 'Nothing found';
 $_['itella_map_select_pickup_point_btn'] = 'Select pickup point';
 $_['itella_map_no_information']          = 'No information';
 $_['itella_map_error_leaflet']           = 'Leaflet is required for Itella-Mapping';
-$_['itella_map_error_missing_mount_el']  = 'No mount supplied to itellaShipping';
+$_['itella_map_error_missing_mount_el']  = 'No mount supplied to Itella-Mapping';
