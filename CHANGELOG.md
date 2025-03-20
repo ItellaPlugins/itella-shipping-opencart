@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.3.0] - 2025-03-20
 ### Updated
 - itella-mapping.js to v1.3.2
 - itella-api to 2.3.9
