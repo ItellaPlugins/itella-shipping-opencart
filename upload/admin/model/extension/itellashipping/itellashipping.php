@@ -14,10 +14,10 @@ use Mijora\Itella\Pdf\Manifest;
 class ModelExtensionItellashippingItellaShipping extends Model
 {
   const TRACKING_URL = [
-    'default' => 'https://itella.lt/en/business-customer/track-shipment/?trackingCode=@',
-    'lt' => 'https://itella.lt/verslui/siuntos-sekimas/?trackingCode=@',
-    'lv' => 'https://itella.lv/private-customer/sutijuma-meklesana/?trackingCode=@',
-    'ee' => 'https://itella.ee/ariklient/saadetise-jalgimine/?trackingCode=@',
+    'default' => 'https://www.smartposti.lt/en/receiving/parcel-tracking?trackingCode=@',
+    'lt' => 'https://www.smartposti.lt/siuntu-gavimas/siuntos-sekimas?trackingCode=@',
+    'lv' => 'https://www.smartposti.lv/paku-sanemsana/pakas-meklesana?trackingCode=@',
+    'ee' => 'https://www.smartposti.ee/pakkide-kattesaamine/saadetise-jalgimine?trackingCode=@',
   ];
 
   private $_locations = array();
@@ -75,8 +75,8 @@ class ModelExtensionItellashippingItellaShipping extends Model
       }
     }
 
-    $this->addItellaStatus('itella_status_id', 'Generated Itella Label');
-    $this->addItellaStatus('itella_error_id', 'Itella Error');
+    $this->addItellaStatus('itella_status_id', 'Generated Smartposti Label');
+    $this->addItellaStatus('itella_error_id', 'Smartposti Error');
 
     $this->copyModificationXML();
   }
