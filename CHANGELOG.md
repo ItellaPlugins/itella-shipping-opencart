@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+### Fixed
+- Fixed missing rename to "Smartposti"
+
 ## [1.3.0] - 2025-03-20
 ### Updated
 - itella-mapping.js to v1.3.2
