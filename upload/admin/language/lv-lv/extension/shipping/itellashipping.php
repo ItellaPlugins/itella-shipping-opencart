@@ -112,7 +112,7 @@ $_['text_price_help_country'] = 'Izvēle ir ierobežota noteiktai Ģeo zonai';
 $_['itella_bad_order_id']   = 'Order information not found in database';
 $_['itella_not_itella']     = 'Not Smartposti order';
 $_['itella_bad_terminal']   = 'Paņemšanas punkts neeksistē vai neaktīvs';
-$_['itella_insert_failed']  = 'Failed to add this order to Smartpost Itella table';
+$_['itella_insert_failed']  = 'Failed to add this order to Smartposti table';
 
 $_['itella_lng_title']          = 'Smartposti';
 $_['itella_lng_prefix']         = 'Smartposti:';
