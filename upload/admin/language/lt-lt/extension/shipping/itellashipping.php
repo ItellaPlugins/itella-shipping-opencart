@@ -84,9 +84,11 @@ $_['text_price_settings'] = 'Kainų nustatymai';
 $_['text_cod_settings']   = 'C.O.D nustatymai';
 $_['entry_cod_options']   = 'C.O.D pasirinkimas';
 
-$_['text_advanced_settings']        = 'Išplėstiniai nustatymai';
-$_['entry_advanced_email_subject']  = 'El. laiško tema';
-$_['entry_advanced_email']          = 'Kurjerio el. paštas';
+$_['text_advanced_settings']            = 'Išplėstiniai nustatymai';
+$_['entry_advanced_pickup_message']     = 'Paėmimo žinutė';
+$_['entry_advanced_pickup_placeholder'] = 'Kurjeriui siunčiama siuntų paėmimo žinutė';
+$_['entry_advanced_email_subject']      = 'El. laiško tema';
+$_['entry_advanced_email']              = 'Kurjerio el. paštas';
 
 $_['text_sender_settings']  = 'Siuntėjo informacija';
 $_['entry_sender_name']     = 'Vardas';
@@ -183,6 +185,8 @@ $_['lng_modal_name']        = 'Vardas:';
 $_['lng_modal_address']     = 'Adresas:';
 $_['lng_modal_phone']       = 'Kontaktinis mob. nr.:';
 $_['lng_modal_manifest_id'] = 'Prisegamo manifesto ID:';
+$_['lng_modal_call_msg']    = 'Žinutė';
+$_['lng_modal_pickup_time'] = 'Paėmimo laikas';
 $_['lng_modal_btn_call']    = 'Kviesti kurjerį';
 $_['lng_modal_btn_cancel']  = 'Atšaukti';
 
