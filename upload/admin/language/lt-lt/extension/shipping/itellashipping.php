@@ -183,6 +183,8 @@ $_['lng_modal_name']        = 'Vardas:';
 $_['lng_modal_address']     = 'Adresas:';
 $_['lng_modal_phone']       = 'Kontaktinis mob. nr.:';
 $_['lng_modal_manifest_id'] = 'Prisegamo manifesto ID:';
+$_['lng_modal_call_msg']    = 'Žinutė';
+$_['lng_modal_pickup_time'] = 'Paėmimo laikas';
 $_['lng_modal_btn_call']    = 'Kviesti kurjerį';
 $_['lng_modal_btn_cancel']  = 'Atšaukti';
 

@@ -183,6 +183,8 @@ $_['lng_modal_name']        = 'Name:';
 $_['lng_modal_address']     = 'Address:';
 $_['lng_modal_phone']       = 'Contact mob. phone:';
 $_['lng_modal_manifest_id'] = 'Manifest ID to attach:';
+$_['lng_modal_call_msg']    = 'Message';
+$_['lng_modal_pickup_time'] = 'Pickup time';
 $_['lng_modal_btn_call']    = 'Call Courier';
 $_['lng_modal_btn_cancel']  = 'Cancel';
 

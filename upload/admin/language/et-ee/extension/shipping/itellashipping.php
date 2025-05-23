@@ -183,6 +183,8 @@ $_['lng_modal_name']        = 'Nimi:';
 $_['lng_modal_address']     = 'Aadress:';
 $_['lng_modal_phone']       = 'Mobiilinumber:';
 $_['lng_modal_manifest_id'] = 'Manifest ID to attach:';
+$_['lng_modal_call_msg']    = 'Message';
+$_['lng_modal_pickup_time'] = 'Pickup time';
 $_['lng_modal_btn_call']    = 'Call Courier';
 $_['lng_modal_btn_cancel']  = 'Tühista';
 

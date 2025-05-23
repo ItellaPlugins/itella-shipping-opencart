@@ -183,6 +183,8 @@ $_['lng_modal_name']        = 'Vārds:';
 $_['lng_modal_address']     = 'Adrese:';
 $_['lng_modal_phone']       = 'Kontakttelefons:';
 $_['lng_modal_manifest_id'] = 'Manifest ID to attach:';
+$_['lng_modal_call_msg']    = 'Message';
+$_['lng_modal_pickup_time'] = 'Pickup time';
 $_['lng_modal_btn_call']    = 'Call Courier';
 $_['lng_modal_btn_cancel']  = 'Atcelt';
 

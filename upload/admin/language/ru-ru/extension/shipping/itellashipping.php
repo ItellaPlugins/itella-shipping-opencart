@@ -183,6 +183,8 @@ $_['lng_modal_name']        = 'Имя:';
 $_['lng_modal_address']     = 'Адрес:';
 $_['lng_modal_phone']       = 'Kонтактный телефон:';
 $_['lng_modal_manifest_id'] = 'Manifest ID to attach:';
+$_['lng_modal_call_msg']    = 'Message';
+$_['lng_modal_pickup_time'] = 'Pickup time';
 $_['lng_modal_btn_call']    = 'Call Courier';
 $_['lng_modal_btn_cancel']  = 'Отменить';
 
