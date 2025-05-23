@@ -84,9 +84,11 @@ $_['text_price_settings'] = 'Kainų nustatymai';
 $_['text_cod_settings']   = 'C.O.D nustatymai';
 $_['entry_cod_options']   = 'C.O.D pasirinkimas';
 
-$_['text_advanced_settings']        = 'Išplėstiniai nustatymai';
-$_['entry_advanced_email_subject']  = 'El. laiško tema';
-$_['entry_advanced_email']          = 'Kurjerio el. paštas';
+$_['text_advanced_settings']            = 'Išplėstiniai nustatymai';
+$_['entry_advanced_pickup_message']     = 'Paėmimo žinutė';
+$_['entry_advanced_pickup_placeholder'] = 'Kurjeriui siunčiama siuntų paėmimo žinutė';
+$_['entry_advanced_email_subject']      = 'El. laiško tema';
+$_['entry_advanced_email']              = 'Kurjerio el. paštas';
 
 $_['text_sender_settings']  = 'Siuntėjo informacija';
 $_['entry_sender_name']     = 'Vardas';

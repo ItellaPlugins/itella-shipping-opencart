@@ -612,6 +612,12 @@
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-itellashipping-advanced" class="form-horizontal">
               <input type="hidden" name="advanced_settings_update">
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-advanced-call-message"><?php echo $entry_advanced_pickup_message; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="itellashipping_advanced_call_message" value="<?php echo $itellashipping_advanced_call_message; ?>" placeholder="<?php echo $entry_advanced_pickup_placeholder; ?>" id="input-advanced-call-message" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-advanced-email-subject"><?php echo $entry_advanced_email_subject; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="itellashipping_advanced_email_subject" value="<?php echo $itellashipping_advanced_email_subject; ?>" placeholder="<?php echo $entry_advanced_email_subject; ?>" id="input-advanced-email-subject" class="form-control" />
