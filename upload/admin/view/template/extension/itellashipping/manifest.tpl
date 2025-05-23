@@ -545,7 +545,7 @@
       var time_to = document.getElementById('call-time-to').value;
       var url = updateParamInUrl(link.href, 'call_date', date);
       url = updateParamInUrl(url, 'call_time_from', time_from);
-      url = updateParamInUrl(url, 'call_time_true', time_to);
+      url = updateParamInUrl(url, 'call_time_to', time_to);
       link.href = url;
     });
 
