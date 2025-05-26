@@ -1,7 +1,7 @@
 <div id="itella_panel" class="clearfix">
   <div class="panel panel-default col-md-6 itella-no-padding">
     <div class="panel-heading">
-      <h3 class="panel-title"><img src="view/image/itellashipping/logo.png" class="itella-logo" alt="Itella Logo">{{ itella_lng['title'] }}</h3>
+      <h3 class="panel-title"><img src="view/image/itellashipping/logo.png" class="itella-logo" alt="Smartposti Logo">{{ itella_lng['title'] }}</h3>
       {% if itella['data']['label_number'] and itella['tracking_email_status'] %}
       <a href="index.php?route=extension/shipping/itellashipping/ajax&action=resendEmail&id_order={{ itella['data']['id_order'] }}&user_token={{ user_token }}"
         id="itella_resend_email_btn" class="btn btn-success"><i class="fa fa-envelope-o"></i>{{ itella_lng['resend_email'] }}</a>

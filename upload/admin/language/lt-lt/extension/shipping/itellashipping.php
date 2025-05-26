@@ -84,12 +84,16 @@ $_['text_price_settings'] = 'Kainų nustatymai';
 $_['text_cod_settings']   = 'C.O.D nustatymai';
 $_['entry_cod_options']   = 'C.O.D pasirinkimas';
 
-$_['text_advanced_settings']        = 'Išplėstiniai nustatymai';
-$_['entry_advanced_email_subject']  = 'El. laiško tema';
-$_['entry_advanced_email']          = 'Kurjerio el. paštas';
+$_['text_advanced_settings']            = 'Išplėstiniai nustatymai';
+$_['entry_advanced_pickup_message']     = 'Paėmimo žinutė';
+$_['entry_advanced_pickup_placeholder'] = 'Kurjeriui siunčiama siuntų paėmimo žinutė';
+$_['entry_advanced_email_subject']      = 'El. laiško tema';
+$_['entry_advanced_email']              = 'Kurjerio el. paštas';
 
 $_['text_sender_settings']  = 'Siuntėjo informacija';
 $_['entry_sender_name']     = 'Vardas';
+$_['entry_sender_code']     = 'Kodas';
+$_['text_sender_code_help'] = 'Įmonės arba PVM kodas';
 $_['entry_sender_street']   = 'Adresas';
 $_['entry_sender_postcode'] = 'Pašto kodas';
 $_['entry_sender_city']     = 'Miestas';
@@ -174,6 +178,7 @@ $_['lng_no_order_selected']     = 'Nepasirinkta užsakymas(ai)!';
 $_['lng_courier_email_missing'] = 'Nėra nustatytas kurjerio el. paštas';
 $_['lng_call_success']          = 'Kurjeris iškviestas į:';
 $_['lng_call_failed']           = 'Kurjerio iškvietimas nepavyko, klaida:';
+$_['lng_call_mail_success']     = 'Kurjerio iškvietimo el.laiškas išsiųstas';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifestas:';
@@ -183,6 +188,8 @@ $_['lng_modal_name']        = 'Vardas:';
 $_['lng_modal_address']     = 'Adresas:';
 $_['lng_modal_phone']       = 'Kontaktinis mob. nr.:';
 $_['lng_modal_manifest_id'] = 'Prisegamo manifesto ID:';
+$_['lng_modal_call_msg']    = 'Žinutė';
+$_['lng_modal_pickup_time'] = 'Paėmimo laikas';
 $_['lng_modal_btn_call']    = 'Kviesti kurjerį';
 $_['lng_modal_btn_cancel']  = 'Atšaukti';
 

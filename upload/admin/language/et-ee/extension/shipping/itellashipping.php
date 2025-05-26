@@ -84,12 +84,16 @@ $_['text_price_settings'] = 'Price Settings';
 $_['text_cod_settings']   = 'C.O.D Settings';
 $_['entry_cod_options']   = 'C.O.D Options';
 
-$_['text_advanced_settings']        = 'Advanced settings';
-$_['entry_advanced_email_subject']  = 'Email subject';
-$_['entry_advanced_email']          = 'Courier email';
+$_['text_advanced_settings']            = 'Advanced settings';
+$_['entry_advanced_pickup_message']     = 'Pickup message';
+$_['entry_advanced_pickup_placeholder'] = 'Shipments pickup message for courier';
+$_['entry_advanced_email_subject']      = 'Email subject';
+$_['entry_advanced_email']              = 'Courier email';
 
 $_['text_sender_settings']  = 'Sender Information';
 $_['entry_sender_name']     = 'Nimi';
+$_['entry_sender_code']     = 'Code';
+$_['text_sender_code_help'] = 'Company or VAT code';
 $_['entry_sender_street']   = 'Tänav';
 $_['entry_sender_postcode'] = 'Sihtnumber';
 $_['entry_sender_city']     = 'Linn';
@@ -174,6 +178,7 @@ $_['lng_no_order_selected']     = 'No order selected!';
 $_['lng_courier_email_missing'] = 'Courier service email not set';
 $_['lng_call_success']          = 'Courier called to:';
 $_['lng_call_failed']           = 'Call courier failed with:';
+$_['lng_call_mail_success']     = 'Courier call email sent';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifest:';
@@ -183,6 +188,8 @@ $_['lng_modal_name']        = 'Nimi:';
 $_['lng_modal_address']     = 'Aadress:';
 $_['lng_modal_phone']       = 'Mobiilinumber:';
 $_['lng_modal_manifest_id'] = 'Manifest ID to attach:';
+$_['lng_modal_call_msg']    = 'Message';
+$_['lng_modal_pickup_time'] = 'Pickup time';
 $_['lng_modal_btn_call']    = 'Call Courier';
 $_['lng_modal_btn_cancel']  = 'Tühista';
 
