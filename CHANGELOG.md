@@ -8,7 +8,7 @@
 - Fixed missing rename to "Smartposti"
 
 ### Updated
-- itella-api to 2.4.3
+- itella-api to 2.4.4
 
 ## [1.3.0] - 2025-03-20
 ### Updated
