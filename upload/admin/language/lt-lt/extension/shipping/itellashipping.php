@@ -92,6 +92,8 @@ $_['entry_advanced_email']              = 'Kurjerio el. paštas';
 
 $_['text_sender_settings']  = 'Siuntėjo informacija';
 $_['entry_sender_name']     = 'Vardas';
+$_['entry_sender_code']     = 'Kodas';
+$_['text_sender_code_help'] = 'Įmonės arba PVM kodas';
 $_['entry_sender_street']   = 'Adresas';
 $_['entry_sender_postcode'] = 'Pašto kodas';
 $_['entry_sender_city']     = 'Miestas';

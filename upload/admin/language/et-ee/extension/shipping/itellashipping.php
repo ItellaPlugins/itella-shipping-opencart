@@ -92,6 +92,8 @@ $_['entry_advanced_email']              = 'Courier email';
 
 $_['text_sender_settings']  = 'Sender Information';
 $_['entry_sender_name']     = 'Nimi';
+$_['entry_sender_code']     = 'Code';
+$_['text_sender_code_help'] = 'Company or VAT code';
 $_['entry_sender_street']   = 'Tänav';
 $_['entry_sender_postcode'] = 'Sihtnumber';
 $_['entry_sender_city']     = 'Linn';

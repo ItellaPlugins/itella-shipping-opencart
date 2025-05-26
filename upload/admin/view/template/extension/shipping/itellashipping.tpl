@@ -256,6 +256,13 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-sender-name"><?php echo $entry_sender_code; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="itellashipping_sender_code" value="<?php echo $itellashipping_sender_code; ?>" placeholder="<?php echo $entry_sender_code; ?>" id="input-sender-code" class="form-control" />
+                  <p class="help-block"><?php echo $text_sender_code_help; ?></p>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sender-street"><?php echo $entry_sender_street; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="itellashipping_sender_street" value="<?php echo $itellashipping_sender_street; ?>" placeholder="<?php echo $entry_sender_street; ?>" id="input-sender-street" class="form-control" />

@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Added sender code field
+
 ### Fixed
 - Fixed missing rename to "Smartposti"
 

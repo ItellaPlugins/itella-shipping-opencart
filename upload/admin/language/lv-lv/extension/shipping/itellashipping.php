@@ -92,6 +92,8 @@ $_['entry_advanced_email']              = 'Courier email';
 
 $_['text_sender_settings']  = 'Sender Information';
 $_['entry_sender_name']     = 'Vārds';
+$_['entry_sender_code']     = 'Code';
+$_['text_sender_code_help'] = 'Company or VAT code';
 $_['entry_sender_street']   = 'Iela';
 $_['entry_sender_postcode'] = 'Pasta indekss';
 $_['entry_sender_city']     = 'Pilsēta';
