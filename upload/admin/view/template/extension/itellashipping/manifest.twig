@@ -516,27 +516,16 @@
       var modal = $(this);
       modal.find('.modal-body #attach-id').text(manifest_id);
 
-      var call_message = document.getElementById('call-message').value;
-      href = updateParamInUrl(href, 'call_message', call_message);
-
       document.getElementById('call-submit').href = href; // update "call" button link in modal
+      updateSubmitCallLink();
     });
 
-    $('#call-message').on('change', function(e) {
-      var link = document.getElementById('call-submit');
-      var url = updateParamInUrl(link.href, 'call_message', e.target.value);
-      link.href = url;
+    $('#call-message, #call-date, #call-time-from, #call-time-to').on('change', function(e) {
+      updateSubmitCallLink();
     });
 
-    $('#call-date, #call-time-from, #call-time-to').on('change', function(e) {
-      var link = document.getElementById('call-submit');
-      var date = document.getElementById('call-date').value;
-      var time_from = document.getElementById('call-time-from').value;
-      var time_to = document.getElementById('call-time-to').value;
-      var url = updateParamInUrl(link.href, 'call_date', date);
-      url = updateParamInUrl(url, 'call_time_from', time_from);
-      url = updateParamInUrl(url, 'call_time_to', time_to);
-      link.href = url;
+    $('.date-modal').on('dp.change', function(e) {
+      updateSubmitCallLink();
     });
 
     document.getElementById('call-date').addEventListener('input', function (e) {
@@ -544,6 +533,7 @@
       if (!pattern.test(e.target.value)) {
         e.target.value = e.target.value.replace(/[^0-9\-]/g, '');
       }
+      updateSubmitCallLink();
     });
 
     $('td[data-checkbox]').on('click', function(e){
@@ -562,6 +552,9 @@
         return;
       }
     });
+
+    $('#call-time-to').val('17:00');
+    $('#call-time-from').val('08:00').trigger('change');
   }
 
   function updateParamInUrl(url, key, value) {
@@ -657,6 +650,20 @@
     }
   }
 
+  function updateSubmitCallLink() {
+    var link = document.getElementById('call-submit');
+    var message = document.getElementById('call-message').value;
+    var date = document.getElementById('call-date').value;
+    var time_from = document.getElementById('call-time-from').value;
+    var time_to = document.getElementById('call-time-to').value;
+    var url = updateParamInUrl(link.href, 'call_date', date);
+    url = updateParamInUrl(url, 'call_message', message);
+    url = updateParamInUrl(url, 'call_date', date);
+    url = updateParamInUrl(url, 'call_time_from', time_from);
+    url = updateParamInUrl(url, 'call_time_to', time_to);
+    link.href = url;
+  }
+
   $('#call-time-from').on('change', function(e) {
     var time_from = document.getElementById('call-time-from');
     var time_to = document.getElementById('call-time-to');
@@ -675,8 +682,6 @@
         el.checked = state;
       });
     });
-
-    $('#call-time-from').trigger('change');
 
     registerItellaButtons();
   });

@@ -178,6 +178,7 @@ $_['lng_no_order_selected']     = 'No order selected!';
 $_['lng_courier_email_missing'] = 'Courier service email not set';
 $_['lng_call_success']          = 'Courier called to:';
 $_['lng_call_failed']           = 'Call courier failed with:';
+$_['lng_call_mail_success']     = 'Courier call email sent';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifest:';

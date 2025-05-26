@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 ### Added
-- Added sender code field
+- Added sender code field in module settings
+- Added pickup message field in module settings
+- Added the ability to specify a message for the courier and arrival time when calling a courier
+- Courier invitation adapted to changes in the updated API library
 
 ### Fixed
 - Fixed missing rename to "Smartposti"
