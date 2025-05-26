@@ -287,7 +287,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 			'itellashipping_sender_city', 'itellashipping_sender_country', 'itellashipping_sender_phone',
 			'itellashipping_sender_email', 'itellashipping_advanced_email_subject',
 			'itellashipping_tracking_email_status', 'itellashipping_tracking_email_subject',
-			'itellashipping_locations_exclude_outdoors'
+			'itellashipping_locations_exclude_outdoors', 'itellashipping_advanced_call_message',
+			'itellashipping_sender_code'
 		) as $key) {
 			if (isset($this->request->post[$key])) {
 				$data[$key] = $this->request->post[$key];

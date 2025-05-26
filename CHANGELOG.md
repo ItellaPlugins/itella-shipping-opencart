@@ -1,8 +1,17 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Added sender code field in module settings
+- Added pickup message field in module settings
+- Added the ability to specify a message for the courier and arrival time when calling a courier
+- Courier invitation adapted to changes in the updated API library
+
 ### Fixed
 - Fixed missing rename to "Smartposti"
+
+### Updated
+- itella-api to 2.4.4
 
 ## [1.3.0] - 2025-03-20
 ### Updated
