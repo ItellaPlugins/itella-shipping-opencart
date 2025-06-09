@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><img src="view/image/itellashipping/logo.png" alt="Itella Logo"></h1>
+      <h1><img src="view/image/itellashipping/logo.png" alt="Smartposti Logo"></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
           <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -261,6 +261,53 @@
             <td><?= $lng_modal_manifest_id; ?></td>
             <td><span id="attach-id"></span></td>
           </tr>
+          <tr>
+            <td><?= $lng_modal_call_msg; ?></td>
+            <td><input id="call-message" type="text" class="form-control" value="<?= $call_info['message']; ?>" maxlength="150" /></td>
+          </tr>
+          <tr>
+            <td><?= $lng_modal_pickup_time; ?></td>
+            <td>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group date-modal">
+                    <input id="call-date" type="text" class="form-control" maxlength="10" data-date-format="YYYY-MM-DD" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <select id="call-time-from" class="form-control">
+                    {assign var="hours" value=23}
+                    {assign var="minutes" value=[0,30]}
+                    {section name=h loop=$hours+1}
+                      {foreach from=$minutes item=m}
+                        {assign var="hour" value=sprintf("%02d", $smarty.section.h.index)}
+                        {assign var="minute" value=sprintf("%02d", $m)}
+                        {assign var="time" value="$hour:$minute"}
+                        <option value="{$time}">{$time}</option>
+                      {/foreach}
+                    {/section}
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <select id="call-time-to" class="form-control col-md-3">
+                    {assign var="hours" value=23}
+                    {assign var="minutes" value=[0,30]}
+                    {section name=h loop=$hours+1}
+                      {foreach from=$minutes item=m}
+                        {assign var="hour" value=sprintf("%02d", $smarty.section.h.index)}
+                        {assign var="minute" value=sprintf("%02d", $m)}
+                        {assign var="time" value="$hour:$minute"}
+                        <option value="{$time}">{$time}</option>
+                      {/foreach}
+                    {/section}
+                  </select>
+                </div>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
       <div class="modal-footer">
@@ -478,7 +525,25 @@
       var manifest_id = button.data('id'); // Extract manifest id from data-id
       var modal = $(this);
       modal.find('.modal-body #attach-id').text(manifest_id);
+
       document.getElementById('call-submit').href = href; // update "call" button link in modal
+      updateSubmitCallLink();
+    });
+
+    $('#call-message, #call-date, #call-time-from, #call-time-to').on('change', function(e) {
+      updateSubmitCallLink();
+    });
+
+    $('.date-modal').on('dp.change', function(e) {
+      updateSubmitCallLink();
+    });
+
+    document.getElementById('call-date').addEventListener('input', function (e) {
+      const pattern = /^\d{0,4}-?\d{0,2}-?\d{0,2}$/;
+      if (!pattern.test(e.target.value)) {
+        e.target.value = e.target.value.replace(/[^0-9\-]/g, '');
+      }
+      updateSubmitCallLink();
     });
 
     $('td[data-checkbox]').on('click', function(e){
@@ -497,6 +562,24 @@
         return;
       }
     });
+
+    $('#call-time-to').val('17:00');
+    $('#call-time-from').val('08:00').trigger('change');
+  }
+
+  function updateParamInUrl(url, key, value) {
+    const encodedKey = encodeURIComponent(key);
+    const encodedValue = encodeURIComponent(value);
+
+    const regex = new RegExp('([?&])' + encodedKey + '=.*?(&|$)', 'i');
+
+    if (url.match(regex)) {
+      return url.replace(regex, '$1' + encodedKey + '=' + encodedValue + '$2');
+    }
+    if (url.indexOf('?') === -1) {
+      return url + '?' + encodedKey + '=' + encodedValue;
+    }
+    return url + '&' + encodedKey + '=' + encodedValue;
   }
 
   function showOverlay($target) {
@@ -547,6 +630,61 @@
     return true;
   }
 
+  function timeToMinutes(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  function updateTimeOptions(fromSelect, toSelect) {
+    const fromTime = fromSelect.value;
+    const fromMinutes = timeToMinutes(fromTime);
+
+    Array.from(toSelect.options).forEach(option => {
+      const optionMinutes = timeToMinutes(option.value);
+      if (optionMinutes <= fromMinutes) {
+          option.disabled = true;
+          option.style.color = '#ccc';
+      } else {
+          option.disabled = false;
+          option.style.color = '';
+      }
+    });
+
+    if (toSelect.selectedOptions.length && toSelect.selectedOptions[0].disabled) {
+      const firstValid = Array.from(toSelect.options).find(opt => !opt.disabled);
+      if (firstValid) {
+          toSelect.value = firstValid.value;
+      } else {
+          toSelect.value = '';
+      }
+    }
+  }
+
+  function updateSubmitCallLink() {
+    var link = document.getElementById('call-submit');
+    var message = document.getElementById('call-message').value;
+    var date = document.getElementById('call-date').value;
+    var time_from = document.getElementById('call-time-from').value;
+    var time_to = document.getElementById('call-time-to').value;
+    var url = updateParamInUrl(link.href, 'call_date', date);
+    url = updateParamInUrl(url, 'call_message', message);
+    url = updateParamInUrl(url, 'call_date', date);
+    url = updateParamInUrl(url, 'call_time_from', time_from);
+    url = updateParamInUrl(url, 'call_time_to', time_to);
+    link.href = url;
+  }
+
+  $('#call-time-from').on('change', function(e) {
+    var time_from = document.getElementById('call-time-from');
+    var time_to = document.getElementById('call-time-to');
+
+    const last_from_option = time_from.options[time_from.options.length - 1];
+    last_from_option.disabled = true;
+    last_from_option.style.color = '#ccc';
+
+    updateTimeOptions(time_from, time_to);
+  });
+
   $(document).ready(function() {
     $('#check_all_orders').on('change', function(e){
       var state = this.checked;
@@ -563,6 +701,11 @@
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
+});
+$('.date-modal').datetimepicker({
+  pickTime: false,
+  minDate: new Date(),
+  defaultDate: new Date()
 });
 //--></script>
 <?php echo $footer; ?>

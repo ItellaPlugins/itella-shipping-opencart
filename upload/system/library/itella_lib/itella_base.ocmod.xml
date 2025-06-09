@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
-  <name>Itella Base Mod for OC2.3</name>
-  <version>1.1.1</version>
+  <name>Smartposti Base Mod for OC2.3</name>
+  <version>1.1.2</version>
   <author>Mijora</author>
   <link>https://www.mijora.lt</link>
   <code>itellashipping_base</code>
@@ -12,7 +12,7 @@
     <operation>
       <search><![CDATA[$extension = array();]]></search>
       <add position="after"><![CDATA[
-        // Itella Admin menu
+        // Smartposti Admin menu
         $this->load->language('extension/shipping/itellashipping');
         if ($this->user->hasPermission('access', 'extension/shipping/itellashipping/manifest')) {
           $itellashipping[] = array(
@@ -35,7 +35,7 @@
             'children' => $itellashipping
           );
         }
-        // Itella END
+        // Smartposti END
         ]]>
       </add>
     </operation>
@@ -45,7 +45,7 @@
     <operation error="skip">
       <search><![CDATA[$this->response->setOutput($this->load->view('sale/order_info', $data));]]></search>
       <add position="before"><![CDATA[
-        $data['itella_panel'] = false; // show only for orders with itella selected
+        $data['itella_panel'] = false; // show only for orders with smartposti selected
         if (explode('.', $order_info['shipping_code'])[0] == 'itellashipping') {
           $this->load->model('extension/itellashipping/itellashipping');
         
@@ -67,7 +67,7 @@
     <operation>
       <search><![CDATA[<?php echo $footer; ?>]]></search>
       <add position="before"><![CDATA[
-        <!-- Place Itella panel -->
+        <!-- Place Smartposti panel -->
         <?php if ($itella_panel): ?>
         <?php echo $itella_panel; ?>
         <script type="text/javascript"><!--
@@ -79,7 +79,7 @@
         });
         //--></script>
         <?php endif; ?>
-        <!-- Itella END -->
+        <!-- Smartposti END -->
         ]]>
       </add>
     </operation>
@@ -89,12 +89,12 @@
     <operation>
       <search><![CDATA[<?php echo $footer; ?>]]></search>
       <add position="before"><![CDATA[
-        <!-- Itella (check if need to add logo) -->
+        <!-- Smartposti (check if need to add logo) -->
         <script type="text/javascript"><!--
         $(document).ready(function(){
           $('input[name^=\'shipping_code\'][value^=\'itellashipping\']')
             .closest('td').next().next()
-            .append($('<img src="view/image/itellashipping/logo.png" alt="Itella Logo" class="itella-order-logo">'))
+            .append($('<img src="view/image/itellashipping/logo.png" alt="Smartposti Logo" class="itella-order-logo">'))
         });
         //--></script>
         <style>
@@ -103,7 +103,7 @@
           margin-left: 0.5rem;
         }
         </style>
-        <!-- Itella END -->
+        <!-- Smartposti END -->
         ]]>
       </add>
     </operation>
@@ -115,11 +115,11 @@
     <operation>
       <search><![CDATA[</head>]]></search>
       <add position="before"><![CDATA[
-        <!-- Itella -->
+        <!-- Smartposti -->
         <script>
             var itella_translation = <?= json_encode($itella_translation); ?>;
         </script>
-        <!-- Itella END -->
+        <!-- Smartposti END -->
         ]]>
       </add>
     </operation>
@@ -128,7 +128,7 @@
     <operation>
       <search><![CDATA[public function index() {]]></search>
       <add position="before"><![CDATA[
-        // Itella
+        // Smartposti
         private function getItellaTranslation()
         {
           $this->load->language('extension/shipping/itellashipping');
@@ -149,16 +149,16 @@
             'error_missing_mount_el'  => $this->language->get('itella_map_error_missing_mount_el'),
           ];
         }
-        // Itella END
+        // Smartposti END
         ]]>
       </add>
     </operation>
     <operation>
       <search><![CDATA[return $this->load->view('common/header', $data);]]></search>
       <add position="before"><![CDATA[
-        // Itella
+        // Smartposti
         $data['itella_translation'] = $this->getItellaTranslation();
-        // Itella END
+        // Smartposti END
         ]]>
       </add>
     </operation>
@@ -168,7 +168,7 @@
     <operation error="skip">
       <search><![CDATA[$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');]]></search>
       <add position="after"><![CDATA[
-        // Itella
+        // Smartposti
         $this->document->addStyle('catalog/view/javascript/itellashipping/leaflet.css');
         $this->document->addStyle('catalog/view/javascript/itellashipping/MarkerCluster.css');
         $this->document->addStyle('catalog/view/javascript/itellashipping/MarkerCluster.Default.css');
@@ -178,7 +178,7 @@
         $this->document->addScript('catalog/view/javascript/itellashipping/leaflet.js');
         $this->document->addScript('catalog/view/javascript/itellashipping/itella-mapping.js');
         $this->document->addScript('catalog/view/javascript/itellashipping/front.js?202201171441');
-        // Itella END
+        // Smartposti END
         ]]>
       </add>
     </operation>
@@ -188,24 +188,24 @@
     <operation>
       <search><![CDATA[$json['order_id'] = $this->model_checkout_order->addOrder($order_data);]]></search>
       <add position="after"><![CDATA[
-        // Itella
+        // Smartposti
         if (strpos($order_data['shipping_code'], 'itellashipping') !== false) {
           $this->load->model('extension/shipping/itellashipping');
           $this->model_extension_shipping_itellashipping->updateItellaOrderCarrier($json['order_id'], $order_data['shipping_code']);
         }
-        // Itella END
+        // Smartposti END
         ]]>
       </add>
     </operation>
     <operation>
       <search><![CDATA[$this->model_checkout_order->editOrder($order_id, $order_data);]]></search>
       <add position="after"><![CDATA[
-        // Itella
+        // Smartposti
         if (strpos($order_data['shipping_code'], 'itellashipping') !== false) {
           $this->load->model('extension/shipping/itellashipping');
           $this->model_extension_shipping_itellashipping->updateItellaOrderCarrier($order_id, $order_data['shipping_code']);
         }
-        // Itella END
+        // Smartposti END
         ]]>
       </add>
     </operation>
@@ -216,11 +216,11 @@
       <search><![CDATA[<?php foreach ($shipping_method['quote'] as $quote) { ?>]]></search>
       <add position="after"><![CDATA[
         <?php
-        // Itella (skip pickup locations)
+        // Smartposti (skip pickup locations)
         if (strpos($quote['code'], 'itellashipping.pickup_') !== false) {
           continue;
         }
-        // Itella END
+        // Smartposti END
         ?>
         ]]>
       </add>
