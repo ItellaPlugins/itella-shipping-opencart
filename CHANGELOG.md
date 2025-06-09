@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.3.1] - 2025-06-09
 ### Added
 - Added sender code field in module settings
 - Added pickup message field in module settings
