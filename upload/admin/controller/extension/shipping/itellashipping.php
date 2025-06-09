@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionShippingItellashipping extends Controller
 {
-	private $_version = '1.3.0';
+	private $_version = '1.3.1';
 	private $error = array();
 
 	public function install()
