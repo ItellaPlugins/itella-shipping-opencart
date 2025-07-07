@@ -587,7 +587,6 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
       $username = $this->config->get('itellashipping_api_user_2711');
       $password = $this->config->get('itellashipping_api_pass_2711');
     }
-    $sender_code = $this->config->get('itellashipping_sender_code');
 
     $send_to = $this->config->get('itellashipping_advanced_email_' . strtoupper($this->config->get('itellashipping_sender_country')));
 
@@ -614,7 +613,7 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
           'time_from' => $params['time_from'],
           'time_to' => $params['time_to'],
           'info_general' => $params['message'],
-          'id_sender' => $sender_code,
+          'id_sender' => 'LT100011522813',
         ))
         ->setAttachment($pdf)
         ->setItems($items)
