@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.2] - 2025-07-17
+### Fixed
+- Fixed the Sender ID of the courier invitation to use the plugin developer ID instead of the sender's company code
+
 ## [1.3.1] - 2025-06-09
 ### Added
 - Added sender code field in module settings
