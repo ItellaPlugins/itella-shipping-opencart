@@ -1,6 +1,12 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- added the option to choose which product to use for parcel locker and courier methods in the module settings
+
+### Changed
+- changed so that API logins are not divided into products, but the same ones are used for all
+
 ### Updated
 - itella-api to 2.5.0
 

@@ -14,7 +14,11 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$this->saveSettings(array(
 			'itellashipping_advanced_email_LT' => 'smartship.routing.lt@itella.com',
 			'itellashipping_advanced_email_LV' => 'smartship.routing.lv@itella.com',
+			'itellashipping_advanced_email_EE' => 'smartship.routing.ee@itella.com',
+			'itellashipping_advanced_email_FI' => 'smartship.routing.fi@itella.com',
 			'itellashipping_advanced_email_subject' => 'E-com order booking',
+			'itellashipping_api_service_p' => $this->model_extension_itellashipping_itellashipping->getDefaultProductCode('pickup'),
+			'itellashipping_api_service_c' => $this->model_extension_itellashipping_itellashipping->getDefaultProductCode('courier')
 		));
 	}
 
@@ -132,6 +136,9 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['entry_api_contract'] = $this->language->get('entry_api_contract');
 		$data['entry_api_contract_gls'] = $this->language->get('entry_api_contract_gls');
 		$data['text_api_contract_gls_help'] = $this->language->get('text_api_contract_gls_help');
+		$data['entry_api_services'] = $this->language->get('entry_api_services');
+		$data['entry_api_service_p'] = $this->language->get('entry_api_service_p');
+		$data['entry_api_service_c'] = $this->language->get('entry_api_service_c');
 		$data['entry_cod_options'] = $this->language->get('entry_cod_options');
 		$data['entry_bic'] = $this->language->get('entry_bic');
 		$data['entry_iban'] = $this->language->get('entry_iban');
@@ -236,6 +243,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['cancel'] = $this->url->link($extension_home . '/extension', $this->getUserToken() . '&type=shipping', true);
 
 		$data['cod_options'] = $this->loadPaymentOptions();
+		$data['pickup_service_options'] = $this->getProductOptions('pickup');
+		$data['courier_service_options'] = $this->getProductOptions('courier');
 
 		$this->load->model('localisation/tax_class');
 
@@ -279,9 +288,9 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 		foreach (array(
 			'itellashipping_tax_class_id', 'itellashipping_geo_zone_id',
-			'itellashipping_api_user_2711', 'itellashipping_api_pass_2711', 'itellashipping_api_contract_2711',
-			'itellashipping_api_user_2317', 'itellashipping_api_pass_2317', 'itellashipping_api_contract_2317',
-			'itellashipping_api_contract_2317_gls',
+			'itellashipping_api_user', 'itellashipping_api_pass', 'itellashipping_api_contract',
+			'itellashipping_api_contract_gls',
+			'itellashipping_api_service_p', 'itellashipping_api_service_c',
 			'itellashipping_cod_status', 'itellashipping_bic', 'itellashipping_iban',
 			'itellashipping_sender_name', 'itellashipping_sender_street', 'itellashipping_sender_postcode',
 			'itellashipping_sender_city', 'itellashipping_sender_country', 'itellashipping_sender_phone',
@@ -294,6 +303,18 @@ class ControllerExtensionShippingItellashipping extends Controller
 				$data[$key] = $this->request->post[$key];
 			} else {
 				$data[$key] = $this->config->get($key);
+			}
+		}
+
+		$changed_configs = array(
+			'itellashipping_api_user_2317' => 'itellashipping_api_user',
+			'itellashipping_api_pass_2317' => 'itellashipping_api_pass',
+			'itellashipping_api_contract_2317' => 'itellashipping_api_contract',
+			'itellashipping_api_contract_2317_gls' => 'itellashipping_api_contract_gls'
+		);
+		foreach ( $changed_configs as $old_key => $new_key ) {
+			if ( empty($data[$new_key]) && ! empty($this->config->get($old_key)) ) {
+				$data[$new_key] = $this->config->get($old_key);
 			}
 		}
 
@@ -585,6 +606,24 @@ class ControllerExtensionShippingItellashipping extends Controller
 		}
 
 		return $result;
+	}
+
+	private function getProductOptions( $type )
+	{
+		$this->load->model('extension/itellashipping/itellashipping');
+
+		$options = array();
+
+		$all_products = $this->model_extension_itellashipping_itellashipping->getAllProductCodes();
+		if ( ! isset($all_products[$type]) ) {
+			return array();
+		}
+
+		foreach ( $all_products[$type] as $key => $code ) {
+			$options[$code] = $this->language->get("text_product_{$type}_{$key}");
+		}
+
+		return $options;
 	}
 
 	/**
