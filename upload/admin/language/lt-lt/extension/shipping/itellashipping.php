@@ -63,11 +63,15 @@ $_['text_locations_help']   = 'Šią nuorodą galite naudoti automatiniam paėmi
 
 $_['text_api_settings']   = 'API nustatymai';
 $_['entry_test_mode']     = 'Test Mode';
+$_['entry_api']           = 'Prisijungimai';
 $_['entry_api_user']      = 'API vartotojas';
 $_['entry_api_pass']      = 'API slaptažodis';
 $_['entry_api_contract']  = 'API kontrakto #';
-$_['entry_api_2711']      = '2711 produkto įgaliojimai';
-$_['entry_api_2317']      = '2317 produkto įgaliojimai';
+$_['entry_api_contract_gls']      = 'API GLS kontrakto #';
+$_['text_api_contract_gls_help']  = 'Tik GLS šalims (ne LT, LV, EE, FI).';
+$_['entry_api_services']  = 'Servisai';
+$_['entry_api_service_p'] = 'Paštomato paslauga';
+$_['entry_api_service_c'] = 'Kurjerio paslauga';
 $_['entry_bic']           = 'BIC';
 $_['entry_iban']          = 'IBAN';
 
@@ -207,10 +211,6 @@ $_['manifest_courier']          = 'Kurjeris';
 $_['manifest_sender']           = 'Siuntėjas';
 $_['manifest_signature']        = 'vardas, pavardė, parašas';
 
-// GLS contract strings
-$_['entry_api_contract_gls']        = 'API GLS Kontrakto #';
-$_['text_api_contract_gls_help']    = 'Tik GLS šalims (ne LT, LV, EE, FI).';
-
 // order_info_form comment field
 $_['itella_lng_comment'] = 'Siuntos komentaras:';
 
@@ -223,6 +223,12 @@ $_['entry_tracking_email_subject'] = 'El. laiško tema';
 $_['entry_tracking_email_template'] = 'El. laiško šablonas';
 $_['text_tracking_email_template_help'] = '{{ tracking_url }} - yra raktas kur bus įterptas sekimo URL, norint įterpti tik sekimo numerį naudokite {{ tracking_number }}';
 $_['error_tracking_email_disabled'] = 'Sekimo URL siuntimas išjungtas';
+
+// Products
+$_['text_product_pickup_locker'] = 'Parcel Connect';
+$_['text_product_pickup_postal'] = 'Postal Parcel';
+$_['text_product_courier_express'] = 'Express Business Day Parcel';
+$_['text_product_courier_home'] = 'Home Parcel';
 
 // added in v1.2.15
 $_['itellashipping_title_lang'] = 'Kalba';

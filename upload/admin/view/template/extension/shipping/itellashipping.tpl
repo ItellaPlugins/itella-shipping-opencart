@@ -89,31 +89,65 @@
               </div>
 
               <div class="panel panel-default">
-                <div class="panel-heading bold"><?php echo $entry_api_2317; ?></div>
+                <div class="panel-heading bold"><?php echo $entry_api; ?></div>
                 <div class="panel-body">
                   <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-user-2"><?php echo $entry_api_user; ?></label>
+                    <label class="col-sm-4 control-label" for="input-api-user"><?php echo $entry_api_user; ?></label>
                     <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_user_2317" value="<?php echo $itellashipping_api_user_2317; ?>" placeholder="<?php echo $entry_api_user; ?>" id="input-api-user-2" class="form-control" />
+                      <input type="text" name="itellashipping_api_user" value="<?php echo $itellashipping_api_user; ?>" placeholder="<?php echo $entry_api_user; ?>" id="input-api-user" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-pass-2"><?php echo $entry_api_pass; ?></label>
+                    <label class="col-sm-4 control-label" for="input-api-pass"><?php echo $entry_api_pass; ?></label>
                     <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_pass_2317" value="<?php echo $itellashipping_api_pass_2317; ?>" placeholder="<?php echo $entry_api_pass; ?>" id="input-api-pass-2" class="form-control" />
+                      <input type="text" name="itellashipping_api_pass" value="<?php echo $itellashipping_api_pass; ?>" placeholder="<?php echo $entry_api_pass; ?>" id="input-api-pass" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-contract-2"><?php echo $entry_api_contract; ?></label>
+                    <label class="col-sm-4 control-label" for="input-api-contract"><?php echo $entry_api_contract; ?></label>
                     <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_contract_2317" value="<?php echo $itellashipping_api_contract_2317; ?>" placeholder="<?php echo $entry_api_contract; ?>" id="input-api-contract-2" class="form-control" />
+                      <input type="text" name="itellashipping_api_contract" value="<?php echo $itellashipping_api_contract; ?>" placeholder="<?php echo $entry_api_contract; ?>" id="input-api-contract" class="form-control" />
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-contract-3"><?php echo $entry_api_contract_gls; ?></label>
+                    <label class="col-sm-4 control-label" for="input-api-contract-gls"><?php echo $entry_api_contract_gls; ?></label>
                     <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_contract_2317_gls" value="<?php echo $itellashipping_api_contract_2317_gls; ?>" placeholder="<?php echo $entry_api_contract_gls; ?>" id="input-api-contract-3" class="form-control" />
+                      <input type="text" name="itellashipping_api_contract_gls" value="<?php echo $itellashipping_api_contract_gls; ?>" placeholder="<?php echo $entry_api_contract_gls; ?>" id="input-api-contract-gls" class="form-control" />
                       <p class="help-block"><?php echo $text_api_contract_gls_help; ?></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <div class="panel-heading bold"><?php echo $entry_api_services; ?></div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input-api-service-p"><?php echo $entry_api_service_p; ?></label>
+                    <div class="col-sm-8">
+                      <select name="itellashipping_api_service_p" id="input-api-service-p" class="form-control">
+                        <?php foreach ($pickup_service_options as $code => $service_name) { ?>
+                          <?php if ($code == $itellashipping_api_service_p) { ?>
+                            <option value="<?php echo $code; ?>" selected="selected"><?php echo $service_name; ?></option>
+                          <?php } else { ?>
+                            <option value="<?php echo $code; ?>"><?php echo $service_name; ?></option>
+                          <?php } ?>
+                        <?php } ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label" for="input-api-service-c"><?php echo $entry_api_service_c; ?></label>
+                    <div class="col-sm-8">
+                      <select name="itellashipping_api_service_c" id="input-api-service-c" class="form-control">
+                        <?php foreach ($courier_service_options as $code => $service_name) { ?>
+                          <?php if ($code == $itellashipping_api_service_c) { ?>
+                            <option value="<?php echo $code; ?>" selected="selected"><?php echo $service_name; ?></option>
+                          <?php } else { ?>
+                            <option value="<?php echo $code; ?>"><?php echo $service_name; ?></option>
+                          <?php } ?>
+                        <?php } ?>
+                      </select>
                     </div>
                   </div>
                 </div>

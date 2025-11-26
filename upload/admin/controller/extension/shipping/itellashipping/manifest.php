@@ -581,12 +581,8 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
       return $items;
     }
 
-    $username = $this->config->get('itellashipping_api_user_2317');
-    $password = $this->config->get('itellashipping_api_pass_2317');
-    if (empty($username)) {
-      $username = $this->config->get('itellashipping_api_user_2711');
-      $password = $this->config->get('itellashipping_api_pass_2711');
-    }
+    $username = $this->config->get('itellashipping_api_user');
+    $password = $this->config->get('itellashipping_api_pass');
 
     $send_to = $this->config->get('itellashipping_advanced_email_' . strtoupper($this->config->get('itellashipping_sender_country')));
 
