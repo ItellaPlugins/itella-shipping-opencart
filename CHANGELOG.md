@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.4.0] - 2025-11-26
 ### Added
 - added the option to choose which product to use for parcel locker and courier methods in the module settings
 
