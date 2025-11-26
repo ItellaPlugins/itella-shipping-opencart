@@ -201,7 +201,20 @@ class ModelExtensionItellashippingItellaShipping extends Model
     //   $this->updatePickupPointId($order_data['id_order'], )
     // }
     $tracking_email_status = (bool) $this->config->get('itellashipping_tracking_email_status');
-    return ['tracking_email_status' => $tracking_email_status, 'data' => $order_data, 'oc_order' => $oc_order, 'new_order' => $new_data];
+    $courier_additional_services = $this->getAvailableAdditionalServices('courier', $oc_order['shipping_iso_code_2']);
+    return [
+      'tracking_email_status' => $tracking_email_status,
+      'data' => $order_data,
+      'oc_order' => $oc_order,
+      'new_order' => $new_data,
+      'courier_extra_services' => $courier_additional_services
+    ];
+  }
+
+  public function getReceiverCountry($id_order)
+  {
+    $oc_order = $this->getOCOrder($id_order);
+    return (is_array($oc_order) && isset($oc_order['shipping_iso_code_2'])) ? $oc_order['shipping_iso_code_2'] : null;
   }
 
   public function saveItellaError($id_order, $error_msg)
@@ -309,21 +322,106 @@ class ModelExtensionItellashippingItellaShipping extends Model
     $this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` SET `order_id` = '" . (int) $order_id . "', `order_status_id` = '" . (int) $order_status_id . "', `notify` = '" . (int) $notify . "', `comment` = '" . $this->db->escape($comment) . "', `date_added` = NOW()");
   }
 
+  public function isBalticsCountry($country_code)
+  {
+    $baltics = ['LT', 'LV', 'EE', 'FI'];
+    return (in_array($country_code, $baltics));
+  }
+
+  public function getAllProductCodes()
+  {
+    return array(
+      'pickup' => array(
+        'locker' => Shipment::PRODUCT_PARCEL_CONNECT,
+        'postal' => Shipment::PRODUCT_POSTAL_PARCEL
+      ),
+      'courier' => array(
+        'express' => Shipment::PRODUCT_EXPRESS_BUSINESS_DAY,
+        'home' => Shipment::PRODUCT_HOME_PARCEL
+      )
+    );
+  }
+
+  public function getDefaultProductCode($type, $receiver_country = null)
+  {
+    $all_products = $this->getAllProductCodes();
+    
+    // If pickup
+    if ($type == 'pickup') {
+      return (isset($all_products['pickup']['locker'])) ? $all_products['pickup']['locker'] : '';
+    }
+    // If not baltics courier
+    if ($receiver_country && !$this->isBalticsCountry($receiver_country)) {
+      return (isset($all_products['courier']['express'])) ? $all_products['courier']['express'] : '';
+    }
+    // If courier
+    return (isset($all_products['courier']['express'])) ? $all_products['courier']['express'] : '';
+  }
+
+  public function getProductCodeFromConfigs($type)
+  {
+    // If pickup
+    if ($type == 'pickup') {
+      return $this->config->get('itellashipping_api_service_p');
+    }
+    // If courier
+    return $this->config->get('itellashipping_api_service_c');
+  }
+
+  public function getProductCode($type, $receiver_country = null)
+  {
+    $product_code = $this->getProductCodeFromConfigs($type);
+    if (empty($product_code) || ($receiver_country && !$this->isBalticsCountry($receiver_country))) {
+      $product_code = $this->getDefaultProductCode($type, $receiver_country);
+    }
+    return $product_code;
+  }
+
+  public function productTypeHasCode($type, $product_code)
+  {
+    $all_products = $this->getAllProductCodes();
+    if (!isset($all_products[$type])) {
+      return false;
+    }
+    return (in_array((int) $product_code, $all_products[$type]));
+  }
+
+  public function getAvailableAdditionalServices($type, $receiver_country = null)
+  {
+    $product_code = $this->getProductCode($type, $receiver_country);
+    $additional_service_codes = AdditionalService::getCodesByProduct($product_code);
+    $map = array(
+      AdditionalService::COD => 'cod',
+      AdditionalService::MULTI_PARCEL => 'multiparcel',
+      AdditionalService::FRAGILE => 'fragile',
+      AdditionalService::CALL_BEFORE_DELIVERY => 'call_before_delivery',
+      AdditionalService::OVERSIZED => 'oversized'
+    );
+
+    $additional_services = array();
+    foreach ($additional_service_codes as $code) {
+      if (isset($map[$code])) {
+        $additional_services[$map[$code]] = $code;
+      }
+    }
+    return $additional_services;
+  }
+
   private function getContractNumber($product_code, $receiver_country)
   {
-    if ((int) $product_code === Shipment::PRODUCT_COURIER) {
-      $contract_gls = $this->config->get('itellashipping_api_contract_' . $product_code . '_gls');
-      $baltics = ['LT', 'LV', 'EE', 'FI'];
+    $all_products = $this->getAllProductCodes();
+    if (in_array((int) $product_code, $all_products['courier'])) {
+      $contract_gls = $this->config->get('itellashipping_api_contract_gls');
       // either sender or receiver is from GLS country and GLS contract is set
       if (!empty($contract_gls)
-          && (!in_array($this->config->get('itellashipping_sender_country'), $baltics) || !in_array($receiver_country, $baltics))
+          && (!in_array($this->config->get('itellashipping_sender_country'), $baltics) || !$this->isBalticsCountry($receiver_country))
       ) {
         return $contract_gls;
       }
     }
 
     // return default contract by product code
-    return $this->config->get('itellashipping_api_contract_' . $product_code);
+    return $this->config->get('itellashipping_api_contract');
   }
 
   public function generateLabel($id_order)
@@ -338,13 +436,13 @@ class ModelExtensionItellashippingItellaShipping extends Model
     // from this point on we should have correct data
     //return $oc_order;
     try {
-      // Determine product code
-      $product_code = Shipment::PRODUCT_COURIER;
-      if ($order_data['is_pickup'] == 1) {
-        $product_code = Shipment::PRODUCT_PICKUP;
-      }
+      $receiver_country = $oc_order['shipping_iso_code_2'];
 
-      $contract_number = $this->getContractNumber($product_code, $oc_order['shipping_iso_code_2']);
+      // Determine product code
+      $product_type = ($order_data['is_pickup'] == 1) ? 'pickup' : 'courier';
+      $product_code = $this->getProductCode($product_type, $receiver_country);
+
+      $contract_number = $this->getContractNumber($product_code, $receiver_country);
 
       // Create and configure sender
       $sender = new Party(Party::ROLE_SENDER);
@@ -366,7 +464,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
         ->setStreet2($oc_order['shipping_address_2'])
         ->setPostCode($oc_order['shipping_postcode'])
         ->setCity($oc_order['shipping_city'])
-        ->setCountryCode($oc_order['shipping_iso_code_2'])
+        ->setCountryCode($receiver_country)
         ->setContactMobile($oc_order['telephone'])
         ->setContactEmail($oc_order['email']);
 
@@ -403,12 +501,13 @@ class ModelExtensionItellashippingItellaShipping extends Model
 
       // Create shipment object
       $shipment = new Shipment(
-        $this->config->get('itellashipping_api_user_' . $product_code),
-        $this->config->get('itellashipping_api_pass_' . $product_code)
+        $this->config->get('itellashipping_api_user'),
+        $this->config->get('itellashipping_api_pass')
       );
       $shipment
         ->setProductCode($product_code) // should always be set first
-        ->setShipmentNumber($id_order) // shipment number 
+        ->setShipmentNumber($id_order) // shipment number
+        ->setRoutingClient('BAL-OPENCART') // integration identifier
         //->setShipmentDateTime(date('c')) // when package will be ready (just use current time)
         ->setSenderParty($sender) // Sender class object
         ->setReceiverParty($receiver) // Receiver class object
@@ -420,7 +519,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
         $shipment->setComment($order_data['comment']);
       }
 
-      if ($product_code == Shipment::PRODUCT_PICKUP) {
+      if ($this->productTypeHasCode('pickup', $product_code)) {
         $shipment->setPickupPoint($order_data['id_pickup_point']);
       }
 
@@ -562,9 +661,10 @@ class ModelExtensionItellashippingItellaShipping extends Model
 
     try {
       $shipment = new Shipment(
-        $this->config->get('itellashipping_api_user_' . $product_code),
-        $this->config->get('itellashipping_api_pass_' . $product_code)
+        $this->config->get('itellashipping_api_user'),
+        $this->config->get('itellashipping_api_pass')
       );
+      $shipment->setRoutingClient('BAL-OPENCART'); // integration identifier
       return $shipment->downloadLabels($order_data['label_number']);
     } catch (ItellaException $e) {
       return array('error' => $e->getMessage());
@@ -638,9 +738,10 @@ class ModelExtensionItellashippingItellaShipping extends Model
           continue;
         }
         $shipment = new Shipment(
-          $this->config->get('itellashipping_api_user_' . $key),
-          $this->config->get('itellashipping_api_pass_' . $key)
+          $this->config->get('itellashipping_api_user'),
+          $this->config->get('itellashipping_api_pass')
         );
+        $shipment->setRoutingClient('BAL-OPENCART'); // integration identifier
 
         $result = base64_decode($shipment->downloadLabels($tr_numbers));
 

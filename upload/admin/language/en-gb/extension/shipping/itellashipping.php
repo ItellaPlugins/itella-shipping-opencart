@@ -63,11 +63,15 @@ $_['text_locations_help']   = 'Use this link to setup automated pickup points up
 
 $_['text_api_settings']   = 'API Settings';
 $_['entry_test_mode']     = 'Test Mode';
+$_['entry_api']           = 'Credentials';
 $_['entry_api_user']      = 'API User';
 $_['entry_api_pass']      = 'API Password';
 $_['entry_api_contract']  = 'API Contract #';
-$_['entry_api_2711']      = '2711 Product Credentials';
-$_['entry_api_2317']      = '2317 Product Credentials';
+$_['entry_api_contract_gls']      = 'API GLS Contract #';
+$_['text_api_contract_gls_help']  = 'For GLS countries only (not LT, LV, EE, FI).';
+$_['entry_api_services']  = 'Services';
+$_['entry_api_service_p'] = 'Parcel locker service';
+$_['entry_api_service_c'] = 'Courier service';
 $_['entry_bic']           = 'BIC';
 $_['entry_iban']          = 'IBAN';
 
@@ -207,10 +211,6 @@ $_['manifest_courier']          = 'Courier';
 $_['manifest_sender']           = 'Sender';
 $_['manifest_signature']        = 'name, lastname, signature';
 
-// GLS contract strings
-$_['entry_api_contract_gls']        = 'API GLS Contract #';
-$_['text_api_contract_gls_help']    = 'For GLS countries only (not LT, LV, EE, FI).';
-
 // order_info_form comment field
 $_['itella_lng_comment'] = 'Shipment comment:';
 
@@ -223,6 +223,12 @@ $_['entry_tracking_email_subject'] = 'Email subject';
 $_['entry_tracking_email_template'] = 'Email template';
 $_['text_tracking_email_template_help'] = '{{ tracking_url }} - key where to insert tracking URL, to insert just tracking number please use {{ tracking_number }}';
 $_['error_tracking_email_disabled'] = 'Tracking URL email is disabled';
+
+// Products
+$_['text_product_pickup_locker'] = 'Parcel Connect';
+$_['text_product_pickup_postal'] = 'Postal Parcel';
+$_['text_product_courier_express'] = 'Express Business Day Parcel';
+$_['text_product_courier_home'] = 'Home Parcel';
 
 // added in v1.2.15
 $_['itellashipping_title_lang'] = 'Language';
