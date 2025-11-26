@@ -859,7 +859,12 @@ class ControllerExtensionShippingItellashipping extends Controller
 		}
 
 		if (is_array($itella_extra)) {
+			$receiver_country = $order->getReceiverCountry($id_order);
+			$courier_additional_services = $order->getAvailableAdditionalServices('courier', $receiver_country);
 			foreach ($itella_extra as $extra) {
+				if (!isset($courier_additional_services[preg_replace('/^is_/', '', $extra)])) {
+					continue;
+				}
 				if ($is_pickup == 0 && in_array($extra, array('is_oversized', 'is_call_before_delivery', 'is_fragile'))) {
 					$data[$extra] = 1;
 				}

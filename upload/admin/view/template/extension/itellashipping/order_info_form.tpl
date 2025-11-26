@@ -84,9 +84,10 @@
           <div class="row">
             <div class="col-xs-12">
               <?php foreach(array('oversized', 'call_before_delivery', 'fragile') as $key): ?>
-                <label class="checkbox-inline">
+                <label class="checkbox-inline" <?= (!isset($itella['courier_extra_services'][$key]) ? 'style="opacity:0.3;"' : ''); ?>>
                 <input type="checkbox" value="is_<?= $key; ?>" name="itella_extra[]" 
-                  <?= ($itella['data']['is_' . $key] ? 'checked="checked"' : ''); ?>>
+                  <?= ($itella['data']['is_' . $key] ? 'checked="checked"' : ''); ?>
+                  <?= (!isset($itella['courier_extra_services'][$key]) ? 'disabled="disabled"' : ''); ?>>
                 <?= $itella_lng[$key] ?>
               </label>
               <?php endforeach; ?>
