@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.4.1] - 2025-12-18
 ### Updated
 - itella-api to 2.5.1
 
