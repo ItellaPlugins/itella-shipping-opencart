@@ -63,30 +63,6 @@
           <div class="panel-body">
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-itellashipping-api" class="form-horizontal">
               <input type="hidden" name="api_settings_update">
- 
-              <div class="panel panel-default">
-                <div class="panel-heading bold"><?php echo $entry_api_2711; ?></div>
-                <div class="panel-body">
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-user"><?php echo $entry_api_user; ?></label>
-                    <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_user_2711" value="<?php echo $itellashipping_api_user_2711; ?>" placeholder="<?php echo $entry_api_user; ?>" id="input-api-user" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-pass"><?php echo $entry_api_pass; ?></label>
-                    <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_pass_2711" value="<?php echo $itellashipping_api_pass_2711; ?>" placeholder="<?php echo $entry_api_pass; ?>" id="input-api-pass" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-contract"><?php echo $entry_api_contract; ?></label>
-                    <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_contract_2711" value="<?php echo $itellashipping_api_contract_2711; ?>" placeholder="<?php echo $entry_api_contract; ?>" id="input-api-contract" class="form-control" />
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               <div class="panel panel-default">
                 <div class="panel-heading bold"><?php echo $entry_api; ?></div>
@@ -107,13 +83,6 @@
                     <label class="col-sm-4 control-label" for="input-api-contract"><?php echo $entry_api_contract; ?></label>
                     <div class="col-sm-8">
                       <input type="text" name="itellashipping_api_contract" value="<?php echo $itellashipping_api_contract; ?>" placeholder="<?php echo $entry_api_contract; ?>" id="input-api-contract" class="form-control" />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label" for="input-api-contract-gls"><?php echo $entry_api_contract_gls; ?></label>
-                    <div class="col-sm-8">
-                      <input type="text" name="itellashipping_api_contract_gls" value="<?php echo $itellashipping_api_contract_gls; ?>" placeholder="<?php echo $entry_api_contract_gls; ?>" id="input-api-contract-gls" class="form-control" />
-                      <p class="help-block"><?php echo $text_api_contract_gls_help; ?></p>
                     </div>
                   </div>
                 </div>

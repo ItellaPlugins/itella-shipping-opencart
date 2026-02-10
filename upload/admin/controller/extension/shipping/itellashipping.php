@@ -1,7 +1,7 @@
 <?php
 class ControllerExtensionShippingItellashipping extends Controller
 {
-	private $_version = '1.4.1';
+	private $_version = '1.4.2';
 	private $error = array();
 
 	public function install()
@@ -63,8 +63,7 @@ class ControllerExtensionShippingItellashipping extends Controller
 
 			if (isset($this->request->post['api_settings_update'])) {
 				// we need unescaped password post
-				$this->request->post['itellashipping_api_pass_2711'] = $_POST['itellashipping_api_pass_2711'];
-				$this->request->post['itellashipping_api_pass_2317'] = $_POST['itellashipping_api_pass_2317'];
+				$this->request->post['itellashipping_api_pass'] = $_POST['itellashipping_api_pass'];
 				unset($this->request->post['api_settings_update']);
 				$this->saveSettings($this->request->post);
 				$this->session->data['success'] = $this->language->get('text_success');
@@ -134,8 +133,6 @@ class ControllerExtensionShippingItellashipping extends Controller
 		$data['entry_api_user'] = $this->language->get('entry_api_user');
 		$data['entry_api_pass'] = $this->language->get('entry_api_pass');
 		$data['entry_api_contract'] = $this->language->get('entry_api_contract');
-		$data['entry_api_contract_gls'] = $this->language->get('entry_api_contract_gls');
-		$data['text_api_contract_gls_help'] = $this->language->get('text_api_contract_gls_help');
 		$data['entry_api_services'] = $this->language->get('entry_api_services');
 		$data['entry_api_service_p'] = $this->language->get('entry_api_service_p');
 		$data['entry_api_service_c'] = $this->language->get('entry_api_service_c');
@@ -289,7 +286,6 @@ class ControllerExtensionShippingItellashipping extends Controller
 		foreach (array(
 			'itellashipping_tax_class_id', 'itellashipping_geo_zone_id',
 			'itellashipping_api_user', 'itellashipping_api_pass', 'itellashipping_api_contract',
-			'itellashipping_api_contract_gls',
 			'itellashipping_api_service_p', 'itellashipping_api_service_c',
 			'itellashipping_cod_status', 'itellashipping_bic', 'itellashipping_iban',
 			'itellashipping_sender_name', 'itellashipping_sender_street', 'itellashipping_sender_postcode',
@@ -310,7 +306,8 @@ class ControllerExtensionShippingItellashipping extends Controller
 			'itellashipping_api_user_2317' => 'itellashipping_api_user',
 			'itellashipping_api_pass_2317' => 'itellashipping_api_pass',
 			'itellashipping_api_contract_2317' => 'itellashipping_api_contract',
-			'itellashipping_api_contract_2317_gls' => 'itellashipping_api_contract_gls'
+			'itellashipping_api_contract_2317_gls' => 'itellashipping_api_contract',
+			'itellashipping_api_contract_gls' => 'itellashipping_api_contract',
 		);
 		foreach ( $changed_configs as $old_key => $new_key ) {
 			if ( empty($data[$new_key]) && ! empty($this->config->get($old_key)) ) {

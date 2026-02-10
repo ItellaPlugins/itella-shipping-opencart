@@ -407,18 +407,19 @@ class ModelExtensionItellashippingItellaShipping extends Model
     return $additional_services;
   }
 
-  private function getContractNumber($product_code, $receiver_country)
+  private function getContractNumber($product_code = null, $receiver_country = null)
   {
-    $all_products = $this->getAllProductCodes();
-    if (in_array((int) $product_code, $all_products['courier'])) {
-      $contract_gls = $this->config->get('itellashipping_api_contract_gls');
-      // either sender or receiver is from GLS country and GLS contract is set
-      if (!empty($contract_gls)
-          && (!in_array($this->config->get('itellashipping_sender_country'), $baltics) || !$this->isBalticsCountry($receiver_country))
-      ) {
-        return $contract_gls;
-      }
-    }
+    // No more using (function params no more required so added values null):
+    // $all_products = $this->getAllProductCodes();
+    // if (in_array((int) $product_code, $all_products['courier'])) {
+    //   $contract_gls = $this->config->get('itellashipping_api_contract_gls');
+    //   // either sender or receiver is from GLS country and GLS contract is set
+    //   if (!empty($contract_gls)
+    //       && (!in_array($this->config->get('itellashipping_sender_country'), $baltics) || !$this->isBalticsCountry($receiver_country))
+    //   ) {
+    //     return $contract_gls;
+    //   }
+    // }
 
     // return default contract by product code
     return $this->config->get('itellashipping_api_contract');
