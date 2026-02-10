@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## [1.4.2] - 2026-02-10
 ### Changed
 - the "API Contract GLS" field has been removed and the "API Contract" field will be used instead
 
