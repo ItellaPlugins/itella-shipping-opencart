@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+### Changed
+- the "API Contract GLS" field has been removed and the "API Contract" field will be used instead
+
+### Fixed
+- fixed notice when saving configs
+
 ## [1.4.1] - 2025-12-18
 ### Updated
 - itella-api to 2.5.1
