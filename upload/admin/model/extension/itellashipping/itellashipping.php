@@ -440,12 +440,11 @@ class ModelExtensionItellashippingItellaShipping extends Model
       $receiver_country = $oc_order['shipping_iso_code_2'];
 
       // Determine product code
-      $product_type = ($order_data['is_pickup'] == 1) ? 'pickup' : 'courier';
+      $is_pickup = ($order_data['is_pickup'] == 1);
+      $product_type = $is_pickup ? 'pickup' : 'courier';
       $product_code = $this->getProductCode($product_type, $receiver_country);
 
       $contract_number = $this->getContractNumber($product_code, $receiver_country);
-
-      $is_pickup_product = $this->productTypeHasCode('pickup', $product_code);
 
       // Create and configure sender
       $sender = new Party(Party::ROLE_SENDER);
@@ -492,17 +491,17 @@ class ModelExtensionItellashippingItellaShipping extends Model
           'codbic' => $this->config->get('itellashipping_bic')
         ));
       }
-      if (!$order_data['is_pickup'] && $order_data['is_fragile']) {
+      if (!$is_pickup && $order_data['is_fragile']) {
         $extra[] = new AdditionalService(AdditionalService::FRAGILE);
       }
-      if (!$order_data['is_pickup'] && $order_data['is_oversized']) {
+      if (!$is_pickup && $order_data['is_oversized']) {
         $extra[] = new AdditionalService(AdditionalService::OVERSIZED);
       }
-      if (!$order_data['is_pickup'] && $order_data['is_call_before_delivery']) {
+      if (!$is_pickup && $order_data['is_call_before_delivery']) {
         $extra[] = new AdditionalService(AdditionalService::CALL_BEFORE_DELIVERY);
       }
       // Block delivery or redirection to outdoor locker
-      if ($is_pickup_product && $this->config->get('itellashipping_locations_exclude_outdoors')) {
+      if ($is_pickup && $this->config->get('itellashipping_locations_exclude_outdoors')) {
         $extra[] = new AdditionalService(AdditionalService::BLOCK_OUTDOOR_LOCKER);
       }
 
@@ -526,7 +525,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
         $shipment->setComment($order_data['comment']);
       }
 
-      if ($is_pickup_product) {
+      if ($is_pickup) {
         $shipment->setPickupPoint($order_data['id_pickup_point']);
       }
 
