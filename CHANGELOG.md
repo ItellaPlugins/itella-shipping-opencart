@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3] - 2026-10-15
+### Improved
+- added additional service 3376 to parcel locker shipments when outdoor parcel lockers are excluded in the settings
+
+### Updated
+- itella-api to 2.5.3
+
 ## [1.4.2] - 2026-02-10
 ### Changed
 - the "API Contract GLS" field has been removed and the "API Contract" field will be used instead
