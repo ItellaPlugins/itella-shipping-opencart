@@ -445,6 +445,8 @@ class ModelExtensionItellashippingItellaShipping extends Model
 
       $contract_number = $this->getContractNumber($product_code, $receiver_country);
 
+      $is_pickup_product = $this->productTypeHasCode('pickup', $product_code);
+
       // Create and configure sender
       $sender = new Party(Party::ROLE_SENDER);
       $sender
@@ -499,6 +501,10 @@ class ModelExtensionItellashippingItellaShipping extends Model
       if (!$order_data['is_pickup'] && $order_data['is_call_before_delivery']) {
         $extra[] = new AdditionalService(AdditionalService::CALL_BEFORE_DELIVERY);
       }
+      // Block delivery or redirection to outdoor locker
+      if ($is_pickup_product && $this->config->get('itellashipping_locations_exclude_outdoors')) {
+        $extra[] = new AdditionalService(AdditionalService::BLOCK_OUTDOOR_LOCKER);
+      }
 
       // Create shipment object
       $shipment = new Shipment(
@@ -520,7 +526,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
         $shipment->setComment($order_data['comment']);
       }
 
-      if ($this->productTypeHasCode('pickup', $product_code)) {
+      if ($is_pickup_product) {
         $shipment->setPickupPoint($order_data['id_pickup_point']);
       }
 
