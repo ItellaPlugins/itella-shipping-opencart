@@ -181,6 +181,7 @@ $_['lng_courier_email_missing'] = 'Nėra nustatytas kurjerio el. paštas';
 $_['lng_call_success']          = 'Kurjeris iškviestas į:';
 $_['lng_call_failed']           = 'Kurjerio iškvietimas nepavyko, klaida:';
 $_['lng_call_mail_success']     = 'Kurjerio iškvietimo el.laiškas išsiųstas';
+$_['lng_call_too_frequent']     = 'Šiam manifestui kurjeris buvo iškviestas mažiau nei prieš minutę. Bandykite vėl po %d s.';
 
 // manifest page modal
 $_['lng_modal_order_title'] = 'Manifestas:';

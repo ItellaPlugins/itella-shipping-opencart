@@ -6,6 +6,8 @@ use Mijora\Itella\CallCourier;
 class ControllerExtensionShippingItellashippingManifest extends Controller
 {
 
+  const CALL_COURIER_TIMEOUT = 60; // seconds before same manifest can be called again
+
   private $success;
 
   public function index()
@@ -550,6 +552,37 @@ class ControllerExtensionShippingItellashippingManifest extends Controller
   }
 
   private function callCourier($id_manifest, $params = array())
+  {
+    $this->load->language('extension/shipping/itellashipping');
+
+    // lock file guards against simultaneous (double click) and repeated calls of the same manifest
+    $lock = fopen(DIR_CACHE . 'itella_call_courier_' . (int) $id_manifest . '.lock', 'c+');
+    if (!$lock) {
+      return $this->sendCourierCall($id_manifest, $params);
+    }
+
+    flock($lock, LOCK_EX);
+
+    $last_call = (int) stream_get_contents($lock);
+    $seconds_left = $last_call + self::CALL_COURIER_TIMEOUT - time();
+    if ($last_call && $seconds_left > 0) {
+      flock($lock, LOCK_UN);
+      fclose($lock);
+      return array('error' => sprintf($this->language->get('lng_call_too_frequent'), $seconds_left));
+    }
+
+    // timeout starts before the call, so any concurrent request is rejected while this one is running
+    ftruncate($lock, 0);
+    rewind($lock);
+    fwrite($lock, (string) time());
+    fflush($lock);
+    flock($lock, LOCK_UN);
+    fclose($lock);
+
+    return $this->sendCourierCall($id_manifest, $params);
+  }
+
+  private function sendCourierCall($id_manifest, $params = array())
   {
     $this->load->language('extension/shipping/itellashipping');
 
