@@ -527,7 +527,17 @@
       modal.find('.modal-body #attach-id').text(manifest_id);
 
       document.getElementById('call-submit').href = href; // update "call" button link in modal
+      $('#call-submit').removeClass('disabled');
       updateSubmitCallLink();
+    });
+
+    $('#call-submit').on('click', function(e) {
+      // prevent double click from calling courier more than once
+      if ($(this).hasClass('disabled')) {
+        e.preventDefault();
+        return;
+      }
+      $(this).addClass('disabled');
     });
 
     $('#call-message, #call-date, #call-time-from, #call-time-to').on('change', function(e) {

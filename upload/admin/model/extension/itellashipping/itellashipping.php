@@ -869,7 +869,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
     $items = array();
     foreach ($orders as $order) {
       $items[] = array(
-        'tracking_number' => implode(' ', explode(',', $order['label_number'])),
+        'track_num' => array_map('trim', explode(',', $order['label_number'])),
         'amount' => $order['packs'],
         'weight' => $order['weight'],
         'delivery_address' => $this->generateDeliveryAddress($order)
