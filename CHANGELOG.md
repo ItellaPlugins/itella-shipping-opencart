@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.4.4] - 2026-11-05
 ### Fixed
 - fixed "Undefined index: track_num" notice when calling a courier
 - fixed an issue where two courier pickup requests were sent when the button was double-clicked
