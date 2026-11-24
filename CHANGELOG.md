@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Changed
+- shipment tracking URLs are now taken from the itella-api library instead of being defined in the module
+
 ### Updated
 - itella-api to 2.5.4
 
