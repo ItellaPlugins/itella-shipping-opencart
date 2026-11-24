@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+### Changed
+- shipment tracking URLs are now taken from the itella-api library instead of being defined in the module
+
+### Updated
+- itella-api to 2.5.4
+
 ## [1.4.4] - 2026-11-05
 ### Fixed
 - fixed "Undefined index: track_num" notice when calling a courier

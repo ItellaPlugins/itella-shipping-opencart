@@ -13,13 +13,6 @@ use Mijora\Itella\Pdf\Manifest;
 
 class ModelExtensionItellashippingItellaShipping extends Model
 {
-  const TRACKING_URL = [
-    'default' => 'https://www.smartposti.lt/en/receiving/parcel-tracking?trackingCode=@',
-    'lt' => 'https://www.smartposti.lt/siuntu-gavimas/siuntos-sekimas?trackingCode=@',
-    'lv' => 'https://www.smartposti.lv/paku-sanemsana/pakas-meklesana?trackingCode=@',
-    'ee' => 'https://www.smartposti.ee/pakkide-kattesaamine/saadetise-jalgimine?trackingCode=@',
-  ];
-
   private $_locations = array();
 
   public function install()
@@ -595,7 +588,7 @@ class ModelExtensionItellashippingItellaShipping extends Model
       ];
     }
 
-    $data['tracking_url'] = str_replace('@', $data['tracking_number'], $this->getTrackingURLByCountryCode($data['country_code']));
+    $data['tracking_url'] = $this->getTrackingUrl($data['tracking_number'], $data['country_code']);
 
     if (version_compare(VERSION, '3.0.0', '>=')) {
       $mail = new Mail($this->config->get('config_mail_engine'));
@@ -643,11 +636,9 @@ class ModelExtensionItellashippingItellaShipping extends Model
     ];
   }
 
-  public function getTrackingURLByCountryCode($country_code)
+  public function getTrackingUrl($tracking_number, $country_code)
   {
-    $country_code = strtolower($country_code);
-  
-    return (self::TRACKING_URL[$country_code] !== null) ? self::TRACKING_URL[$country_code] : self::TRACKING_URL['default'];
+    return ItellaHelper::getTrackingUrl($tracking_number, $country_code);
   }
 
   public function getLabel($id_order)
